@@ -19,7 +19,7 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return view('/home');
+    return view('dashboard.index');
 });
 Route::resource('/products', ProductController::class);
 Route::resource('/customers', CustomerController::class);
@@ -27,5 +27,5 @@ Route::resource('/orders', OrderController::class);
 Auth::routes();
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/orders/details', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.details');
