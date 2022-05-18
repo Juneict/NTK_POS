@@ -49,7 +49,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('cart')}}" class="nav-link">
                   <i class="fas fa-cart-plus nav-icon"></i>
                   <p>Open POS</p>
                 </a>
