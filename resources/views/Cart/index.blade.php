@@ -42,9 +42,10 @@
                                                   </tr>
                                               </thead>
                                               <tbody>
+                                                @foreach($products as $product)
                                                   <tr>
-                                                    
-                                                    <td>T-shirt</td>
+                                                      
+                                                    <td>{{$product->name}}</td>
                                                     <td width="15%">
                                                       <div class="row">
                                                           <div class="">
@@ -60,11 +61,14 @@
                                                       
                                                     </td>
                                                     <td>0.00</td>
-                                                    <td>7,000.00</td>
+                                                    <td>{{$product->price}}</td>
                                                     <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                                     </td>
                                                   </tr>
-                                                  <tr>
+                                                @endforeach
+
+                                                 
+                                                  {{-- <tr>
                                                     
                                                     <td>Skirt</td>
                                                     <td width="15%">
@@ -85,7 +89,7 @@
                                                     <td>9,000.00</td>
                                                     <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                                     </td>
-                                                  </tr>
+                                                  </tr> --}}
                                               </tbody>
                                             </table>
                                           </div>
