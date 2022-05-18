@@ -14,7 +14,7 @@
                                       <div class="row">
                                           {{-- barcode input --}}
                                           <div class="form-group col-md-4">
-                                              <input type="text" class="form-control" placeholder="Scan Barcode">
+                                              <input type="text" class="form-control" placeholder="Scan Barcodes">
                                           </div>
                                           {{-- barcode end --}}
 
@@ -30,15 +30,15 @@
                                           {{-- customer end--}}
 
                                           {{-- cart --}}
-                                          <div class="col-lg-3 col-md-4">
-                                            <table class="table  table-striped">
+                                          <div class="">
+                                            <table class="table">
                                               <thead>
                                                   <tr>
                                                     <th>Products</th>
                                                     <th>Quantity</th>
-                                                    <th>Discount</th>
+                                                   
                                                     <th>Price</th>
-                                                    <th>action</th>
+                                                    <th>Action</th>
                                                   </tr>
                                               </thead>
                                               <tbody>
@@ -46,7 +46,7 @@
                                                   <tr>
                                                       
                                                     <td>{{$product->name}}</td>
-                                                    <td width="15%">
+                                                    {{-- <td width="15%">
                                                       <div class="row">
                                                           <div class="">
                                                               <button class="btn btn-sm btn-success">+ </button>
@@ -59,8 +59,9 @@
                                                           </div> 
                                                       </div>
                                                       
-                                                    </td>
-                                                    <td>0.00</td>
+                                                    </td> --}}
+                                                    <td><input type="number" name="quantity" class="form-control" value="1"></td>
+                                                   
                                                     <td>{{$product->price}}</td>
                                                     <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                                     </td>
@@ -99,7 +100,7 @@
                                                 <table class="table">
                                                   <tr>
                                                     <th colspan="4">Total</th>
-                                                    <td>16,000.00</td>
+                                                    <td>{{$product->sum('price')}}</td>
                                                   </tr>
                                                 </table>
                                           </div>
@@ -122,9 +123,24 @@
                       <div class="card">
                         <div class="card-body">
                               
-                                  <input type="text" class="form-control" placeholder="Search Product">
-                            
-                              
+                                  <input type="text" class="form-control" placeholder="Search Products">
+                                  <div class="row mt-3 ">
+                                  @foreach($products as $product)
+                                      
+                                        <div class="col-md-2 col-lg-2 justify-content-center">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                  <div class="text-center">
+                                                    <h5 class="card-title">{{$product->name}}</h5><br>
+                                                    <p class="text-muted">{{$product->price}} ks</p>
+                                                  </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                      
+                                  @endforeach
+                                </div>
                         </div>
                       </div>
                     </div>
