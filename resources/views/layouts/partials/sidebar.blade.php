@@ -43,6 +43,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/users" class="nav-link {{ Request::segment(1) == 'users' ? 'active' : ''}}">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Users Management</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/products" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
                   <i class="fas fa-th-large nav-icon"></i>
                   <p>Products</p>
