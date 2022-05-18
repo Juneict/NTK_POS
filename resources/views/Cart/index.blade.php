@@ -95,10 +95,12 @@
                                               <button class="btn btn-danger" type="submit">Cancel</button>
                                             </div>
                                             <div class="col-md-6">
-                                              <button class="btn btn-success" type="submit">Submit</button>
+                                              <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary">Send</a>
                                             </div>
                                           </div>
                                       </div>
+                                      
+                                     
                                       {{-- row --}}                 
                                 </form>
                             </div>
@@ -116,11 +118,8 @@
                                         <div class="col-md-2 col-lg-2 justify-content-center">
                                             <div class="card">
                                                 <div class="card-body">
-                                                  <div class="text-center">
-                                                    <h5 class="card-title">{{$product->name}}</h5><br>
-                                                    <p class="text-muted">{{$product->price}} ks</p>
-                                                  </div>
-                                                  
+                                                  <img src="/dist/img/product.png"class="card-img-top" alt="">
+                                                  {{$product->name}}                                                 
                                                 </div>
                                             </div>
                                         </div>
@@ -141,6 +140,35 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
+
+     {{-- modal --}}
+     <div class="modal right fade" id="sendReceivedAmount" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title" id="staticBackdropLabel">Received Amount</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+              </div>
+              <div class="modal-body">
+                      <form action="" method="POST">
+                          @csrf
+                          <input type="text" class="form-control" value="66000">
+
+                          <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary">Send</button>
+                              <button class="btn btn-default" data-dismiss="modal">Cancle</button>
+                              
+                          </div>
+                      </form>
+              </div>
+      
+          </div>
+      </div>
+</div> 
+    {{-- endmodal --}}
 </div>
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>

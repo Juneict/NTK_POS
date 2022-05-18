@@ -48,13 +48,27 @@
                           <input type="text" name="name" class="form-control" value="{{old('name')}}">
                         </div>
                         <div class="form-group col-md-2">
-                          <label for="name">Size</label>
-                          <input type="text" name="size" class="form-control" value="{{old('size')}}">
-                        </div>
-                        <div class="form-group col-md-2">
-                          <label for="name">Color</label>
-                          <input type="text" name="color" class="form-control" value="{{old('color')}}">
-                        </div>
+                          <label for="">Size</label>
+                          <select name="size" id="" class="form-control">
+                              <option value="S">S</option>
+                              <option value="M">M</option>
+                              <option value="L">L</option>
+                              <option value="XL">XL</option>
+                              <option value="XXL">XXl</option>
+                          </select>
+                         </div> 
+                         <div class="form-group col-md-2">
+                          <label for="">Color</label>
+                          <select name="color" id="" class="form-control">
+                              <option value="white">white</option>
+                              <option value="black">black</option>
+                              <option value="blue">blue</option>
+                              <option value="red">yellow</option>
+                              <option value="green">green</option>
+                              <option value="yellow">yellow</option>
+                              <option value="brown">brown</option>
+                          </select>
+                         </div>
                         <div class="form-group col-md-2">
                           <label for="name">Barcode *</label>
                           <input type="text" name="barcode" class="form-control" value="{{old('barcode')}}">
@@ -96,5 +110,5 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
-  </div>
+</div>
 @endsection
