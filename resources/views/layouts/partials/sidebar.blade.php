@@ -55,13 +55,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('cart')}}" class="nav-link">
+                <a href="{{route('cart')}}" class="nav-link {{ Request::segment(1) == 'cart' ? 'active' : ''}}">
                   <i class="fas fa-cart-plus nav-icon"></i>
                   <p>Open POS</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/orders" class="nav-link">
+                <a href="/orders" class="nav-link {{ Request::segment(1) == 'orders' ? 'active' : ''}}">
                   <i class="fas fa-cart-plus nav-icon"></i>
                   <p>Orders</p>
                 </a>
