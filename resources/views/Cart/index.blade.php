@@ -111,20 +111,20 @@
                       <div class="card">
                         <div class="card-body">
                               
-                                  <input type="text" class="form-control search-product" placeholder="Search Products">
-                                  <div class="row mt-3 product-container">
-                                  {{-- @foreach($products as $product)
-                                      
-                                        <div class="col-md-2 col-lg-2 justify-content-center">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                  <img src="/dist/img/product.png"class="card-img-top" alt="">
-                                                  {{$product->name}}                                                 
-                                                </div>
-                                            </div>
-                                        </div>
-                                      
-                                  @endforeach --}}
+                                  <input type="text" class="form-control" placeholder="Search Products">
+                                  <div class="row mt-3 ">
+                                    @foreach($productlists as $product)
+                                        
+                                          <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center">
+                                              <div class="card">
+                                                  <div class="card-body">
+                                                    <img src="/dist/img/product.png" class="card-img-top"  alt="">
+                                                    <p style="text-align: center; margin-top:3px"><small> {{$product->name}} </small> </p>                                                
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        
+                                  @endforeach
                                 </div>
                         </div>
                       </div>
