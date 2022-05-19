@@ -13,8 +13,8 @@
                                 <form action="">
                                       <div class="row">
                                           {{-- barcode input --}}
-                                          <div class="form-group col-md-4">
-                                              <input type="text" class="form-control" placeholder="Scan Barcodes">
+                                          <div class="form-group col-md-4 barcode">
+                                              <input type="text" class="form-control search-barcode" placeholder="Scan Barcodes">
                                           </div>
                                           {{-- barcode end --}}
 
@@ -30,7 +30,7 @@
                                           {{-- customer end--}}
 
                                           {{-- cart --}}
-                                          <div class="">
+                                          <div class="cart-container">
                                             <table class="table">
                                               <thead>
                                                   <tr>
@@ -41,32 +41,18 @@
                                                     <th>Action</th>
                                                   </tr>
                                               </thead>
-                                              <tbody>
-                                                @foreach($products as $product)
+                                              <tbody class="cart">
+                                                {{-- @foreach($products as $product)
                                                   <tr>
                                                       
                                                     <td>{{$product->name}}</td>
-                                                    {{-- <td width="15%">
-                                                      <div class="row">
-                                                          <div class="">
-                                                              <button class="btn btn-sm btn-success">+ </button>
-                                                          </div> 
-                                                          <div class="">
-                                                              1
-                                                          </div>
-                                                          <div class="">
-                                                              <button class="btn btn-sm btn-danger">-</button>
-                                                          </div> 
-                                                      </div>
-                                                      
-                                                    </td> --}}
                                                     <td><input type="number" name="quantity" class="form-control" value="1"></td>
                                                    
                                                     <td>{{$product->price}}</td>
                                                     <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                                     </td>
                                                   </tr>
-                                                @endforeach
+                                                @endforeach --}}
 
                                                  
                                                   {{-- <tr>
@@ -100,13 +86,13 @@
                                                 <table class="table">
                                                   <tr>
                                                     <th colspan="4">Total</th>
-                                                    <td>{{$product->sum('price')}}</td>
+                                                    <td class="total-price">0</td>
                                                   </tr>
                                                 </table>
                                           </div>
                                           <div class="row m-auto">
                                             <div class="col-md-6">
-                                              <button class="btn btn-danger" type="submit">Cancle</button>
+                                              <button class="btn btn-danger" type="submit">Cancel</button>
                                             </div>
                                             <div class="col-md-6">
                                               <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary">Send</a>
@@ -125,6 +111,7 @@
                       <div class="card">
                         <div class="card-body">
                               
+<<<<<<< HEAD
                                   <input type="text" class="form-control" placeholder="Search Products">
                                   <div class="row mt-3 ">
                                     @foreach($products as $product)
@@ -138,6 +125,21 @@
                                               </div>
                                           </div>
                                         
+=======
+                                  <input type="text" class="form-control search-product" placeholder="Search Products">
+                                  <div class="row mt-3 product-container">
+                                  @foreach($products as $product)
+                                      
+                                        <div class="col-md-2 col-lg-2 justify-content-center">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                  <img src="/dist/img/product.png"class="card-img-top" alt="">
+                                                  {{$product->name}}                                                 
+                                                </div>
+                                            </div>
+                                        </div>
+                                      
+>>>>>>> 8646359c600daebe8d2d1e16857a7fe893bac9d8
                                   @endforeach
                                 </div>
                         </div>
@@ -186,8 +188,104 @@
 </div>
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
-<script>
-    
 
-  
+<script>
+window.onload = () => {
+
+  const barcodeInput = document.querySelector('.search-barcode');
+  const cartContainer = document.querySelector('.cart-container');
+  const cart = document.querySelector('.cart');
+  const counter = document.getElementById('counter'); 
+  const productContainer = document.querySelector('.product-container');
+  const searchProductInput = document.querySelector('.search-product');
+
+  const products = {!! json_encode($products, JSON_HEX_TAG) !!};
+  console.log(products);
+
+  const searchBarcode = function(e){
+    if(e.key === 'Enter'){
+      e.preventDefault();
+
+      inputBarcodeItem();
+
+      calculateTotalPrice();
+
+      barcodeInput.value = '';
+
+    }
+  };
+
+  const inputBarcodeItem = function(){
+    const item = products.find(cur => +cur.barcode === +barcodeInput.value);
+
+    if(!item) return;
+
+    const html = `
+    <tr data-id=${item.id}>
+      <td>${item.name}</td>
+      <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control" value="1"></td>
+      <td class="item-price">${item.price}</td>
+      <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
+    </tr>
+    `;
+
+    cart.insertAdjacentHTML('beforeend', html);
+  }
+
+  const calculateTotalPrice = function(){
+
+    const prices = new Array();
+
+    const arr = document.getElementsByClassName('item-price');
+    for(let i=0; i< arr.length; i++){
+      prices.push(+arr[i].innerHTML);
+    }
+
+    const total_price = prices.reduce((acc, cur) => acc + cur, 0);
+    document.querySelector('.total-price').innerHTML = total_price;
+  }
+
+  const calculateCountPrice = function(e){
+    const count = +e.target.value;
+    const parent = e.target.parentElement.parentElement;
+    const item = products.find(cur => cur.id === +parent.dataset.id)
+
+    parent.querySelector('.item-price').innerHTML = count * item.price;
+
+    calculateTotalPrice();
+  }
+
+  const delete_cart_item = function(e){
+    e.preventDefault();
+
+    const parentTr = e.target.closest('button').parentElement.parentElement;
+    parentTr.parentElement.removeChild(parentTr);
+
+    calculateTotalPrice();
+  }
+
+  function similar(a,b) {
+    let equivalency = 0;
+    const minLength = (a.length > b.length) ? b.length : a.length;    
+    const maxLength = (a.length < b.length) ? b.length : a.length;    
+    for(let i = 0; i < minLength; i++) {
+        if(a[i] == b[i]) {
+            equivalency++;
+        }
+    }
+
+    const weight = equivalency / maxLength;
+    return (weight * 100) + "%";
+  }
+
+  const searchProduct = function(){
+
+  }
+
+  barcodeInput.addEventListener('keydown', searchBarcode);
+  cartContainer.addEventListener('change', calculateCountPrice);
+  cartContainer.addEventListener('click', delete_cart_item);
+  searchProductInput.addEventListener('search', searchProduct);
+};
+
 </script>
