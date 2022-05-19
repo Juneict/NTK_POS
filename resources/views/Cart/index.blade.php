@@ -186,13 +186,6 @@ const searchProductInput = document.querySelector('.search-product');
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
 console.log(products);
 
-const inCartItems = new Array();
-
-
-// Array.from(cart.children, tr => console.log(tr));
-// console.log(cart.children);
-
-
 const searchBarcode = function(e){
   if(e.key === 'Enter'){
     e.preventDefault();
@@ -203,8 +196,9 @@ const searchBarcode = function(e){
 
     calculateTotalPrice();
 
-    barcodeInput.value = '';
+    setLocalStorage();
 
+    barcodeInput.value = '';
   }
 };
 
@@ -228,7 +222,7 @@ const inputBarcodeItem = function(inCartIds){
 
   const html = `
   <tr data-id=${item.id}>
-    <td>${item.name}</td>
+    <td class="item-name">${item.name}</td>
     <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control item-count" value="1"></td>
     <td class="item-price">${item.price}</td>
     <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
@@ -285,6 +279,7 @@ const calculateCountPrice = function(e){
   parent.querySelector('.item-price').innerHTML = count * item.price;
 
   calculateTotalPrice();
+  setLocalStorage();
 }
 
 const delete_cart_item = function(e){
@@ -296,6 +291,8 @@ const delete_cart_item = function(e){
   parentTr.parentElement?.removeChild(parentTr);
 
   calculateTotalPrice();
+  
+  setLocalStorage();
 }
 
 function similarItems(a,b) {
@@ -367,10 +364,55 @@ const searchProduct = function(e){
   }
 }
 
+const setLocalStorage = function(){
+  const cartItems = new Array();
+  const total_price = document.querySelector('.total-price').innerHTML;
+
+  Array.from(cart.children, tr => {
+    const id = +tr.dataset.id;
+    const name = tr.querySelector('.item-name').innerHTML;
+    const count = +tr.querySelector('.item-count').value;
+    const price = +tr.querySelector('.item-price').innerHTML;
+
+    cartItems.push({id, name, count, price});
+  });
+
+  localStorage.setItem('cart_items', JSON.stringify(cartItems));
+  localStorage.setItem('total_price', total_price);
+}
+
+const renderLocalStorage = function(){
+    
+    const cart_items = JSON.parse(localStorage.getItem("cart_items"));
+    const total_price = localStorage.total_price;
+  
+    if(!cart_items) return;
+
+    cart_items.forEach((item, i) => {
+
+      const related_item = products.find(cur => cur.id === +cart_items[i].id);
+
+      const html = `
+        <tr data-id=${cart_items[i].id}>
+          <td class="item-name">${cart_items[i].name}</td>
+          <td><input type="number" min="1" max="${related_item.stock}" name="quantity" class="form-control item-count" value="${cart_items[i].count}"></td>
+          <td class="item-price">${cart_items[i].price}</td>
+          <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `;
+
+      cart.insertAdjacentHTML('beforeend', html);
+    });
+
+    document.querySelector('.total-price').innerHTML = total_price;
+}
+
 barcodeInput.addEventListener('keydown', searchBarcode);
 cartContainer.addEventListener('change', calculateCountPrice);
 cartContainer.addEventListener('click', delete_cart_item);
 searchProductInput.addEventListener('keydown', searchProduct);
+
+renderLocalStorage();
 };
 
 </script>
