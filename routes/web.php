@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
@@ -31,3 +32,4 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
 // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
 Route::get('/orders/details', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.details');
+Route::get('/logout', [App\Http\Controllers\LogoutController::class,'perform'])->name('logout.perform');
