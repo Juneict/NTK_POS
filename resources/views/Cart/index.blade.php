@@ -184,7 +184,6 @@ const productContainer = document.querySelector('.product-container');
 const searchProductInput = document.querySelector('.search-product');
 
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
-console.log(products);
 
 const searchBarcode = function(e){
   if(e.key === 'Enter'){
