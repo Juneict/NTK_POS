@@ -96,10 +96,10 @@
                                           </div>
                                           <div class="row m-auto">
                                             <div class="col-md-6">
-                                              <button class="btn btn-danger" type="submit">Cancel</button>
+                                              <button class="btn btn-danger cancel-cart" type="submit">Cancel</button>
                                             </div>
                                             <div class="col-md-6">
-                                              <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary">Send</a>
+                                              <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary proceed-btn">Proceed</a>
                                             </div>
                                           </div>
                                       </div>
@@ -156,12 +156,11 @@
               <div class="modal-body">
                       <form action="" method="POST">
                           @csrf
-                          <input type="text" class="form-control" value="66000">
+                          <input type="text" class="form-control payment-input" value="0">
 
                           <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">Send</button>
-                              <button class="btn btn-default" data-dismiss="modal">Cancle</button>
-                              
+                            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Send</button>
                           </div>
                       </form>
               </div>
@@ -183,6 +182,9 @@ const cart = document.querySelector('.cart');
 const counter = document.getElementById('counter'); 
 const productContainer = document.querySelector('.product-container');
 const searchProductInput = document.querySelector('.search-product');
+const proceedBtn = document.querySelector('.proceed-btn');
+const paymentInput = document.querySelector('.payment-input');
+const cancelCartBtn = document.querySelector('.cancel-cart');
 
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
 
@@ -259,6 +261,7 @@ const updateCartItem = function(id){
   });
 
   calculateCountPrice(rowElement);
+  rowElement = '';
 }
 
 const calculateTotalPrice = function(){
@@ -339,7 +342,7 @@ const getProductList = function(item){
     productContainer.insertAdjacentHTML('beforeend', html);
 }
 
-const removeRecentItems = function(){
+const removeChildItems = function(){
   let lastChild = productContainer.lastElementChild;
 
   while(lastChild){
@@ -354,13 +357,13 @@ const searchProduct = function(e){
     e.preventDefault();
     
     if(searchProductInput.value === '') {
-      removeRecentItems();
+      removeChildItems();
 
       products.forEach(item => getProductList(item));
       return;
     }
 
-    removeRecentItems();
+    removeChildItems();
     const keyword = searchProductInput.value.toLowerCase();
     const item = products.find(item => item.name.toLowerCase() === keyword);
 
@@ -376,6 +379,22 @@ const searchProduct = function(e){
     };
     getProductList(item);
   }
+}
+
+const proceedCheckout = function(){
+  const total_price = document.querySelector('.total-price').innerHTML;
+  paymentInput.value = total_price;
+}
+
+const cancelCheckout = function(e){
+  e.preventDefault();
+
+  // remove all child
+  cart.innerHTML = '';
+  document.querySelector('.total-price').innerHTML = 0;
+  
+  localStorage.removeItem('cart_items');
+  localStorage.removeItem('total_price');
 }
 
 const setLocalStorage = function(){
@@ -426,6 +445,8 @@ cartContainer.addEventListener('change', calculateCountPrice);
 cartContainer.addEventListener('click', delete_cart_item);
 searchProductInput.addEventListener('keydown', searchProduct);
 productContainer.addEventListener('click', inputSearchItem);
+proceedBtn.addEventListener('click', proceedCheckout);
+cancelCartBtn.addEventListener('click', cancelCheckout);
 
 renderLocalStorage();
 };
