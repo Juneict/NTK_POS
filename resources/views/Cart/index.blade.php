@@ -111,8 +111,8 @@
                       <div class="card">
                         <div class="card-body">
                               
-                                  <input type="text" class="form-control" placeholder="Search Products">
-                                  <div class="row mt-3 ">
+                                  <input type="text" class="form-control search-product" placeholder="Search Products">
+                                  <div class="row mt-3 product-container">
                                     @foreach($productlists as $product)
                                         
                                           <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center">
@@ -176,153 +176,153 @@
 <script>
 window.onload = () => {
 
-  const barcodeInput = document.querySelector('.search-barcode');
-  const cartContainer = document.querySelector('.cart-container');
-  const cart = document.querySelector('.cart');
-  const counter = document.getElementById('counter'); 
-  const productContainer = document.querySelector('.product-container');
-  const searchProductInput = document.querySelector('.search-product');
+const barcodeInput = document.querySelector('.search-barcode');
+const cartContainer = document.querySelector('.cart-container');
+const cart = document.querySelector('.cart');
+const counter = document.getElementById('counter'); 
+const productContainer = document.querySelector('.product-container');
+const searchProductInput = document.querySelector('.search-product');
 
-  const products = {!! json_encode($products, JSON_HEX_TAG) !!};
-  console.log(products);
+const products = {!! json_encode($products, JSON_HEX_TAG) !!};
+console.log(products);
 
-  const searchBarcode = function(e){
-    if(e.key === 'Enter'){
-      e.preventDefault();
-
-      inputBarcodeItem();
-
-      calculateTotalPrice();
-
-      barcodeInput.value = '';
-
-    }
-  };
-
-  const inputBarcodeItem = function(){
-    const item = products.find(cur => +cur.barcode === +barcodeInput.value);
-
-    if(!item) return;
-
-    const html = `
-    <tr data-id=${item.id}>
-      <td>${item.name}</td>
-      <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control" value="1"></td>
-      <td class="item-price">${item.price}</td>
-      <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
-    </tr>
-    `;
-
-    cart.insertAdjacentHTML('beforeend', html);
-  }
-
-  const calculateTotalPrice = function(){
-
-    const prices = new Array();
-
-    const arr = document.getElementsByClassName('item-price');
-    for(let i=0; i< arr.length; i++){
-      prices.push(+arr[i].innerHTML);
-    }
-
-    const total_price = prices.reduce((acc, cur) => acc + cur, 0);
-    document.querySelector('.total-price').innerHTML = total_price;
-  }
-
-  const calculateCountPrice = function(e){
-    const count = +e.target.value;
-    const parent = e.target.parentElement.parentElement;
-    const item = products.find(cur => cur.id === +parent.dataset.id)
-
-    parent.querySelector('.item-price').innerHTML = count * item.price;
-
-    calculateTotalPrice();
-  }
-
-  const delete_cart_item = function(e){
+const searchBarcode = function(e){
+  if(e.key === 'Enter'){
     e.preventDefault();
 
-    if(!e.target.closest('button')) return;
-
-    const parentTr = e.target.closest('button').parentNode?.parentNode;
-    parentTr.parentElement?.removeChild(parentTr);
+    inputBarcodeItem();
 
     calculateTotalPrice();
+
+    barcodeInput.value = '';
+
+  }
+};
+
+const inputBarcodeItem = function(){
+  const item = products.find(cur => +cur.barcode === +barcodeInput.value);
+
+  if(!item) return;
+
+  const html = `
+  <tr data-id=${item.id}>
+    <td>${item.name}</td>
+    <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control" value="1"></td>
+    <td class="item-price">${item.price}</td>
+    <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
+  </tr>
+  `;
+
+  cart.insertAdjacentHTML('beforeend', html);
+}
+
+const calculateTotalPrice = function(){
+
+  const prices = new Array();
+
+  const arr = document.getElementsByClassName('item-price');
+  for(let i=0; i< arr.length; i++){
+    prices.push(+arr[i].innerHTML);
   }
 
-  function similarItems(a,b) {
-    let equivalency = 0;
-    const minLength = (a.length > b.length) ? b.length : a.length;    
-    const maxLength = (a.length < b.length) ? b.length : a.length;    
-    for(let i = 0; i < minLength; i++) {
-        if(a[i] == b[i]) {
-            equivalency++;
-        }
-    }
+  const total_price = prices.reduce((acc, cur) => acc + cur, 0);
+  document.querySelector('.total-price').innerHTML = total_price;
+}
 
-    const weight = equivalency / maxLength;
-    return (weight * 100);
-  }
+const calculateCountPrice = function(e){
+  const count = +e.target.value;
+  const parent = e.target.parentElement.parentElement;
+  const item = products.find(cur => cur.id === +parent.dataset.id)
 
-  const getProductList = function(item){
+  parent.querySelector('.item-price').innerHTML = count * item.price;
 
-    const html = `
-      <div class="col-md-2 col-lg-2 justify-content-center">
-        <div class="card">
-          <div class="card-body">
-            <img src="/dist/img/product.png" class="card-img-top" alt="">
-            ${item.name}                                                 
-          </div>
-        </div>
-      </div>
-      `;
+  calculateTotalPrice();
+}
 
-      productContainer.insertAdjacentHTML('beforeend', html);
-  }
+const delete_cart_item = function(e){
+  e.preventDefault();
 
-  const removeRecentItems = function(){
-    let lastChild = productContainer.lastElementChild;
+  if(!e.target.closest('button')) return;
 
-    while(lastChild){
+  const parentTr = e.target.closest('button').parentNode?.parentNode;
+  parentTr.parentElement?.removeChild(parentTr);
 
-      productContainer.removeChild(lastChild);
-      lastChild = productContainer.lastElementChild;
-    }
-  }
+  calculateTotalPrice();
+}
 
-  const searchProduct = function(e){
-    if(e.key === 'Enter'){
-      e.preventDefault();
-      
-      if(searchProductInput.value === '') {
-        removeRecentItems();
-
-        products.forEach(item => getProductList(item));
-        return;
+function similarItems(a,b) {
+  let equivalency = 0;
+  const minLength = (a.length > b.length) ? b.length : a.length;    
+  const maxLength = (a.length < b.length) ? b.length : a.length;    
+  for(let i = 0; i < minLength; i++) {
+      if(a[i] == b[i]) {
+          equivalency++;
       }
-
-      removeRecentItems();
-      const keyword = searchProductInput.value.toLowerCase();
-      const item = products.find(item => item.name.toLowerCase() === keyword);
-
-      if(!item) {
-        products.forEach(item => {
-          const similarValue = similarItems(item.name.toLowerCase(), keyword);
-
-          if(!similarValue) return;
-
-          getProductList(item);
-        });
-        return;
-      };
-      getProductList(item);
-    }
   }
 
-  barcodeInput.addEventListener('keydown', searchBarcode);
-  cartContainer.addEventListener('change', calculateCountPrice);
-  cartContainer.addEventListener('click', delete_cart_item);
-  searchProductInput.addEventListener('keydown', searchProduct);
+  const weight = equivalency / maxLength;
+  return (weight * 100);
+}
+
+const getProductList = function(item){
+
+  const html = `
+    <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center">
+      <div class="card">
+          <div class="card-body">
+              <img src="/dist/img/product.png" class="card-img-top"  alt="">
+              <p style="text-align: center; margin-top:3px"><small> ${item.name} </small></p>                                                
+          </div>
+      </div>
+    </div>
+    `;
+
+    productContainer.insertAdjacentHTML('beforeend', html);
+}
+
+const removeRecentItems = function(){
+  let lastChild = productContainer.lastElementChild;
+
+  while(lastChild){
+
+    productContainer.removeChild(lastChild);
+    lastChild = productContainer.lastElementChild;
+  }
+}
+
+const searchProduct = function(e){
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    
+    if(searchProductInput.value === '') {
+      removeRecentItems();
+
+      products.forEach(item => getProductList(item));
+      return;
+    }
+
+    removeRecentItems();
+    const keyword = searchProductInput.value.toLowerCase();
+    const item = products.find(item => item.name.toLowerCase() === keyword);
+
+    if(!item) {
+      products.forEach(item => {
+        const similarValue = similarItems(item.name.toLowerCase(), keyword);
+
+        if(!similarValue) return;
+
+        getProductList(item);
+      });
+      return;
+    };
+    getProductList(item);
+  }
+}
+
+barcodeInput.addEventListener('keydown', searchBarcode);
+cartContainer.addEventListener('change', calculateCountPrice);
+cartContainer.addEventListener('click', delete_cart_item);
+searchProductInput.addEventListener('keydown', searchProduct);
 };
 
 </script>
