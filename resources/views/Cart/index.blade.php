@@ -111,8 +111,8 @@
                       <div class="card">
                         <div class="card-body">
                               
-                                  <input type="text" class="form-control" placeholder="Search Products">
-                                  <div class="row mt-3 ">
+                                  <input type="text" class="form-control search-product" placeholder="Search Products">
+                                  <div class="row mt-3 product-container">
                                   @foreach($products as $product)
                                       
                                         <div class="col-md-2 col-lg-2 justify-content-center">
@@ -180,6 +180,8 @@ window.onload = () => {
   const cartContainer = document.querySelector('.cart-container');
   const cart = document.querySelector('.cart');
   const counter = document.getElementById('counter'); 
+  const productContainer = document.querySelector('.product-container');
+  const searchProductInput = document.querySelector('.search-product');
 
   const products = {!! json_encode($products, JSON_HEX_TAG) !!};
   console.log(products);
@@ -242,14 +244,32 @@ window.onload = () => {
 
     const parentTr = e.target.closest('button').parentElement.parentElement;
     parentTr.parentElement.removeChild(parentTr);
-    
+
     calculateTotalPrice();
+  }
+
+  function similar(a,b) {
+    let equivalency = 0;
+    const minLength = (a.length > b.length) ? b.length : a.length;    
+    const maxLength = (a.length < b.length) ? b.length : a.length;    
+    for(let i = 0; i < minLength; i++) {
+        if(a[i] == b[i]) {
+            equivalency++;
+        }
+    }
+
+    const weight = equivalency / maxLength;
+    return (weight * 100) + "%";
+  }
+
+  const searchProduct = function(){
+
   }
 
   barcodeInput.addEventListener('keydown', searchBarcode);
   cartContainer.addEventListener('change', calculateCountPrice);
   cartContainer.addEventListener('click', delete_cart_item);
+  searchProductInput.addEventListener('search', searchProduct);
 };
 
-  
 </script>
