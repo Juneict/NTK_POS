@@ -45,6 +45,9 @@
                             <b>Alert Quantity</b> 5.0000 <br>
                             <b>Product Type</b>: Single
                         </div>
+                        <div class="col-md-4">
+                          <img src="/dist/img/product.png"class="card-img-top" style="width:300px"alt="">
+                        </div>
                     
                     </div>
                     <div class="col-md-12 mt-3">

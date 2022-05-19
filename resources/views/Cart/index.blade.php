@@ -20,11 +20,11 @@
 
                                           {{-- customer --}}
                                           <div class="form-group col-md-8">
-                                            <select name="period"  class="form-control">
-                                              <option value="" class="form-control">Walk-in Customer</option>
-                                              
-                                              <option value="morning" class="form-control">Myat Ko</option>
-                                              <option value="evening" class="form-control">Ko Nyi</option>
+                                            <select name="customer_id"  class="form-control">
+                                              <option value="1" class="form-control">Walk-in Customer</option>
+                                              @foreach($customers as $customer)
+                                              <option value="{{$customer->customer_name}}" class="form-control">{{$customer->customer_name}}</option>
+                                              @endforeach
                                             </select>
                                           </div>
                                           {{-- customer end--}}
@@ -127,17 +127,17 @@
                               
                                   <input type="text" class="form-control" placeholder="Search Products">
                                   <div class="row mt-3 ">
-                                  @foreach($products as $product)
-                                      
-                                        <div class="col-md-2 col-lg-2 justify-content-center">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                  <img src="/dist/img/product.png"class="card-img-top" alt="">
-                                                  {{$product->name}}                                                 
-                                                </div>
-                                            </div>
-                                        </div>
-                                      
+                                    @foreach($products as $product)
+                                        
+                                          <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center">
+                                              <div class="card">
+                                                  <div class="card-body">
+                                                    <img src="/dist/img/product.png"class="card-img-top" alt="">
+                                                    <p class="card-text">  {{$product->name}}  </p>                                                
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        
                                   @endforeach
                                 </div>
                         </div>
