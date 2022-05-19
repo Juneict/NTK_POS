@@ -113,7 +113,7 @@
                               
                                   <input type="text" class="form-control search-product" placeholder="Search Products">
                                   <div class="row mt-3 product-container">
-                                  @foreach($products as $product)
+                                  {{-- @foreach($products as $product)
                                       
                                         <div class="col-md-2 col-lg-2 justify-content-center">
                                             <div class="card">
@@ -124,7 +124,7 @@
                                             </div>
                                         </div>
                                       
-                                  @endforeach
+                                  @endforeach --}}
                                 </div>
                         </div>
                       </div>
@@ -242,13 +242,15 @@ window.onload = () => {
   const delete_cart_item = function(e){
     e.preventDefault();
 
-    const parentTr = e.target.closest('button').parentElement.parentElement;
-    parentTr.parentElement.removeChild(parentTr);
+    if(!e.target.closest('button')) return;
+
+    const parentTr = e.target.closest('button').parentNode?.parentNode;
+    parentTr.parentElement?.removeChild(parentTr);
 
     calculateTotalPrice();
   }
 
-  function similar(a,b) {
+  function similarItems(a,b) {
     let equivalency = 0;
     const minLength = (a.length > b.length) ? b.length : a.length;    
     const maxLength = (a.length < b.length) ? b.length : a.length;    
@@ -259,17 +261,69 @@ window.onload = () => {
     }
 
     const weight = equivalency / maxLength;
-    return (weight * 100) + "%";
+    return (weight * 100);
   }
 
-  const searchProduct = function(){
+  const getProductList = function(item){
 
+    const html = `
+      <div class="col-md-2 col-lg-2 justify-content-center">
+        <div class="card">
+          <div class="card-body">
+            <img src="/dist/img/product.png" class="card-img-top" alt="">
+            ${item.name}                                                 
+          </div>
+        </div>
+      </div>
+      `;
+
+      productContainer.insertAdjacentHTML('beforeend', html);
+  }
+
+  const removeRecentItems = function(){
+    let lastChild = productContainer.lastElementChild;
+
+    while(lastChild){
+
+      productContainer.removeChild(lastChild);
+      lastChild = productContainer.lastElementChild;
+    }
+  }
+
+  const searchProduct = function(e){
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      
+      if(searchProductInput.value === '') {
+        removeRecentItems();
+
+        products.forEach(item => getProductList(item));
+        return;
+      }
+
+      removeRecentItems();
+      const keyword = searchProductInput.value.toLowerCase();
+      const item = products.find(item => item.name.toLowerCase() === keyword);
+
+      if(!item) {
+        products.forEach(item => {
+          const similarValue = similarItems(item.name.toLowerCase(), keyword);
+
+          if(!similarValue) return;
+
+          getProductList(item);
+        });
+        
+        return;
+      };
+      getProductList(item);
+    }
   }
 
   barcodeInput.addEventListener('keydown', searchBarcode);
   cartContainer.addEventListener('change', calculateCountPrice);
   cartContainer.addEventListener('click', delete_cart_item);
-  searchProductInput.addEventListener('search', searchProduct);
+  searchProductInput.addEventListener('keydown', searchProduct);
 };
 
 </script>
