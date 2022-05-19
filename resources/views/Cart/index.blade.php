@@ -115,7 +115,7 @@
                                   <div class="row mt-3 product-container">
                                     @foreach($productlists as $product)
                                         
-                                          <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center">
+                                          <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center search-item" data-id="{{ $product->id }}">
                                               <div class="card">
                                                   <div class="card-body">
                                                     <img src="/dist/img/product.png" class="card-img-top"  alt="">
@@ -190,9 +190,8 @@ const searchBarcode = function(e){
   if(e.key === 'Enter'){
     e.preventDefault();
 
-    const inCartIds = getIds();
-
-    inputBarcodeItem(inCartIds);
+    const item = products.find(cur => +cur.barcode === +barcodeInput.value);
+    inputCartItem(item);
 
     calculateTotalPrice();
 
@@ -209,14 +208,13 @@ const getIds = function(){
   return inCartItemIds;
 }
 
-const inputBarcodeItem = function(inCartIds){
-
-  const item = products.find(cur => +cur.barcode === +barcodeInput.value);
+const inputCartItem = function(item){
   
   if(!item) return;
 
-  if(inCartIds.includes(item.id)){
-    updateBarcodeItem(item.id);
+  if(getIds().includes(item.id)){
+
+    updateCartItem(item.id);
     return;
   }
 
@@ -232,13 +230,29 @@ const inputBarcodeItem = function(inCartIds){
   cart.insertAdjacentHTML('beforeend', html);
 }
 
+const inputSearchItem = function(e){
+  e.preventDefault();
+  
+  const element = e.target.closest('.search-item');
+  const item = products.find(item => item.id === +element.dataset.id);
+
+  inputCartItem(item);
+
+  calculateTotalPrice();
+
+  setLocalStorage();
+}
+
 
 let rowElement;
-const updateBarcodeItem = function(id){
+const updateCartItem = function(id){
+
   Array.from(cart.children, tr => {
+
     if(+tr.dataset.id === id){
       rowElement = tr;
       const element = tr.querySelector('.item-count');
+
       const currentCount = +element.value;
       element.value = currentCount + 1;
     }
@@ -312,7 +326,7 @@ function similarItems(a,b) {
 const getProductList = function(item){
 
   const html = `
-    <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center">
+    <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center search-item" data-id="${item.id}">
       <div class="card">
           <div class="card-body">
               <img src="/dist/img/product.png" class="card-img-top"  alt="">
@@ -411,6 +425,7 @@ barcodeInput.addEventListener('keydown', searchBarcode);
 cartContainer.addEventListener('change', calculateCountPrice);
 cartContainer.addEventListener('click', delete_cart_item);
 searchProductInput.addEventListener('keydown', searchProduct);
+productContainer.addEventListener('click', inputSearchItem);
 
 renderLocalStorage();
 };
