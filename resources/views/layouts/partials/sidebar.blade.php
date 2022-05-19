@@ -73,7 +73,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link" onclick="document.getElementById('logout-form').submit()">
+                <a href="{{route('logout')}}" class="nav-link">
                   <i class=" fas fa-sign-out-alt nav-icon"></i>
                   <p>Logout</p>
                 </a>
