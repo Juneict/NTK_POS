@@ -46,7 +46,7 @@
                                                   <tr>
                                                       
                                                     <td>{{$product->name}}</td>
-                                                    <td><input type="number" name="quantity" class="form-control" value="1"></td>
+                                                    <td><input type="number" name="quantity" class="form-control item-count" value="1"></td>
                                                    
                                                     <td>{{$product->price}}</td>
                                                     <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -186,11 +186,20 @@ const searchProductInput = document.querySelector('.search-product');
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
 console.log(products);
 
+const inCartItems = new Array();
+
+
+// Array.from(cart.children, tr => console.log(tr));
+// console.log(cart.children);
+
+
 const searchBarcode = function(e){
   if(e.key === 'Enter'){
     e.preventDefault();
 
-    inputBarcodeItem();
+    const inCartIds = getIds();
+
+    inputBarcodeItem(inCartIds);
 
     calculateTotalPrice();
 
@@ -199,21 +208,49 @@ const searchBarcode = function(e){
   }
 };
 
-const inputBarcodeItem = function(){
-  const item = products.find(cur => +cur.barcode === +barcodeInput.value);
+const getIds = function(){
+  const inCartItemIds = new Array();
+  Array.from(cart.children, tr => inCartItemIds.push(+tr.dataset.id));
 
+  return inCartItemIds;
+}
+
+const inputBarcodeItem = function(inCartIds){
+
+  const item = products.find(cur => +cur.barcode === +barcodeInput.value);
+  
   if(!item) return;
+
+  if(inCartIds.includes(item.id)){
+    updateBarcodeItem(item.id);
+    return;
+  }
 
   const html = `
   <tr data-id=${item.id}>
     <td>${item.name}</td>
-    <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control" value="1"></td>
+    <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control item-count" value="1"></td>
     <td class="item-price">${item.price}</td>
     <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
   </tr>
   `;
 
   cart.insertAdjacentHTML('beforeend', html);
+}
+
+
+let rowElement;
+const updateBarcodeItem = function(id){
+  Array.from(cart.children, tr => {
+    if(+tr.dataset.id === id){
+      rowElement = tr;
+      const element = tr.querySelector('.item-count');
+      const currentCount = +element.value;
+      element.value = currentCount + 1;
+    }
+  });
+
+  calculateCountPrice(rowElement);
 }
 
 const calculateTotalPrice = function(){
@@ -230,10 +267,21 @@ const calculateTotalPrice = function(){
 }
 
 const calculateCountPrice = function(e){
-  const count = +e.target.value;
-  const parent = e.target.parentElement.parentElement;
-  const item = products.find(cur => cur.id === +parent.dataset.id)
+  let count, item;
 
+  if(rowElement){
+    count = rowElement.querySelector('.item-count').value;
+    const id = +rowElement.dataset.id;
+    item = products.find(item => item.id === id);
+
+    rowElement.querySelector('.item-price').innerHTML = count * item.price;
+    return;
+  }
+
+  count = +e.target.value;
+  const parent = e.target.parentElement.parentElement;
+  item = products.find(cur => cur.id === +parent.dataset.id)
+  
   parent.querySelector('.item-price').innerHTML = count * item.price;
 
   calculateTotalPrice();
