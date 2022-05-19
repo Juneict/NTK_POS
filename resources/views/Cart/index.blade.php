@@ -313,7 +313,6 @@ window.onload = () => {
 
           getProductList(item);
         });
-        
         return;
       };
       getProductList(item);

@@ -57,7 +57,7 @@
                               <option value="XXL">XXl</option>
                           </select>
                          </div> 
-                         <div class="form-group col-md-2">
+                         <div class="form-group col-md-2">  
                           <label for="">Color</label>
                           <select name="color" id="" class="form-control">
                               <option value="white">white</option>

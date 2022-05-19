@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header">
                         <h3 class="card-title">Orders</h3>
-                        <a href="" class="btn btn-success" style="float:right">Open POS</a>
+                        <a href="{{route('cart')}}" class="btn btn-success" style="float:right">Open POS</a>
                 </div>
               <div class="card-body">
                     <div class="col-md-5">
