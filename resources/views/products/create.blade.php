@@ -45,7 +45,7 @@
                       <div class="row">
                         <div class="form-group col-md-4">
                           <label for="name">Product Name *</label>
-                          <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                          <input type="text" name="name" class="form-control" value="{{old('name')}}" required>
                         </div>
                         <div class="form-group col-md-2">
                           <label for="">Size</label>
@@ -71,11 +71,11 @@
                          </div>
                         <div class="form-group col-md-2">
                           <label for="name">Barcode *</label>
-                          <input type="text" name="barcode" class="form-control" value="{{old('barcode')}}">
+                          <input type="text" name="barcode" class="form-control" value="{{old('barcode')}}" required>
                         </div>
                         <div class="form-group col-md-2">
                           <label for="name">Price *</label>
-                          <input type="text" name="price" class="form-control" value="{{old('price')}}">
+                          <input type="text" name="price" class="form-control" value="{{old('price')}}" required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="name">Description</label>
@@ -83,7 +83,7 @@
                         </div>                      
                         <div class="form-group col-md-2">
                           <label for="name">Stock</label>
-                          <input type="text" name="stock" class="form-control" value="{{old('stock')}}">
+                          <input type="text" name="stock" class="form-control" value="{{old('stock')}}" required>
                         </div>
                         <div class="form-group">
                                       <label for="status">Status</label>
