@@ -9,6 +9,16 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="card">
+              @if (session('success'))
+              <div class="alert alert-success">
+                  {{ session('success') }}
+              </div>
+            @endif
+            @if (session('delete'))
+              <div class="alert alert-danger">
+                  {{ session('delete') }}
+              </div>
+            @endif
                 <div class="card-header">
                         <h3 class="card-title">Orders</h3>
                         <a href="{{route('cart')}}" class="btn btn-success" style="float:right">Open POS</a>
@@ -128,6 +138,6 @@
       "responsive": true,
     });
   });
-
+  $('div.alert').delay(3000).slideUp(300);
   
 </script>

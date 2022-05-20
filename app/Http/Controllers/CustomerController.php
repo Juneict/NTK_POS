@@ -94,8 +94,10 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        //
+        
+        $customer->delete();
+        return redirect()->back()->with('delete','Customer delete successfully');
     }
 }

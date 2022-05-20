@@ -243,6 +243,7 @@ const inputSearchItem = function(e){
   setLocalStorage();
 }
 
+ 
 
 let rowElement;
 const updateCartItem = function(id){
