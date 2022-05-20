@@ -184,7 +184,7 @@ const productContainer = document.querySelector('.product-container');
 const searchProductInput = document.querySelector('.search-product');
 const proceedBtn = document.querySelector('.proceed-btn');
 const paymentInput = document.querySelector('.payment-input');
-const cancelCartBtn = document.querySelector('.cancel-cart');
+const cancelCartBtn = document.querySelector('.cancel-cart')
 
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
 
@@ -244,8 +244,6 @@ const inputSearchItem = function(e){
 
   setLocalStorage();
 }
-
- 
 
 let rowElement;
 const updateCartItem = function(id){
@@ -448,8 +446,8 @@ searchProductInput.addEventListener('keydown', searchProduct);
 productContainer.addEventListener('click', inputSearchItem);
 proceedBtn.addEventListener('click', proceedCheckout);
 cancelCartBtn.addEventListener('click', cancelCheckout);
-
 renderLocalStorage();
+
 };
 
 </script>
