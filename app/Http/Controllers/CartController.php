@@ -13,6 +13,7 @@ class CartController extends Controller
         $this->middleware('auth');
     }
     public function index(){
+        
         $customers = Customer::all();
         $products = Product::all();
         $productlists = Product::latest()->paginate(20);

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\Payment;
 use Illuminate\Http\Request;
+use App\Http\Controllers\CartController;
 
 class OrderController extends Controller
 {
@@ -17,9 +21,9 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
     public function index()
-    {
-        
-    return view('orders.index');
+    { 
+        $orders = Order::all();  
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -38,9 +42,47 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $user_id = auth()->user()->id;
+        
+        $order = Order::create([
+            'customer_id' => $req->customer_id,
+            'user_id' => $user_id
+        ]);
+
+        $items = array();
+        for($i = 0; $i < count($req->product_id); $i++)
+        {
+            $tmp = [
+                'name' => $req->item_name[$i],
+                'price' => $req->item_price[$i],
+                'quantity' => $req->quantity[$i],
+                'order_id' => $order->id,
+                'product_id' => $req->product_id[$i]
+            ];
+            array_push($items, $tmp);
+        }
+
+        $result = OrderItem::insert($items);
+
+        for($i = 0; $i < count($req->product_id); $i++)
+        {
+            $product = Product::find($req->product_id[$i]);
+            $currentStock = $product->stock;
+            $updatedStock = $currentStock - $req->quantity[$i];
+            $product->stock = $updatedStock;
+            $product->save();
+        }
+
+        $payment = Payment::insert([
+            'amount' => $req->payment_amount,
+            'order_id' => $order->id,
+            'customer_id' => $req->customer_id 
+        ]);
+
+        return (new CartController)->index();
+
     }
 
     /**
