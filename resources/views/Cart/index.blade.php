@@ -1,6 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content-wrapper">
+  <style>
+    .cart-container{
+      width: 100%;
+      height: 350px;
+    }
+    .cart-total{
+      width: 100%;
+    }
+  </style>
     <!-- Main content -->
     <form id="cart-form" action="{{ route('place-order') }}" method="POST">
     <div class="content mt-3">
@@ -10,6 +19,7 @@
                   <div class="row">
                     <div class="col-md-4">
                         <div class="card">
+
                             <div class="card-body">
                                 
                                       <div class="row">
@@ -45,48 +55,14 @@
                                                   </tr>
                                               </thead>
                                               <tbody class="cart">
-                                                {{-- @foreach($products as $product) --}}
-                                                  {{-- <tr>
-                                                      
-                                                    <td><input type="text" name="item_name" class="form-control item-count" value="Tshirt" readonly></td>
-                                                    <td><input type="number" name="quantity" class="form-control item-count" value="1"></td>
-                                                   
-                                                    <td><input type="text" name="price" class="form-control" value="3400" readonly></td>
-                                                    <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                                    </td>
-                                                  </tr> --}}
-                                                {{-- @endforeach --}}
-
-                                                 
-                                                  {{-- <tr>
-                                                    
-                                                    <td>Skirt</td>
-                                                    <td width="15%">
-                                                      <div class="row">
-                                                          <div class="">
-                                                              <button class="btn btn-sm btn-success">+ </button>
-                                                          </div> 
-                                                          <div class="">
-                                                              1
-                                                          </div>
-                                                          <div class="">
-                                                              <button class="btn btn-sm btn-danger">-</button>
-                                                          </div> 
-                                                      </div>
-                                                      
-                                                    </td>
-                                                    <td>0.00</td>
-                                                    <td>9,000.00</td>
-                                                    <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                                    </td>
-                                                  </tr> --}}
+                                              
                                               </tbody>
                                             </table>
                                           </div>
                                           {{-- cart end --}}
 
-                                          <div class="col-md-12">
-                                                <table class="table">
+                                          <div class=" col-md-12">
+                                                <table class="table" style="width: 100%">
                                                   <tr>
                                                     <th colspan="4">Total</th>
                                                     <td class="total-price">0</td>
