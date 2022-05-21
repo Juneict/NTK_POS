@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->integer('amount');
             $table->foreignId('order_id');
-            $table->foreignId('user_id');
+            $table->foreignId('customer_id');
             $table->timestamps();
 
             // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
