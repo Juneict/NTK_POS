@@ -2,6 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Main content -->
+    <form id="cart-form" action="{{ route('place-order') }}" method="POST">
     <div class="content mt-3">
       <div class="container-fluid">
         <div class="row">
@@ -10,7 +11,7 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <form action="">
+                                
                                       <div class="row">
                                           {{-- barcode input --}}
                                           <div class="form-group col-md-4 barcode">
@@ -20,11 +21,11 @@
 
                                           {{-- customer --}}
                                           <div class="input-group col-md-8">
-                                            <select name="customer_id"  class="form-control">
-                                              <option value="1" class="form-control">Walk-in Customer</option>
-                                              @foreach($customers as $customer)
-                                              <option value="{{$customer->customer_name}}" class="form-control">{{$customer->customer_name}}</option>
-                                              @endforeach
+                                            <select name="customer_id"  class="form-control customer-list">
+                                              {{-- <option value="1" class="form-control">Walk-in Customer</option> --}}
+                                                @foreach($customers as $customer)
+                                                <option value="{{$customer->id}}" class="form-control">{{$customer->customer_name}}</option>
+                                                @endforeach
                                             </select>
                                           </div>
                                           
@@ -44,17 +45,17 @@
                                                   </tr>
                                               </thead>
                                               <tbody class="cart">
-                                                {{-- @foreach($products as $product)
-                                                  <tr>
+                                                {{-- @foreach($products as $product) --}}
+                                                  {{-- <tr>
                                                       
-                                                    <td>{{$product->name}}</td>
+                                                    <td><input type="text" name="item_name" class="form-control item-count" value="Tshirt" readonly></td>
                                                     <td><input type="number" name="quantity" class="form-control item-count" value="1"></td>
                                                    
-                                                    <td>{{$product->price}}</td>
+                                                    <td><input type="text" name="price" class="form-control" value="3400" readonly></td>
                                                     <td> <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                                     </td>
-                                                  </tr>
-                                                @endforeach --}}
+                                                  </tr> --}}
+                                                {{-- @endforeach --}}
 
                                                  
                                                   {{-- <tr>
@@ -94,17 +95,17 @@
                                           </div>
                                           <div class="row m-auto">
                                             <div class="col-md-6">
-                                              <button class="btn btn-danger cancel-cart" type="submit">Cancel</button>
+                                              <button class="btn btn-danger cancel-cart" type="submit">Clear</button>
                                             </div>
                                             <div class="col-md-6">
-                                              <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary proceed-btn">Proceed</a>
+                                              <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary proceed-btn" style="pointer-events:none;">Proceed</a>
                                             </div>
                                           </div>
                                       </div>
                                       
                                      
                                       {{-- row --}}                 
-                                </form>
+                                
                             </div>
                            {{-- card body --}}
                         </div>
@@ -141,7 +142,7 @@
     <!-- /.content -->
 
      {{-- modal --}}
-     <div class="modal right fade" id="sendReceivedAmount" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal right fade" id="sendReceivedAmount" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
@@ -152,21 +153,22 @@
                   
               </div>
               <div class="modal-body">
-                      <form action="" method="POST">
+                      
                           @csrf
-                          <input type="text" class="form-control payment-input" value="0">
+                          <input type="text" name="payment_amount" class="form-control payment-input" value="0">
 
                           <div class="modal-footer">
                             <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary btn-send">Send</button>
                           </div>
-                      </form>
+                      
               </div>
       
           </div>
       </div>
-</div> 
+    </div> 
     {{-- endmodal --}}
+    </form>
 </div>
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
@@ -183,8 +185,15 @@ const searchProductInput = document.querySelector('.search-product');
 const proceedBtn = document.querySelector('.proceed-btn');
 const paymentInput = document.querySelector('.payment-input');
 const cancelCartBtn = document.querySelector('.cancel-cart')
+const customerList = document.querySelector('.customer-list');
+const sendBtn = document.querySelector('.btn-send');
 
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
+
+let customer_id, customer_name;
+
+const enableButton = () => proceedBtn.style.removeProperty('pointer-events');
+const disableButton = () => proceedBtn.style.cssText = 'pointer-events:none';
 
 const searchBarcode = function(e){
   if(e.key === 'Enter'){
@@ -201,6 +210,10 @@ const searchBarcode = function(e){
   }
 };
 
+const saveCustomer = function(){
+  localStorage.setItem('customer_id', customerList.value);
+}
+
 const getIds = function(){
   const inCartItemIds = new Array();
   Array.from(cart.children, tr => inCartItemIds.push(+tr.dataset.id));
@@ -212,6 +225,13 @@ const inputCartItem = function(item){
   
   if(!item) return;
 
+  if(item.stock === 0){
+    alert('Item: Out of Stock!');
+    return;
+  }
+
+  enableButton();
+
   if(getIds().includes(item.id)){
 
     updateCartItem(item.id);
@@ -219,12 +239,13 @@ const inputCartItem = function(item){
   }
 
   const html = `
-  <tr data-id=${item.id}>
-    <td class="item-name">${item.name}</td>
-    <td><input type="number" min="1" max="${item.stock}" name="quantity" class="form-control item-count" value="1"></td>
-    <td class="item-price">${item.price}</td>
-    <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
-  </tr>
+    <tr name="product_id[]" data-id=${item.id}>
+      <input type="hidden" name="product_id[]" value="${item.id}">
+      <td><input type="text" name="item_name[]" class="form-control item-name" value="${item.name}" readonly></td>
+      <td><input type="number" min="1" max="${item.stock}" name="quantity[]" class="form-control item-count" value="1" onkeydown="return false" ></td>
+      <td><input type="text" name="item_price[]" class="form-control item-price" value="${item.price}" readonly></td>
+      <td><button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
+    </td>
   `;
 
   cart.insertAdjacentHTML('beforeend', html);
@@ -267,7 +288,7 @@ const calculateTotalPrice = function(){
 
   const arr = document.getElementsByClassName('item-price');
   for(let i=0; i< arr.length; i++){
-    prices.push(+arr[i].innerHTML);
+    prices.push(+arr[i].value);
   }
 
   const total_price = prices.reduce((acc, cur) => acc + cur, 0);
@@ -282,7 +303,7 @@ const calculateCountPrice = function(e){
     const id = +rowElement.dataset.id;
     item = products.find(item => item.id === id);
 
-    rowElement.querySelector('.item-price').innerHTML = count * item.price;
+    rowElement.querySelector('.item-price').value = count * item.price;
     return;
   }
 
@@ -290,7 +311,7 @@ const calculateCountPrice = function(e){
   const parent = e.target.parentElement.parentElement;
   item = products.find(cur => cur.id === +parent.dataset.id)
   
-  parent.querySelector('.item-price').innerHTML = count * item.price;
+  parent.querySelector('.item-price').value = count * item.price;
 
   calculateTotalPrice();
   setLocalStorage();
@@ -307,6 +328,8 @@ const delete_cart_item = function(e){
   calculateTotalPrice();
   
   setLocalStorage();
+
+  if(getIds().length === 0) disableButton();
 }
 
 function similarItems(a,b) {
@@ -379,19 +402,20 @@ const searchProduct = function(e){
 }
 
 const proceedCheckout = function(){
+
   const total_price = document.querySelector('.total-price').innerHTML;
   paymentInput.value = total_price;
 }
 
-const cancelCheckout = function(e){
+const clearCheckout = function(e){
   e.preventDefault();
 
   // remove all child
   cart.innerHTML = '';
   document.querySelector('.total-price').innerHTML = 0;
-  
-  localStorage.removeItem('cart_items');
-  localStorage.removeItem('total_price');
+  localStorage.clear();
+  disableButton();
+
 }
 
 const setLocalStorage = function(){
@@ -400,9 +424,9 @@ const setLocalStorage = function(){
 
   Array.from(cart.children, tr => {
     const id = +tr.dataset.id;
-    const name = tr.querySelector('.item-name').innerHTML;
+    const name = tr.querySelector('.item-name').value;
     const count = +tr.querySelector('.item-count').value;
-    const price = +tr.querySelector('.item-price').innerHTML;
+    const price = +tr.querySelector('.item-price').value;
 
     cartItems.push({id, name, count, price});
   });
@@ -412,10 +436,13 @@ const setLocalStorage = function(){
 }
 
 const renderLocalStorage = function(){
-    
+
+    const customer_id = localStorage.customer_id;
     const cart_items = JSON.parse(localStorage.getItem("cart_items"));
     const total_price = localStorage.total_price;
   
+    if(customer_id) customerList.value = customer_id;
+    
     if(!cart_items) return;
 
     cart_items.forEach((item, i) => {
@@ -423,11 +450,12 @@ const renderLocalStorage = function(){
       const related_item = products.find(cur => cur.id === +cart_items[i].id);
 
       const html = `
-        <tr data-id=${cart_items[i].id}>
-          <td class="item-name">${cart_items[i].name}</td>
-          <td><input type="number" min="1" max="${related_item.stock}" name="quantity" class="form-control item-count" value="${cart_items[i].count}"></td>
-          <td class="item-price">${cart_items[i].price}</td>
-          <td> <button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
+        <tr name="product_id" data-id=${cart_items[i].id}>
+          <input type="hidden" name="product_id[]" value="${cart_items[i].id}">
+          <td><input type="text" name="item_name[]" class="form-control item-name" value="${cart_items[i].name}" readonly></td>
+          <td><input type="number" min="1" max="${related_item.stock}" name="quantity[]" class="form-control item-count" value="${cart_items[i].count}" onkeydown="return false"></td>
+          <td><input type="text" name="item_price[]" class="form-control item-price" value="${cart_items[i].price}" readonly></td>
+          <td><button class="btn btn-sm btn-danger delete-cart-item"><i class="fas fa-trash"></i></button></td>
         </tr>
       `;
 
@@ -435,6 +463,8 @@ const renderLocalStorage = function(){
     });
 
     document.querySelector('.total-price').innerHTML = total_price;
+
+    enableButton();
 }
 
 barcodeInput.addEventListener('keydown', searchBarcode);
@@ -443,7 +473,10 @@ cartContainer.addEventListener('click', delete_cart_item);
 searchProductInput.addEventListener('keydown', searchProduct);
 productContainer.addEventListener('click', inputSearchItem);
 proceedBtn.addEventListener('click', proceedCheckout);
-cancelCartBtn.addEventListener('click', cancelCheckout);
+cancelCartBtn.addEventListener('click', clearCheckout);
+customerList.addEventListener('change', saveCustomer);
+sendBtn.addEventListener('submit', clearCheckout);
+
 renderLocalStorage();
 
 };

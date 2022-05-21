@@ -50,6 +50,7 @@ class ProductController extends Controller
         $products->color =$request->color;
         $products->status =$request->status;
         $products->save();
+        
         if (!$products) {
             return redirect()->back()->with('error', 'Sorry, there a problem while creating product.');
         }

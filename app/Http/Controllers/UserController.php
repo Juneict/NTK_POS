@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -40,16 +41,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $users = new User;
         $users->name =$request->name;
         $users->email =$request->email;
-        $users->password =$request->password;
+        $users->password =Hash::make($request->password);
         $users->is_admin =$request->is_admin;
-        $users->save();
-        if (!$users) {
-            return redirect()->back()->with('error', 'Sorry, there a problem while creating user.');
+        
+        if ($users->save()) {
+            return redirect()->route('users.index')->with('success', 'Success, you user account have been created.');
         }
-        return redirect()->route('users.index')->with('success', 'Success, you user account have been created.');
+        return redirect()->back()->with('error', 'Sorry, there a problem while creating user.');
+
+        // if($user->save()){
+        //     return response()->json([
+        //         'status'    => true,
+        //         'data'      => [],
+        //         'message'   => 'User Registation Successfully'
+        //     ]);
+        // }
+        // else{
+        //     return response()->json([
+        //         'status'    => false,
+        //         'data'      => [],
+        //         'message'   => 'User Registation Faild'
+        //     ]);
     }
 
     /**
