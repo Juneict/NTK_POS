@@ -40,7 +40,7 @@
                         </form>
                     </div>
                     <!-- datatable  -->
-                    <table id="products" class="table table-striped table-bordered">
+                    <table id="orders" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -54,55 +54,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Walk-in Customer</td>
-                                        <td>ks 59,000.00</td>
-                                        <td>ks 59,000.00</td>
-                                        <td><span class="badge badge-success">Paid</span></td>
-                                        <td>ks 0.00</td>
-                                        <td>17-05-2022</td>
-                                        <td>
-                                          <a href="" class="btn btn-success"><i
-                                                  class="fas fa-eye"></i></a>
-                                          <a href="" class="btn btn-primary"><i
-                                                  class="fas fa-edit"></i></a>
-                                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Ko Ko</td>
-                                        <td>ks 10,000.00</td>
-                                        <td>ks 5,000.00</td>
-                                        <td><span class="badge badge-warning">Partial</span></td>
-                                        <td>ks 5,000.00</td>
-                                        <td>17-05-2022</td>
-                                        <td>
-                                          <a href="" class="btn btn-success"><i
-                                                  class="fas fa-eye"></i></a>
-                                          <a href="" class="btn btn-primary"><i
-                                                  class="fas fa-edit"></i></a>
-                                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Myat Ko</td>
-                                        <td>ks 10,000.00</td>
-                                        <td>ks 0.00</td>
-                                        <td><span class="badge badge-danger">NoPaid</span></td>
-                                        <td>ks 10,000.00</td>
-                                        <td>17-05-2022</td>
-                                        <td>
-                                          <a href="{{route('orders.details')}}" class="btn btn-success"><i
-                                                  class="fas fa-eye"></i></a>
-                                          <a href="" class="btn btn-primary"><i
-                                                  class="fas fa-edit"></i></a>
-                                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    
+                                                            
                             
                             </tbody>
                     </table>  
@@ -124,11 +76,11 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-    $("#products").DataTable({
+    $("#orders").DataTable({
       "responsive": true, "lengthChange": true, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
+    $('#orders').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,
@@ -136,6 +88,7 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
+      
     });
   });
   $('div.alert').delay(3000).slideUp(300);

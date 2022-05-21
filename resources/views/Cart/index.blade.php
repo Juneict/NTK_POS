@@ -19,7 +19,6 @@
                   <div class="row">
                     <div class="col-md-4">
                         <div class="card">
-
                             <div class="card-body">
                                 
                                       <div class="row">
@@ -163,6 +162,7 @@ const paymentInput = document.querySelector('.payment-input');
 const cancelCartBtn = document.querySelector('.cancel-cart')
 const customerList = document.querySelector('.customer-list');
 const sendBtn = document.querySelector('.btn-send');
+const alertMsg = document.querySelector('.alert-success');
 
 const products = {!! json_encode($products, JSON_HEX_TAG) !!};
 
@@ -210,7 +210,7 @@ const inputCartItem = function(item){
 
   if(getIds().includes(item.id)){
 
-    updateCartItem(item.id);
+    updateCartItem(item);
     return;
   }
 
@@ -241,15 +241,18 @@ const inputSearchItem = function(e){
 }
 
 let rowElement;
-const updateCartItem = function(id){
+const updateCartItem = function(item){
 
   Array.from(cart.children, tr => {
 
-    if(+tr.dataset.id === id){
+    if(+tr.dataset.id === item.id){
       rowElement = tr;
       const element = tr.querySelector('.item-count');
 
       const currentCount = +element.value;
+
+      if(currentCount >= item.stock) return;
+
       element.value = currentCount + 1;
     }
   });
@@ -383,15 +386,19 @@ const proceedCheckout = function(){
   paymentInput.value = total_price;
 }
 
-const clearCheckout = function(e){
-  e.preventDefault();
-
-  // remove all child
+const clearCart = function(){
   cart.innerHTML = '';
   document.querySelector('.total-price').innerHTML = 0;
   localStorage.clear();
   disableButton();
+}
 
+const clearCheckout = function(e){
+  if(e) e.preventDefault();
+
+  // remove all child
+  clearCart();
+  alertMsg.style.display = 'none';
 }
 
 const setLocalStorage = function(){
@@ -452,9 +459,15 @@ proceedBtn.addEventListener('click', proceedCheckout);
 cancelCartBtn.addEventListener('click', clearCheckout);
 customerList.addEventListener('change', saveCustomer);
 sendBtn.addEventListener('submit', clearCheckout);
-
 renderLocalStorage();
 
+if(alertMsg){
+  clearCart();
+
+  setTimeout(() => {
+    alertMsg.style.display = 'none';
+  }, 1000);
 };
 
+};
 </script>
