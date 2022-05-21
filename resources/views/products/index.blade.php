@@ -21,7 +21,7 @@
             @endif
                 <div class="card-header">
                         <h3 class="card-title">Products</h3>
-                        <a href="{{route('products.create')}}" class="btn btn-success" style="float:right">Create</a>
+                        <a href="" data-toggle="modal" data-target="#createproduct" class="btn btn-success" style="float:right">Create</a>
                 </div>
               <div class="card-body">
                 
@@ -52,14 +52,16 @@
                         <td><span
                             class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>                        
                         <td>
-                            <a href="/products/{{$product->id}}" class="btn btn-success"><i
+                            <a href=""data-toggle="modal" data-target="#showproduct{{$product->id}}" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
-                            <a href="/products/{{$product->id}}/edit" class="btn btn-primary"><i
+                            <a href="" data-toggle="modal" data-target="#editproduct{{$product->id}}" class="btn btn-primary"><i
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="#deleteproduct{{$product->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+                    @include('products.detail')
                     @include('products.delete')
+                    @include('products.edit')
                     @endforeach
                     
                
@@ -79,6 +81,10 @@
     </div>
     <!-- /.content -->
   </div>
+
+
+  @include('products.create')
+
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>

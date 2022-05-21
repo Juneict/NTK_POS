@@ -37,7 +37,7 @@
                       @endif
                 <div class="card-header">
                         <h3 class="card-title">Customers</h3>
-                        <a href="{{route('customers.create')}}" class="btn btn-success" style="float:right">Create</a>
+                        <a href=""data-toggle="modal" data-target="#createCustomer" class="btn btn-success" style="float:right">Create</a>
                 </div>
               <div class="card-body">
                 
@@ -63,11 +63,12 @@
                         <td>
                             <a href="/customers/{{$customer->id}}" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
-                            <a href="/customers/{{$customer->id}}/edit" class="btn btn-primary"><i
+                            <a href="" data-toggle="modal" data-target="#editcustomer{{$customer->id}}" class="btn btn-primary"><i
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="#deletecustomer{{$customer->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+                    @include('customers.edit')
                     @include('customers.delete')
                     @endforeach
                     
@@ -88,6 +89,7 @@
     </div>
     <!-- /.content -->
   </div>
+  @include('customers.create')
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
