@@ -21,10 +21,9 @@
             @endif
                 <div class="card-header">
                         <h3 class="card-title">Users</h3>
-                        <a href="/users/create" class="btn btn-success" style="float:right">Create</a>
+                        <a href=""  data-toggle="modal" data-target="#createuser" class="btn btn-success" style="float:right">Create</a>
                 </div>
               <div class="card-body">
-                
                     <!-- datatable  -->
                     <table id="users" class="table table-striped table-bordered">
             <thead>
@@ -48,12 +47,16 @@
                                 @endif
                         </td>                   
                         <td>
-                            <a href="/users/{{$user->id}}/edit" class="btn btn-primary"><i
+                            <a href="" data-toggle="modal" data-target="#editUser{{$user->id}}" class="btn btn-primary"><i
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="#deleteUser{{$user->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+                   {{-- modal --}}
+                    @include('users.edit')
                     @include('users.delete')
+                   {{-- end modal --}}
+                    
                     @endforeach
                     
                
@@ -73,6 +76,9 @@
     </div>
     <!-- /.content -->
   </div>
+
+ @include('users.create')
+
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>

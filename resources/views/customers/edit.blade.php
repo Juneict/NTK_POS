@@ -1,77 +1,35 @@
-@extends('layouts.admin')
-
-@section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Update customer</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">customers</a></li>
-              <li class="breadcrumb-item active">POS</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                        <h3 class="card-title">Edit customers</h3>
-                        <a href="{{route('customers.index')}}" class="btn btn-warning" style="float:right">Back</a>
-                </div>
-              <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <form action="{{ route('customers.update', $customer) }}" method="POST">
-                      @csrf
-                      @method('PUT')
-                    
-                        <div class="form-group">
-                          <label for="name">customer Name *</label>
-                          <input type="text" name="customer_name" class="form-control" value="{{old('customer_name',$customer->customer_name)}}">
-                        </div>
-                        <div class="form-group">
-                          <label for="name">Phone</label>
-                          <input type="text" name="phone" class="form-control" value="{{old('phone',$customer->phone)}}">
-                        </div>
-                        <div class="form-group">
-                          <label for="name">Address</label>
-                          <input type="text" name="address" class="form-control" value="{{old('address',$customer->address)}}">
-                        </div>
-                                         
-                      <button class="btn btn-warning" type="submit">Update</button>
-                  </form>
-              </div>
-              </div>
-            </div>
-
-         
+<div class="modal right fade" id="editcustomer{{$customer->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="staticBackdropLabel">edit customer</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+              {{ $customer->id}}
           </div>
-          <!-- /.col-md-6 -->
-         
-          
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
+          <div class="modal-body">
+                <form action="{{ route('customers.update', $customer) }}" method="POST">
+                  @csrf
+                  @method('PUT')
+                
+                    <div class="form-group">
+                      <label for="name">Customer Name *</label>
+                      <input type="text" name="customer_name" class="form-control" value="{{old('customer_name',$customer->customer_name)}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Phone</label>
+                      <input type="text" name="phone" class="form-control" value="{{old('phone',$customer->phone)}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Address</label>
+                      <input type="text" name="address" class="form-control" value="{{old('address',$customer->address)}}">
+                    </div>
+                                    
+                  <button class="btn btn-warning" type="submit">Update</button>
+              </form>
+          </div>
+  
+      </div>
   </div>
-@endsection
+</div> 
