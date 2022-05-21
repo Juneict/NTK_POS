@@ -44,45 +44,49 @@ class OrderController extends Controller
      */
     public function store(Request $req)
     {
-        $user_id = auth()->user()->id;
+        try {
+            $user_id = auth()->user()->id;
         
-        $order = Order::create([
-            'customer_id' => $req->customer_id,
-            'user_id' => $user_id
-        ]);
-
-        $items = array();
-        for($i = 0; $i < count($req->product_id); $i++)
-        {
-            $tmp = [
-                'name' => $req->item_name[$i],
-                'price' => $req->item_price[$i],
-                'quantity' => $req->quantity[$i],
+            $order = Order::create([
+                'customer_id' => $req->customer_id,
+                'user_id' => $user_id
+            ]);
+    
+            $items = array();
+            for($i = 0; $i < count($req->product_id); $i++)
+            {
+                $tmp = [
+                    'name' => $req->item_name[$i],
+                    'price' => $req->item_price[$i],
+                    'quantity' => $req->quantity[$i],
+                    'order_id' => $order->id,
+                    'product_id' => $req->product_id[$i]
+                ];
+                array_push($items, $tmp);
+            }
+    
+            $result = OrderItem::insert($items);
+    
+            for($i = 0; $i < count($req->product_id); $i++)
+            {
+                $product = Product::find($req->product_id[$i]);
+                $currentStock = $product->stock;
+                $updatedStock = $currentStock - $req->quantity[$i];
+                $product->stock = $updatedStock;
+                $product->save();
+            }
+    
+            $payment = Payment::insert([
+                'amount' => $req->payment_amount,
                 'order_id' => $order->id,
-                'product_id' => $req->product_id[$i]
-            ];
-            array_push($items, $tmp);
-        }
+                'customer_id' => $req->customer_id 
+            ]);
+          
+            return redirect()->back()->with('success', 'Payment success.');
 
-        $result = OrderItem::insert($items);
-
-        for($i = 0; $i < count($req->product_id); $i++)
-        {
-            $product = Product::find($req->product_id[$i]);
-            $currentStock = $product->stock;
-            $updatedStock = $currentStock - $req->quantity[$i];
-            $product->stock = $updatedStock;
-            $product->save();
-        }
-
-        $payment = Payment::insert([
-            'amount' => $req->payment_amount,
-            'order_id' => $order->id,
-            'customer_id' => $req->customer_id 
-        ]);
-
-        return (new CartController)->index();
-
+          } catch (\Exception $e) {
+            $e->getMessage();
+          }
     }
 
     /**
