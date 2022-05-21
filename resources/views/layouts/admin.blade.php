@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <style>
     .main-sidebar { background-color: #313140 !important }
+    .main-header{background-color: #3C3C4E !important}
+    .card-title{color: #313140!important}
+    .card-body{color:#556474 !important}
+    /* .nav-link{color:aliceblue !important}; */
   </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -25,12 +29,25 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: aliceblue !important"></i></a>
       </li>
     </ul>
 
     <!-- Right navbar links -->
-    
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a href="{{route('cart')}}" class="btn btn-success">
+          <i class="fas fa-cart-plus"></i>Open POS
+        </a>
+      </li> 
+
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link"  role="button"><b style="color: aliceblue !important">{{date('d-m-Y')}}</b></a>
+      </li>
+      
+    </ul>
   </nav>
   <!-- /.navbar -->
 

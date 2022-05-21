@@ -6,7 +6,6 @@
         <a class="nav-link" data-widget="pushmenu" href="{{route('home')}}" role="button"><i class="fas fa-bars"></i></a>
       </li>
     </ul>
-
     <!-- SEARCH FORM -->
     {{--
     <form class="form-inline ml-3">

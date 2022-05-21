@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="{{route('dashboard')}}" class="brand-link">
       <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">နွယ်သာကီ POS</span>
+      <span class="brand-text font-weight-light"><b>i-SYS POS</b> </span>
     </a>
 
     <!-- Sidebar -->
@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+          <img src="/dist/img/account.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="{{route('dashboard')}}" class="d-block">Admin</a>
@@ -39,7 +39,7 @@
               <li class="nav-item">
                 <a href="{{route('dashboard')}}" class="nav-link {{ Request::segment(1) == 'dashboard' ? 'active' : ''}}">
                   <i class="fas fa-tachometer-alt nav-icon"></i>
-                  <p>Dashboard</p>
+                  <p >Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">

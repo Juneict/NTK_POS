@@ -113,6 +113,6 @@ class ProductController extends Controller
     {
     
         $product->delete();
-        return redirect()->back()->with('delete','Customer delete successfully');
+        return redirect()->back()->with('success','Customer delete successfully');
     }
 }
