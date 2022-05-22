@@ -45,6 +45,7 @@ class OrderController extends Controller
      */
     public function store(Request $req)
     {
+        
         try {
             $user_id = auth()->user()->id;
         
@@ -82,7 +83,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'customer_id' => $req->customer_id 
             ]);
-          
+           
             return redirect()->back()->with('success', 'Payment success.');
 
           } catch (\Exception $e) {

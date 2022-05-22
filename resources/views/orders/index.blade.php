@@ -21,43 +21,50 @@
             @endif
                 <div class="card-header">
                         <h3 class="card-title">Orders</h3>
-                        <a href="{{route('cart')}}" class="btn btn-success" style="float:right">Open POS</a>
+                       
                 </div>
               <div class="card-body">
-                    <div class="col-md-5">
-                        <form action="">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <input type="date" name="start_date" class="form-control" value="{{request('start_date')}}" />
-                                </div>
-                                <div class="col-md-5">
-                                    <input type="date" name="end_date" class="form-control" value="{{request('end_date')}}" />
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-outline-primary" type="submit">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                
                     <!-- datatable  -->
-                    <table id="orders" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Customer Name</th>
-                                    <th>Total</th>
-                                    <th>Received Amount</th>
-                                    <th>Status</th>
-                                    <th>To Pay</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                                            
-                            
-                            </tbody>
-                    </table>  
+                    <table id="products" class="table table-striped table-bordered">
+            <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Total</th>
+                    <th>Received Amount</th>
+                    <th>Status</th>
+                    <th>To Pay</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                  </tr>
+            </thead>
+            <tbody>
+                
+                    @foreach($orders as $index=>$order)
+                    <tr>
+                        <td>{{$index+1}}</td>
+                        <td>{{$order->customers->customer_name}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td> ks</td>
+                        <td><span
+                            class="right badge badge-danger"></span></td>                        
+                        <td>
+                            <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i
+                                    class="fas fa-eye"></i></a>
+                            <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i
+                                    class="fas fa-edit"></i></a>
+                            <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                
+                    @endforeach
+                    
+               
+            </tbody>
+        </table>  
               </div>
             </div>
 
@@ -72,25 +79,28 @@
     </div>
     <!-- /.content -->
   </div>
+
+
+ 
+
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-    $("#orders").DataTable({
-      "responsive": true, "lengthChange": true, "autoWidth": false,
+    $("#products").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#orders').DataTable({
+    $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      
     });
   });
+
   $('div.alert').delay(3000).slideUp(300);
-  
 </script>

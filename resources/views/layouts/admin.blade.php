@@ -46,7 +46,11 @@
       <li class="nav-item dropdown">
         <a class="nav-link"  role="button"><b style="color: aliceblue !important">{{date('d-m-Y')}}</b></a>
       </li>
-      
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt" style="color: aliceblue !important"></i>
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->

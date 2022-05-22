@@ -45,13 +45,14 @@
                         <td>{{$customer->phone}}</td>
                         <td>{{$customer->address}}</td>
                         <td>
-                            <a href="/customers/{{$customer->id}}" class="btn btn-success"><i
+                            <a href="" data-toggle="modal" data-target="#showcustomer{{$customer->id}}" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
                             <a href="" data-toggle="modal" data-target="#editcustomer{{$customer->id}}" class="btn btn-primary"><i
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="#deletecustomer{{$customer->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+                    @include('customers.details')
                     @include('customers.edit')
                     @include('customers.delete')
                     @endforeach
