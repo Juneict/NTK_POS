@@ -44,6 +44,7 @@ class OrderController extends Controller
      */
     public function store(Request $req)
     {
+        // some changes
         try {
             $user_id = auth()->user()->id;
         
