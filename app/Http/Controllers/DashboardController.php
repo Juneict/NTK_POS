@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-
+        
         $customer = Customer::firstOrCreate(['customer_name' => 'Walk-In Customer']);
         return view('dashboard.index');
     }
