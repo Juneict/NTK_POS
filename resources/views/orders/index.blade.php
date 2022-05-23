@@ -31,11 +31,11 @@
                   <tr>
                     <th>#</th>
                     <th>Customer Name</th>
-                    <th>Total</th>
-                    <th>Received Amount</th>
-                    <th>Status</th>
+                    <th>Total Amount</th>
+                    <th>Received Amount</th>   
                     <th>To Pay</th>
-                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>DATE</th>
                     <th>Action</th>
                   </tr>
             </thead>
@@ -45,12 +45,21 @@
                     <tr>
                         <td>{{$index+1}}</td>
                         <td>{{$order->customers->customer_name}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td> ks</td>
-                        <td><span
-                            class="right badge badge-danger"></span></td>                        
+                        <td>{{ number_format($order->price,2)}} ks</td>
+                        <td>{{ number_format($order->amount,2)}} ks</td>
+                        <td>{{ number_format(($order->price-$order->amount),2)}} ks</td>
+                        <td>
+                          @if($order->amount == 0)
+                          <span class="badge badge-danger">Not Paid</span>
+                          @elseif($order->amount < $order->price)
+                              <span class="badge badge-warning">Partial</span>
+                          @elseif($order->amount == $order->price)
+                              <span class="badge badge-success">Paid</span>
+                          @elseif($order->amount > $order->price)
+                              <span class="badge badge-info">Change</span>
+                          @endif
+                        </td>
+                        <td>{{$order->created_at}}</td>
                         <td>
                             <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
@@ -58,12 +67,23 @@
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
-                    </tr>
+                      </tr>
                 
                     @endforeach
-                    
-               
             </tbody>
+            <tfoot>
+              <tr>
+                  <th colspan="2" style="text-align: center">Total</th>
+                 
+                  <th>{{number_format($orders->sum('price'))}}</th>
+                  <th>{{number_format($orders->sum('amount'))}}</th>
+                  <th>{{number_format($orders->sum('price')-$orders->sum('amount'))}}</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                 
+              </tr>
+          </tfoot>
         </table>  
               </div>
             </div>

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
 use App\Models\Payment;
+use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CartController;
 
 class OrderController extends Controller
@@ -23,7 +24,11 @@ class OrderController extends Controller
     public function index()
     { 
         
-        $orders = Order::all();  
+        $orders =Order::join('payments', 'orders.id','=','payments.order_id')
+                ->join('order_items','orders.id','=','order_items.order_id')
+                ->select('orders.*','payments.*','order_items.*')
+                ->get();
+    
         return view('orders.index', compact('orders'));
     }
 

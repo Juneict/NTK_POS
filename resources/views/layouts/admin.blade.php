@@ -18,6 +18,7 @@
     .main-header{background-color: #3C3C4E !important}
     .card-title{color: #313140!important}
     .card-body{color:#556474 !important}
+   
     /* .nav-link{color:aliceblue !important}; */
   </style>
 </head>
