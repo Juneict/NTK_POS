@@ -14,4 +14,10 @@ class Order extends Model
         'customer_id',
         'user_id'
     ];
+    public function customers(){
+        return $this->belongsTo('App\Models\Customer','customer_id');
+    }
+    public function payments(){
+        return $this->hasMany('App\Models\Payment');
+    }
 }

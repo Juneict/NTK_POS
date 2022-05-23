@@ -16,7 +16,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href=""><b>NTK</b>POS</a>
+            <a href=""><b>i-SYS</b>POS</a>
         </div>
 
         <div class="card">

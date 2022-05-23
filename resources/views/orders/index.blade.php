@@ -21,91 +21,70 @@
             @endif
                 <div class="card-header">
                         <h3 class="card-title">Orders</h3>
-                        <a href="{{route('cart')}}" class="btn btn-success" style="float:right">Open POS</a>
+                       
                 </div>
               <div class="card-body">
-                    <div class="col-md-5">
-                        <form action="">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <input type="date" name="start_date" class="form-control" value="{{request('start_date')}}" />
-                                </div>
-                                <div class="col-md-5">
-                                    <input type="date" name="end_date" class="form-control" value="{{request('end_date')}}" />
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-outline-primary" type="submit">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                
                     <!-- datatable  -->
                     <table id="products" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Customer Name</th>
-                                    <th>Total</th>
-                                    <th>Received Amount</th>
-                                    <th>Status</th>
-                                    <th>To Pay</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Walk-in Customer</td>
-                                        <td>ks 59,000.00</td>
-                                        <td>ks 59,000.00</td>
-                                        <td><span class="badge badge-success">Paid</span></td>
-                                        <td>ks 0.00</td>
-                                        <td>17-05-2022</td>
-                                        <td>
-                                          <a href="" class="btn btn-success"><i
-                                                  class="fas fa-eye"></i></a>
-                                          <a href="" class="btn btn-primary"><i
-                                                  class="fas fa-edit"></i></a>
-                                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Ko Ko</td>
-                                        <td>ks 10,000.00</td>
-                                        <td>ks 5,000.00</td>
-                                        <td><span class="badge badge-warning">Partial</span></td>
-                                        <td>ks 5,000.00</td>
-                                        <td>17-05-2022</td>
-                                        <td>
-                                          <a href="" class="btn btn-success"><i
-                                                  class="fas fa-eye"></i></a>
-                                          <a href="" class="btn btn-primary"><i
-                                                  class="fas fa-edit"></i></a>
-                                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Myat Ko</td>
-                                        <td>ks 10,000.00</td>
-                                        <td>ks 0.00</td>
-                                        <td><span class="badge badge-danger">NoPaid</span></td>
-                                        <td>ks 10,000.00</td>
-                                        <td>17-05-2022</td>
-                                        <td>
-                                          <a href="{{route('orders.details')}}" class="btn btn-success"><i
-                                                  class="fas fa-eye"></i></a>
-                                          <a href="" class="btn btn-primary"><i
-                                                  class="fas fa-edit"></i></a>
-                                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    
-                            
-                            </tbody>
-                    </table>  
+            <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Total Amount</th>
+                    <th>Received Amount</th>   
+                    <th>To Pay</th>
+                    <th>Status</th>
+                    <th>DATE</th>
+                    <th>Action</th>
+                  </tr>
+            </thead>
+            <tbody>
+                
+                    @foreach($orders as $index=>$order)
+                    <tr>
+                        <td>{{$index+1}}</td>
+                        <td>{{$order->customers->customer_name}}</td>
+                        <td>{{ number_format($order->price,2)}} ks</td>
+                        <td>{{ number_format($order->amount,2)}} ks</td>
+                        <td>{{ number_format(($order->price-$order->amount),2)}} ks</td>
+                        <td>
+                          @if($order->amount == 0)
+                          <span class="badge badge-danger">Not Paid</span>
+                          @elseif($order->amount < $order->price)
+                              <span class="badge badge-warning">Partial</span>
+                          @elseif($order->amount == $order->price)
+                              <span class="badge badge-success">Paid</span>
+                          @elseif($order->amount > $order->price)
+                              <span class="badge badge-info">Change</span>
+                          @endif
+                        </td>
+                        <td>{{$order->created_at}}</td>
+                        <td>
+                            <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i
+                                    class="fas fa-eye"></i></a>
+                            <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i
+                                    class="fas fa-edit"></i></a>
+                            <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        </td>
+                      </tr>
+                
+                    @endforeach
+            </tbody>
+            <tfoot>
+              <tr>
+                  <th colspan="2" style="text-align: center">Total</th>
+                 
+                  <th>{{number_format($orders->sum('price'))}}</th>
+                  <th>{{number_format($orders->sum('amount'))}}</th>
+                  <th>{{number_format($orders->sum('price')-$orders->sum('amount'))}}</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                 
+              </tr>
+          </tfoot>
+        </table>  
               </div>
             </div>
 
@@ -120,24 +99,28 @@
     </div>
     <!-- /.content -->
   </div>
+
+
+ 
+
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
     $("#products").DataTable({
-      "responsive": true, "lengthChange": true, "autoWidth": false,
+      "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
     });
   });
+
   $('div.alert').delay(3000).slideUp(300);
-  
 </script>

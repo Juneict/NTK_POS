@@ -20,9 +20,9 @@ class CreatePaymentsTable extends Migration
             $table->foreignId('customer_id');
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+            // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        
         });
     }
 

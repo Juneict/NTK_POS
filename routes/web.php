@@ -38,6 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/details', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.details');
     Route::get('/logout', [App\Http\Controllers\LogoutController::class,'perform'])->name('logout.perform');
 
-    Route::post('/place-order', [OrderConroller::class, 'store']);
+    
     Route::post('/place-order', [App\Http\Controllers\OrderController::class, 'store'])->name('place-order');
 });

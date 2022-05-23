@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+  .cart-container{
+    width: 100%;
+  }
+</style>
 <div class="content-wrapper">
     <!-- Main content -->
     <form id="cart-form" action="{{ route('place-order') }}" method="POST">
