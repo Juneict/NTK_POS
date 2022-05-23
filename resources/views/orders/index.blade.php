@@ -60,6 +60,8 @@
                           @endif
                         </td>
                         <td>{{$order->created_at}}</td>
+
+                        @can('order_crud')  
                         <td>
                             <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
@@ -67,6 +69,8 @@
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
+                        @endcan
+                        
                       </tr>
                 
                     @endforeach

@@ -38,7 +38,7 @@
                     <label for="">Role</label>
                     <select name="is_admin" id="" class="form-control">
                         <option value="1">Admin</option>
-                        <option value="2">Cashier</option>
+                        <option value="0">Cashier</option>
                     </select>
                 </div>                                     
               <button class="btn btn-success" type="submit">Create</button>

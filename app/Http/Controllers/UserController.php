@@ -19,6 +19,8 @@ class UserController extends Controller
     }
     public function index()
     {
+        $this->authorize('user_management');
+
         $users = User::all();
         return view('users.index',compact('users'));
     }
@@ -30,6 +32,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('user_management');
+
         return view('users.create');
     }
 
@@ -41,31 +45,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('user_management');
 
-        $users = new User;
-        $users->name =$request->name;
-        $users->email =$request->email;
-        $users->password =Hash::make($request->password);
-        $users->is_admin =$request->is_admin;
+        User::insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_admin' => $request->is_admin
+        ]);
         
-        if ($users->save()) {
-            return redirect()->route('users.index')->with('success', 'Success, you user account have been created.');
-        }
-        return redirect()->back()->with('error', 'Sorry, there a problem while creating user.');
+        return redirect()->route('users.index')->with('success', 'Success, you user account have been created.');
 
-        // if($user->save()){
-        //     return response()->json([
-        //         'status'    => true,
-        //         'data'      => [],
-        //         'message'   => 'User Registation Successfully'
-        //     ]);
-        // }
-        // else{
-        //     return response()->json([
-        //         'status'    => false,
-        //         'data'      => [],
-        //         'message'   => 'User Registation Faild'
-        //     ]);
     }
 
     /**
@@ -77,6 +67,8 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        $this->authorize('user_management');
+
     }
 
     /**
@@ -87,6 +79,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('user_management');
+
         return view('users.edit',compact('user'));
     }
 
@@ -99,7 +93,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        
+        $this->authorize('user_management');
+
         $user->name =$request->name;
         $user->email =$request->email;
         $user->password =$request->password;
@@ -119,6 +114,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('user_management');
+
         $user->delete();
         return redirect()->route('users.index')->with('success','User delete successfully');
     }

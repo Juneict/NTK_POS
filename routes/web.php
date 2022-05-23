@@ -8,6 +8,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -26,18 +27,19 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
-Route::middleware('auth')->group(function () {
-    Route::resource('/products', ProductController::class);
-    Route::resource('/customers', CustomerController::class);
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login/owner', [LoginController::class, 'index'])->name('user.login');
+
+Route::middleware('auth')->group(function(){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::resource('/orders', OrderController::class);
+    Route::resource('/customers', CustomerController::class);
+    Route::resource('/products', ProductController::class);
     Route::resource('/users',UserController::class);
 
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
-    Route::get('/orders/details', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.details');
-    Route::get('/logout', [App\Http\Controllers\LogoutController::class,'perform'])->name('logout.perform');
-
-    
-    Route::post('/place-order', [App\Http\Controllers\OrderController::class, 'store'])->name('place-order');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/orders/details', [OrderController::class, 'show'])->name('orders.details');
+    Route::get('/logout', [LogoutController::class,'perform'])->name('user.logout');
+    Route::post('/place-order', [OrderController::class, 'store'])->name('place-order');
 });
