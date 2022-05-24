@@ -60,16 +60,18 @@
                           @endif
                         </td>
                         <td>{{$order->created_at}}</td>
+                      
                         <td>
-                            <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i
+                            <a href="/orders/{{$order->id}}" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
                             <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
                       </tr>
-                
+                     
                     @endforeach
+                   
             </tbody>
             <tfoot>
               <tr>
@@ -100,7 +102,7 @@
     <!-- /.content -->
   </div>
 
-
+ 
  
 
 @endsection

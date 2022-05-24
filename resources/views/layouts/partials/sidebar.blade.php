@@ -13,7 +13,7 @@
           <img src="/dist/img/account.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="{{route('dashboard')}}" class="d-block">Admin</a>
+          <a href="{{route('dashboard')}}" class="d-block">{{auth()->user()->name}}</a>
         </div>
       </div>
 

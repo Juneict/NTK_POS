@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
-    Route::get('/orders/details', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.details');
+    
     Route::get('/logout', [App\Http\Controllers\LogoutController::class,'perform'])->name('logout.perform');
 
     
