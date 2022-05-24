@@ -59,15 +59,18 @@
                         <td><span
                             class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>
                             
-                        @can('product_crud')
+                        
                         <td>
-                            <a href=""data-toggle="modal" data-target="#showproduct{{$product->id}}" class="btn btn-success"><i
-                                    class="fas fa-eye"></i></a>
-                            <a href="" data-toggle="modal" data-target="#editproduct{{$product->id}}" class="btn btn-primary"><i
-                                    class="fas fa-edit"></i></a>
+                            <a href=""data-toggle="modal" data-target="#showproduct{{$product->id}}" class="btn btn-success"><i class="fas fa-eye"></i></a>
+
+                            @can('product_crud')
+                            <a href="" data-toggle="modal" data-target="#editproduct{{$product->id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            @endcan
+
+                            @can('product_crud')
                             <a href="" data-toggle="modal" data-target="#deleteproduct{{$product->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            @endcan
                         </td>
-                        @endcan
 
                     </tr>
                     @include('products.detail')
