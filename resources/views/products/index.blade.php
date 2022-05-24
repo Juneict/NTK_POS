@@ -19,10 +19,17 @@
                   {{ session('delete') }}
               </div>
             @endif
+
+                
                 <div class="card-header">
                         <h3 class="card-title">Products</h3>
+
+                        @can('product_crud')  
                         <a href="" data-toggle="modal" data-target="#createproduct" class="btn btn-success" style="float:right">Create</a>
+                        @endcan
                 </div>
+                
+
               <div class="card-body">
                 
                     <!-- datatable  -->
@@ -50,7 +57,9 @@
                         <td>{{$product->stock}}</td>
                         <td>{{number_format($product->price,2)}} ks</td>
                         <td><span
-                            class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>                        
+                            class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>
+                            
+                        @can('product_crud')
                         <td>
                             <a href=""data-toggle="modal" data-target="#showproduct{{$product->id}}" class="btn btn-success"><i
                                     class="fas fa-eye"></i></a>
@@ -58,6 +67,8 @@
                                     class="fas fa-edit"></i></a>
                             <a href="" data-toggle="modal" data-target="#deleteproduct{{$product->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
+                        @endcan
+
                     </tr>
                     @include('products.detail')
                     @include('products.delete')

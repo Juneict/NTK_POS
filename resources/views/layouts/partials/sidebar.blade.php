@@ -30,12 +30,18 @@
                   <p >Dashboard</p>
                 </a>
               </li>
+
+              @can('user_management')
+
               <li class="nav-item">
                 <a href="/users" class="nav-link {{ Request::segment(1) == 'users' ? 'active' : ''}}">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Users Management</p>
                 </a>
               </li>
+
+              @endcan
+
               <li class="nav-item">
                 <a href="/products" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
                   <i class="fas fa-th-large nav-icon"></i>
@@ -61,7 +67,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('logout')}}" method="post" class="nav-link">
+                <a href="{{route('user.logout')}}" method="post" class="nav-link">
                   <i class=" fas fa-sign-out-alt nav-icon"></i>
                   <p>Logout</p>
                 </a>

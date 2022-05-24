@@ -23,7 +23,7 @@ class OrderController extends Controller
     }
     public function index()
     { 
-        
+
         $orders =Order::join('payments', 'orders.id','=','payments.order_id')
                 ->join('order_items','orders.id','=','order_items.order_id')
                 ->select('orders.*','payments.*','order_items.*')
@@ -39,7 +39,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -50,6 +50,8 @@ class OrderController extends Controller
      */
     public function store(Request $req)
     {
+        $this->authorize('order_crud');
+
         // some changes
         try {
             $user_id = auth()->user()->id;
@@ -116,6 +118,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('order_crud');
         //
     }
 
@@ -128,6 +131,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('order_crud');
         //
     }
 
@@ -139,6 +143,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('order_crud');
         //
     }
 }

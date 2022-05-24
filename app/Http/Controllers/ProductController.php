@@ -29,6 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+
         return view('products.create');
     }
 
@@ -40,6 +41,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('product_crud');
+
         $products  = new Product;
         $products->name = $request->name;
         $products->description = $request->description;
@@ -77,6 +80,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+
         return view('products.edit',compact('product'));
     }
 
@@ -89,6 +93,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->authorize('product_crud');
+
         $product->name =$request->name;
         $product->description = $request->description;
         $product->barcode = $request->barcode;
@@ -112,7 +118,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-    
+        $this->authorize('product_crud');
+
         $product->delete();
         return redirect()->back()->with('success','Customer delete successfully');
     }
