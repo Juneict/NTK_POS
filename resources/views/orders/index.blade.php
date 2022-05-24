@@ -61,15 +61,19 @@
                         </td>
                         <td>{{$order->created_at}}</td>
 
-                        @can('order_crud')  
+                          
                         <td>
-                            <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i
-                                    class="fas fa-eye"></i></a>
-                            <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i
-                                    class="fas fa-edit"></i></a>
-                            <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                          <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i class="fas fa-eye"></i></a>
+
+                          @can('order_crud')
+                          <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                          @endcan
+
+                          @can('order_crud')
+                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                          @endcan
+                          
                         </td>
-                        @endcan
                         
                       </tr>
                 
