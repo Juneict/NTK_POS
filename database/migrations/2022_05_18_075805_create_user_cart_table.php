@@ -17,9 +17,6 @@ class CreateUserCartTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('product_id');
             $table->unsignedInteger('quantity');
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
