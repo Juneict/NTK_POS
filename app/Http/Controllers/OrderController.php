@@ -53,7 +53,7 @@ class OrderController extends Controller
         $this->authorize('order_crud');
 
         // some changes
-        try {
+        try {    
             $user_id = auth()->user()->id;
         
             $order = Order::create([
@@ -104,9 +104,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        return view('orders.details');
+        return view('orders.details', compact('order'));
     }
 
     /**

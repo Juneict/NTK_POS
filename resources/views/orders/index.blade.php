@@ -63,7 +63,7 @@
 
                           
                         <td>
-                          <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i class="fas fa-eye"></i></a>
+                          <a href="/orders/{{ $order->id }}" class="btn btn-success"><i class="fas fa-eye"></i></a>
 
                           @can('order_crud')
                           <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
