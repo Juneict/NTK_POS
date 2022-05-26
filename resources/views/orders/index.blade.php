@@ -26,11 +26,12 @@
               <div class="card-body">
                 
                     <!-- datatable  -->
-                    <table id="products" class="table table-striped table-bordered">
+                    <table id="orders" class="table table-striped table-bordered">
             <thead>
                   <tr>
                     <th>#</th>
                     <th>Customer Name</th>
+                    <th>Products</th>
                     <th>Total Amount</th>
                     <th>Received Amount</th>   
                     <th>To Pay</th>
@@ -42,20 +43,24 @@
             <tbody>
                 
                     @foreach($orders as $index=>$order)
+                   
                     <tr>
+                        
                         <td>{{$index+1}}</td>
-                        <td>{{$order->customers->customer_name}}</td>
-                        <td>{{ number_format($order->price,2)}} ks</td>
-                        <td>{{ number_format($order->amount,2)}} ks</td>
-                        <td>{{ number_format(($order->price-$order->amount),2)}} ks</td>
+                        <td>{{$order->customer_name}}</td>
+                        <td>{{$order->items}}</td>
+                        <td>{{ number_format($order->total_amount,2)}} ks</td>
+                        <td>{{ number_format($order->received_amount,2)}} ks</td>
+                        <td>{{ number_format(abs($order->total_amount-$order->received_amount),2)}} ks</td>
+                       
                         <td>
-                          @if($order->amount == 0)
+                          @if($order->received_amount == 0)
                           <span class="badge badge-danger">Not Paid</span>
-                          @elseif($order->amount < $order->price)
+                          @elseif($order->received_amount < $order->total_amount)
                               <span class="badge badge-warning">Partial</span>
-                          @elseif($order->amount == $order->price)
+                          @elseif($order->received_amount == $order->total_amount)
                               <span class="badge badge-success">Paid</span>
-                          @elseif($order->amount > $order->price)
+                          @elseif($order->received_amount > $order->total_amount)
                               <span class="badge badge-info">Change</span>
                           @endif
                         </td>
@@ -63,10 +68,9 @@
 
                           
                         <td>
-                          <a href="/orders/{{ $order->id }}" class="btn btn-success"><i class="fas fa-eye"></i></a>
-
+                        
                           @can('order_crud')
-                          <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                          <a href="" data-toggle="modal" data-target="#editorder{{$order->id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                           @endcan
 
                           @can('order_crud')
@@ -76,16 +80,17 @@
                         </td>
                         
                       </tr>
-                
+                      @include('orders.edit')
                     @endforeach
+                   
             </tbody>
             <tfoot>
               <tr>
-                  <th colspan="2" style="text-align: center">Total</th>
-                 
-                  <th>{{number_format($orders->sum('price'))}}</th>
-                  <th>{{number_format($orders->sum('amount'))}}</th>
-                  <th>{{number_format($orders->sum('price')-$orders->sum('amount'))}}</th>
+                  <th colspan="3" style="text-align: center">Total</th>
+                
+                  <th>{{number_format($orders->sum('total_amount'),2)}} ks</th>
+                  <th>{{number_format($orders->sum('received_amount'),2)}} ks</th>
+                  <th>{{number_format(abs($orders->sum('received_amount')-$orders->sum('total_amount')))}} ks</th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -108,18 +113,15 @@
     <!-- /.content -->
   </div>
 
-
+ 
  
 
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-    $("#products").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
+    
+    $('#orders').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,

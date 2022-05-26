@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/users',UserController::class);
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
-    Route::get('/orders/details', [OrderController::class, 'show'])->name('orders.details');
+   
     Route::get('/logout', [LogoutController::class,'perform'])->name('user.logout');
     Route::post('/place-order', [OrderController::class, 'store'])->name('place-order');
 });

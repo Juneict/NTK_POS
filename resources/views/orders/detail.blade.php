@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content-wrapper">
-    <!-- /.content-header -->
-
+    <style>
+    
+    </style>
     <!-- Main content -->
     <div class="content mt-3">
       <div class="container-fluid">
@@ -14,46 +15,47 @@
                         <a href="{{route('orders.index')}}" class="btn btn-success" style="float:right">Back</a>
                 </div>
               <div class="card-body">
-                    <div class="col-md-5">
-                       <h5><b>Customer Name</b>  : {{ $order->customers->customer_name }}</h5> <br>   
-                       <b> Order ID</b> : {{ $order->id }} <br>
-                       <b> Payment Status</b> : no paid <br>
-                    </div>
+               <div class="row">
+                <div class="col-md-4">
+                    Invoice No:#00{{$order->id}} <br>
+                    Payment Status : @if($order->amount == 0)
+                    <span class="badge badge-danger">Not Paid</span>
+                    @elseif($order->amount < $order->price)
+                        <span class="badge badge-warning">Partial</span>
+                    @elseif($order->amount == $order->price)
+                        <span class="badge badge-success">Paid</span>
+                    @elseif($order->amount > $order->price)
+                        <span class="badge badge-info">Change</span>
+                    @endif     
+                </div>
+                <div class="col-md-4">
+                    <b>Customer Name</b>  : {{$order->customers->customer_name}} <br>
+                   <b>Address</b>  : {{$order->customers->address}}    
+                </div>
+                <div class="col-md-4">
+                   <b> Date </b>: {{date('d-m-Y')}}
+                </div>
+            </div>     
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Items</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Tax</th>
+                        <th>Price inc.tax</th>
+                        <th>Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                </tbody>
+            </table>    
+          </div>
                     <!-- datatable  -->
-                    <table id="products" class="table table-striped table-bordered">
-                            <thead>
-                                <h5 class="mt-2"> Products </h5>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price</th>
-                                    <th>Tax</th>
-                                    <th>Price inc.tax</th>
-                                    <th>Sub Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>T-Shirt</td>
-                                        <td>2</td>
-                                        <td>ks 9,000.00</td>
-                                        <td>0,00</td>
-                                        <td>ks 9,000.00</td>
-                                        <td>ks 9,000.00</td>
-                                    </tr>                                   
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Skirt</td>
-                                        <td>1</td>
-                                        <td>ks 6,000.00</td>
-                                        <td>0,00</td>
-                                        <td>ks 6,000.00</td>
-                                        <td>ks 6,000.00</td>
-                                    </tr>
-                            </tbody>
-                    </table>  
+                     
                     <div class="row">
                         <div class="col-md-6">
                             <h5 class="mt-3">Payment info</h5>
@@ -110,8 +112,6 @@
          
           </div>
           <!-- /.col-md-6 -->
-         
-          
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
