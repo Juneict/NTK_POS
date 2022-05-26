@@ -31,6 +31,7 @@
                   <tr>
                     <th>#</th>
                     <th>Customer Name</th>
+                    <th>Products</th>
                     <th>Total Amount</th>
                     <th>Received Amount</th>   
                     <th>To Pay</th>
@@ -42,20 +43,23 @@
             <tbody>
                 
                     @foreach($orders as $index=>$order)
+                   
                     <tr>
                         <td>{{$index+1}}</td>
-                        <td>{{$order->customers->customer_name}}</td>
-                        <td>{{ number_format($order->price,2)}} ks</td>
-                        <td>{{ number_format($order->amount,2)}} ks</td>
-                        <td>{{ number_format(($order->price-$order->amount),2)}} ks</td>
+                        <td>{{$order->customer_name}}</td>
+                        <td>{{$order->items}}</td>
+                        <td>{{ number_format($order->total_amount,2)}} ks</td>
+                        <td>{{ number_format($order->received_amount,2)}} ks</td>
+                        <td>{{ number_format(($order->total_amount-$order->received_amount),2)}} ks</td>
+                       
                         <td>
-                          @if($order->amount == 0)
+                          @if($order->received_amount == 0)
                           <span class="badge badge-danger">Not Paid</span>
-                          @elseif($order->amount < $order->price)
+                          @elseif($order->received_amount < $order->total_amount)
                               <span class="badge badge-warning">Partial</span>
-                          @elseif($order->amount == $order->price)
+                          @elseif($order->received_amount == $order->total_amount)
                               <span class="badge badge-success">Paid</span>
-                          @elseif($order->amount > $order->price)
+                          @elseif($order->received_amount > $order->total_amount)
                               <span class="badge badge-info">Change</span>
                           @endif
                         </td>
@@ -63,8 +67,7 @@
 
                           
                         <td>
-                          <a href=""data-toggle="modal" data-target="" class="btn btn-success"><i class="fas fa-eye"></i></a>
-
+                        
                           @can('order_crud')
                           <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                           @endcan
@@ -82,11 +85,11 @@
             </tbody>
             <tfoot>
               <tr>
-                  <th colspan="2" style="text-align: center">Total</th>
+                  <th colspan="3" style="text-align: center">Total</th>
                  
-                  <th>{{number_format($orders->sum('price'))}}</th>
-                  <th>{{number_format($orders->sum('amount'))}}</th>
-                  <th>{{number_format($orders->sum('price')-$orders->sum('amount'))}}</th>
+                  <th>{{number_format($orders->sum('received_amount'))}} ks</th>
+                  <th>{{number_format($orders->sum('total_amount'))}} ks</th>
+                  <th>{{number_format($orders->sum('received_amount')-$orders->sum('total_amount'))}} ks</th>
                   <th></th>
                   <th></th>
                   <th></th>

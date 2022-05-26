@@ -15,26 +15,44 @@
                         <a href="{{route('orders.index')}}" class="btn btn-success" style="float:right">Back</a>
                 </div>
               <div class="card-body">
-                    
+               <div class="row">
                 <div class="col-md-4">
-                  Invoice No:#00{{$order->id}} <br>
-                  Payment Status : @if($order->amount == 0)
-                  <span class="badge badge-danger">Not Paid</span>
-                  @elseif($order->amount < $order->price)
-                      <span class="badge badge-warning">Partial</span>
-                  @elseif($order->amount == $order->price)
-                      <span class="badge badge-success">Paid</span>
-                  @elseif($order->amount > $order->price)
-                      <span class="badge badge-info">Change</span>
-                  @endif     
-              </div>
-              <div class="col-md-4">
-                  <b>Customer Name</b>  : {{$order->customers->customer_name}} <br>
-                 <b>Address</b>  : {{$order->customers->address}}    
-              </div>
-              <div class="col-md-4">
-                 <b> Date </b>: {{date('d-m-Y')}}
-              </div>
+                    Invoice No:#00{{$order->id}} <br>
+                    Payment Status : @if($order->amount == 0)
+                    <span class="badge badge-danger">Not Paid</span>
+                    @elseif($order->amount < $order->price)
+                        <span class="badge badge-warning">Partial</span>
+                    @elseif($order->amount == $order->price)
+                        <span class="badge badge-success">Paid</span>
+                    @elseif($order->amount > $order->price)
+                        <span class="badge badge-info">Change</span>
+                    @endif     
+                </div>
+                <div class="col-md-4">
+                    <b>Customer Name</b>  : {{$order->customers->customer_name}} <br>
+                   <b>Address</b>  : {{$order->customers->address}}    
+                </div>
+                <div class="col-md-4">
+                   <b> Date </b>: {{date('d-m-Y')}}
+                </div>
+            </div>     
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Items</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Tax</th>
+                        <th>Price inc.tax</th>
+                        <th>Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                </tbody>
+            </table>    
           </div>
                     <!-- datatable  -->
                      

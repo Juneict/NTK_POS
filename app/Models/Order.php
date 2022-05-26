@@ -20,4 +20,7 @@ class Order extends Model
     public function payments(){
         return $this->hasMany('App\Models\Payment');
     }
+    public function order_items(){
+        return $this->hasMany('App\Models\OrderItem');
+    }
 }
