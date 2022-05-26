@@ -14,13 +14,22 @@ class Order extends Model
         'customer_id',
         'user_id'
     ];
+
     public function customers(){
         return $this->belongsTo('App\Models\Customer','customer_id');
     }
+
     public function payments(){
-        return $this->hasMany('App\Models\Payment');
+        return $this->hasMany(Payment::class);
     }
+
     public function order_items(){
-        return $this->hasMany('App\Models\OrderItem');
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function total(){
+        return $this->order_items->map(function($i){
+            return $i->price;
+        })->sum();
     }
 }
