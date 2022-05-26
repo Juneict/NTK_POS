@@ -79,10 +79,7 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
     $(function () {
-    $("#customers").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#customers_wrapper .col-md-6:eq(0)');
+   
     $('#customers').DataTable({
       "paging": true,
       "lengthChange": false,

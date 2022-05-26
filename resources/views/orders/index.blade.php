@@ -26,7 +26,7 @@
               <div class="card-body">
                 
                     <!-- datatable  -->
-                    <table id="products" class="table table-striped table-bordered">
+                    <table id="orders" class="table table-striped table-bordered">
             <thead>
                   <tr>
                     <th>#</th>
@@ -45,12 +45,13 @@
                     @foreach($orders as $index=>$order)
                    
                     <tr>
+                        
                         <td>{{$index+1}}</td>
                         <td>{{$order->customer_name}}</td>
                         <td>{{$order->items}}</td>
                         <td>{{ number_format($order->total_amount,2)}} ks</td>
                         <td>{{ number_format($order->received_amount,2)}} ks</td>
-                        <td>{{ number_format(($order->total_amount-$order->received_amount),2)}} ks</td>
+                        <td>{{ number_format(abs($order->total_amount-$order->received_amount),2)}} ks</td>
                        
                         <td>
                           @if($order->received_amount == 0)
@@ -69,7 +70,7 @@
                         <td>
                         
                           @can('order_crud')
-                          <a href="" data-toggle="modal" data-target="" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                          <a href="" data-toggle="modal" data-target="#editorder{{$order->id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                           @endcan
 
                           @can('order_crud')
@@ -79,17 +80,17 @@
                         </td>
                         
                       </tr>
-                     
+                      @include('orders.edit')
                     @endforeach
                    
             </tbody>
             <tfoot>
               <tr>
                   <th colspan="3" style="text-align: center">Total</th>
-                 
-                  <th>{{number_format($orders->sum('received_amount'))}} ks</th>
-                  <th>{{number_format($orders->sum('total_amount'))}} ks</th>
-                  <th>{{number_format($orders->sum('received_amount')-$orders->sum('total_amount'))}} ks</th>
+                
+                  <th>{{number_format($orders->sum('total_amount'),2)}} ks</th>
+                  <th>{{number_format($orders->sum('received_amount'),2)}} ks</th>
+                  <th>{{number_format(abs($orders->sum('received_amount')-$orders->sum('total_amount')))}} ks</th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -119,11 +120,8 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-    $("#products").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
+    
+    $('#orders').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
