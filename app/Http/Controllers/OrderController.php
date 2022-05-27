@@ -144,6 +144,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        dd('hello');
         $this->authorize('order_crud');
         //
     }
