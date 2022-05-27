@@ -46,21 +46,10 @@
                                 <td>{{$index+1}}</td>
                                 <td>{{$order->customer_name}}</td>
                                 <td>{{$order->items}}</td>
-                                
                                 <td>{{ number_format($order->total_amount)}} ks</td>
                                 <td>{{ number_format($order->received_amount)}} ks</td>
                                 <td>{{ number_format(abs($order->total_amount-$order->received_amount))}} ks</td>
-                                <td>
-                                  @if($order->received_amount == 0)
-                                  <span class="badge badge-danger">Not Paid</span>
-                                  @elseif($order->received_amount < $order->total_amount)
-                                      <span class="badge badge-warning">Partial</span>
-                                  @elseif($order->received_amount == $order->total_amount)
-                                      <span class="badge badge-success">Paid</span>
-                                  @elseif($order->received_amount > $order->total_amount)
-                                      <span class="badge badge-info">Change</span>
-                                  @endif
-                                </td>
+                                <td><span class="badge badge-info">{{$order->order_status}}</span>
                                 <td>{{$order->order_id}}</td>
                                 <td>{{$order->created_at}}</td>
                                 <td>
@@ -109,7 +98,7 @@
     $('#orders').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
