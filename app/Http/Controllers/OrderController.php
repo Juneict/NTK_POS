@@ -149,15 +149,21 @@ class OrderController extends Controller
     {
         $this->authorize('order_crud');
         
-        $total_price = Order::where('id', $order->id)->first()->total();
-        $payment = Payment::where('order_id', $order->id)->first();
-        $payment->amount += (int)$request->amount;
+        try{
 
-        $payment_status = $this->calcStatus($total_price, $payment->amount);
-        $payment->status = $payment_status;
-        $payment->save();
-
-        return redirect()->back()->with('success', 'Payment updated.');
+            $total_price = Order::where('id', $order->id)->first()->total();
+            $payment = Payment::where('order_id', $order->id)->first();
+            $payment->amount += (int)$request->amount;
+    
+            $payment_status = $this->calcStatus($total_price, $payment->amount);
+            $payment->status = $payment_status;
+            $payment->save();
+    
+            return redirect()->back()->with('success', 'Payment updated.');
+            
+        }catch (\Exception $e) {
+            $e->getMessage();
+          }
     }
 
     /**
@@ -171,7 +177,30 @@ class OrderController extends Controller
         
         $this->authorize('order_crud');
 
-        return Order::where('id', $id)->first()->order_items();
-        
+        try{
+
+            $details = Order::with('order_items', 'payments')->where('id', $id)->get();
+            $items = $details[0]->order_items;
+            $payments = $details[0]->payments;
+            
+            foreach($items as $item)
+            {
+                $product = Product::where('id', $item->product_id)->first();
+                $product->stock += $item->quantity;
+                $product->save();
+
+                $item->delete();
+            }
+
+            if( $payments ) $payments->delete();
+
+            Order::where('id', $id)->delete();
+            
+            return redirect()->back()->with('success', 'order deleted successfully.');
+
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
+
 }
