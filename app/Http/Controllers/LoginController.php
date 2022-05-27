@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,13 +17,13 @@ class LoginController extends Controller
  
         if (Auth::attempt($credentials)) {
             $req->session()->regenerate();
- 
+
             return redirect()->route('dashboard')->with('success', 'Logged in successfully.');
         }
 
-        return back()->withErrors([
-            'error' => 'Invalid Credentials.',
-        ]);
+        
+
+        return redirect()->back()->with('error', 'Invalid Credentials!');
     }
 
     public function showLoginForm(){

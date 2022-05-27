@@ -24,8 +24,12 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
+Route::get('/',function(){
+	if(!Auth::user()){
+		return view('auth.login');
+	}else{
+		return redirect()->route('dashboard');
+	}	
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
