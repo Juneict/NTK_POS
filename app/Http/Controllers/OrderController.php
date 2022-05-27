@@ -53,12 +53,14 @@ class OrderController extends Controller
 
         // some changes
         try {    
-            $user_id = auth()->user()->id;
+
+            $user_id = $req->user()->id;
         
             $order = Order::create([
                 'customer_id' => $req->customer_id,
                 'user_id' => $user_id
             ]);
+
     
             $items = array();
             for($i = 0; $i < count($req->product_id); $i++)
@@ -74,6 +76,8 @@ class OrderController extends Controller
             }
     
             $result = OrderItem::insert($items);
+
+            
     
             for($i = 0; $i < count($req->product_id); $i++)
             {
@@ -83,18 +87,30 @@ class OrderController extends Controller
                 $product->stock = $updatedStock;
                 $product->save();
             }
-    
+
+            $total_price = (int)$order->total();
+            $payment_status = $this->calcStatus($total_price, (int)$req->payment_amount);
+
             $payment = Payment::insert([
                 'amount' => $req->payment_amount,
                 'order_id' => $order->id,
-                'customer_id' => $req->customer_id 
+                'customer_id' => $req->customer_id,
+                'status' => $payment_status
             ]);
-           
+            
             return redirect()->back()->with('success', 'Payment success.');
 
           } catch (\Exception $e) {
             $e->getMessage();
           }
+    }
+
+    public function calcStatus($price, $amount)
+    {
+        if($amount == 0) return('no paid');
+        if($amount == $price) return('paid');
+        if($amount < $price) return('partial');
+        if($amount > $price) return('change');
     }
 
     /**
@@ -131,9 +147,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        return $order;
         $this->authorize('order_crud');
-        //
+        
+        $total_price = Order::where('id', $order->id)->first()->total();
+        $payment = Payment::where('order_id', $order->id)->first();
+        $payment->amount += (int)$request->amount;
+
+        $payment_status = $this->calcStatus($total_price, $payment->amount);
+        $payment->status = $payment_status;
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Payment updated.');
     }
 
     /**
@@ -144,8 +168,10 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        dd('hello');
+        
         $this->authorize('order_crud');
-        //
+
+        return Order::where('id', $id)->first()->order_items();
+        
     }
 }

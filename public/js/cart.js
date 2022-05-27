@@ -48,7 +48,7 @@ window.onload = () => {
         itemAlertMsg.style.display = "block";
         itemAlertMsg.innerHTML = msg;
 
-        setTimeout(() => (itemAlertMsg.style.display = "none"), 3000);
+        setTimeout(() => (itemAlertMsg.style.display = "none"), 1500);
     };
 
     const saveCustomer = function () {
