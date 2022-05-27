@@ -13,6 +13,7 @@ window.onload = () => {
     const sendBtn = document.querySelector(".btn-send");
     const alertMsg = document.querySelector(".alert-success");
     const itemAlertMsg = document.querySelector(".alert-outofstock");
+    const logoutBtn = document.querySelector(".logout-btn");
 
     const enableButton = () =>
         proceedBtn.style.removeProperty("pointer-events");
@@ -317,6 +318,8 @@ window.onload = () => {
         enableButton();
     };
 
+    const clearLocalStorageOnLogout = () => window.localStorage.clear();
+
     barcodeInput.addEventListener("keydown", searchBarcode);
     cartContainer.addEventListener("change", calculateCountPrice);
     cartContainer.addEventListener("click", delete_cart_item);
@@ -326,6 +329,7 @@ window.onload = () => {
     cancelCartBtn.addEventListener("click", clearCheckout);
     customerList.addEventListener("change", saveCustomer);
     sendBtn.addEventListener("submit", clearCheckout);
+    logoutBtn.addEventListener("click", clearLocalStorageOnLogout);
 
     if (alertMsg) {
         clearCart();
