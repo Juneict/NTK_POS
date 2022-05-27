@@ -139,7 +139,7 @@
               <div class="modal-body">
                       
                           @csrf
-                          <input type="text" name="payment_amount" class="form-control payment-input" value="0">
+                          <input type="number" name="payment_amount" class="form-control payment-input" value="0">
 
                           <div class="modal-footer">
                             <button class="btn btn-default" data-dismiss="modal">Cancel</button>
