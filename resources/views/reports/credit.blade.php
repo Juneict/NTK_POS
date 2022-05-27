@@ -58,12 +58,8 @@
                               
                                 <td>
                                     @can('order_crud')
-                                    <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                                    @endcan
-
-                                    @can('order_crud')
-                                    <a href="" data-toggle="modal" data-target="#deleteorder{{$order->order_id}}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                                    @endcan        
+                                    <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                    @endcan    
                                 </td>  
                               </tr>
                             @include('reports.edit')
