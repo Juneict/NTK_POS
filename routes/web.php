@@ -1,15 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
    
+    Route::get('/credit',[ReportController::class,'index'])->name('credit');
     Route::get('/logout', [LogoutController::class,'perform'])->name('user.logout');
     Route::post('/place-order', [OrderController::class, 'store'])->name('place-order');
 });

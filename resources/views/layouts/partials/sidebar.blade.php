@@ -61,6 +61,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('credit')}}" class="nav-link {{ Request::segment(1) == 'credit' ? 'active' : ''}}">
+                  <i class="fas fa-clipboard nav-icon"></i>
+                  <p>Credit List</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/customers" class="nav-link {{ Request::segment(1) == 'customers' ? 'active' : ''}}">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Customers</p>
