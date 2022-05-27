@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content-wrapper">
-   
-
-    <!-- Main content -->
+   <!-- Main content -->
     <div class="content mt-3">
       <div class="container-fluid">
         <div class="row">
@@ -27,77 +25,71 @@
                 
                     <!-- datatable  -->
                     <table id="orders" class="table table-striped table-bordered">
-            <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Customer Name</th>
-                    <th>Products</th>
-                    <th>Total Amount</th>
-                    <th>Received Amount</th>   
-                    <th>To Pay</th>
-                    <th>Status</th>
-                    <th>DATE</th>
-                    <th>Action</th>
-                  </tr>
-            </thead>
-            <tbody>
-                
-                    @foreach($orders as $index=>$order)
-                   
-                    <tr>
-                        
-                        <td>{{$index+1}}</td>
-                        <td>{{$order->customer_name}}</td>
-                        <td>{{$order->items}}</td>
-                        <td>{{ number_format($order->total_amount,2)}} ks</td>
-                        <td>{{ number_format($order->received_amount,2)}} ks</td>
-                        <td>{{ number_format(abs($order->total_amount-$order->received_amount),2)}} ks</td>
-                       
-                        <td>
-                          @if($order->received_amount == 0)
-                          <span class="badge badge-danger">Not Paid</span>
-                          @elseif($order->received_amount < $order->total_amount)
-                              <span class="badge badge-warning">Partial</span>
-                          @elseif($order->received_amount == $order->total_amount)
-                              <span class="badge badge-success">Paid</span>
-                          @elseif($order->received_amount > $order->total_amount)
-                              <span class="badge badge-info">Change</span>
-                          @endif
-                        </td>
-                        <td>{{$order->created_at}}</td>
+                       <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Customer Name</th>
+                            <th>Products</th>
+                            <th>Total Amount</th>
+                            <th>Received Amount</th>   
+                            <th>To Pay</th>
+                            <th>Status</th>
+                            <th>DATE</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                      <tbody>
+                          @foreach($orders as $index=>$order)
+                            <tr>
+                              <td>{{$index+1}}</td>
+                              <td>{{$order->customer_name}}</td>
+                              <td>{{$order->items}}</td>
+                              <td>{{ number_format($order->total_amount)}} ks</td>
+                              <td>{{ number_format($order->received_amount)}} ks</td>
+                              <td>{{ number_format(abs($order->total_amount-$order->received_amount))}} ks</td>
+                              <td>
+                                @if($order->received_amount == 0)
+                                <span class="badge badge-danger">Not Paid</span>
+                                @elseif($order->received_amount < $order->total_amount)
+                                    <span class="badge badge-warning">Partial</span>
+                                @elseif($order->received_amount == $order->total_amount)
+                                    <span class="badge badge-success">Paid</span>
+                                @elseif($order->received_amount > $order->total_amount)
+                                    <span class="badge badge-info">Change</span>
+                                @endif
+                              </td>
+                              <td>{{$order->created_at}}</td>
+                              <td>
+                                
+                                  @can('order_crud')
+                                  <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                  @endcan
 
+                                  @can('order_crud')
+                                  <a href="" data-toggle="modal" data-target="#deleteorder{{$order->order_id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                  @endcan
+                                  
+                              </td>
+                                
+                            </tr>
+                        @include('orders.delete')
+                        @include('orders.edit')
+                      @endforeach  
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                            <th colspan="3" style="text-align: center">Total</th>
                           
-                        <td>
-                        
-                          @can('order_crud')
-                          <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                          @endcan
-
-                          @can('order_crud')
-                          <a href="" data-toggle="modal" data-target="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                          @endcan
+                            <th>{{number_format($orders->sum('total_amount'))}} ks</th>
+                            <th>{{number_format($orders->sum('received_amount'))}} ks</th>
+                            <th>{{number_format(abs($orders->sum('received_amount')-$orders->sum('total_amount')))}} ks</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                           
-                        </td>
-                        
-                      </tr>
-                      @include('orders.edit')
-                    @endforeach
-                   
-            </tbody>
-            <tfoot>
-              <tr>
-                  <th colspan="3" style="text-align: center">Total</th>
-                
-                  <th>{{number_format($orders->sum('total_amount'),2)}} ks</th>
-                  <th>{{number_format($orders->sum('received_amount'),2)}} ks</th>
-                  <th>{{number_format(abs($orders->sum('received_amount')-$orders->sum('total_amount')))}} ks</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                 
-              </tr>
-          </tfoot>
-        </table>  
+                        </tr>
+                    </tfoot>
+                    </table>  
               </div>
             </div>
 
@@ -109,11 +101,13 @@
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
+    
     </div>
+  
     <!-- /.content -->
   </div>
 
- 
+
  
 
 @endsection
