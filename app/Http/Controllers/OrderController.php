@@ -23,11 +23,11 @@ class OrderController extends Controller
     }
     public function index()
     {  
-        $orders =Order::select('customer_name','orders.id as order_id','orders.created_at',DB::raw("group_concat(order_items.name) as items"),DB::raw('sum(order_items.price) as total_amount'),'payments.amount as received_amount')
+        $orders =Order::select('customer_name','orders.id as order_id','status as order_status','orders.created_at',DB::raw("group_concat(order_items.name) as items"),DB::raw('sum(order_items.price) as total_amount'),'payments.amount as received_amount')
         ->leftjoin('order_items','orders.id','=','order_items.order_id')
         ->leftjoin('customers','orders.customer_id', '=', 'customers.id')
         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
-        ->groupBy('orders.id', 'customers.customer_name', 'payments.amount','created_at')->get();     
+        ->groupBy('orders.id','status', 'customers.customer_name', 'payments.amount','created_at')->get();     
         return view('orders.index', compact('orders'));
     }
 
