@@ -19,7 +19,6 @@
             <a href=""><b>i-SYS</b>POS</a>
         </div>
 
-
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
