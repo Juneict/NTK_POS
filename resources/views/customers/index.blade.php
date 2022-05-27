@@ -49,7 +49,9 @@
                                     class="fas fa-eye"></i></a>
                             <a href="" data-toggle="modal" data-target="#editcustomer{{$customer->id}}" class="btn btn-primary"><i
                                     class="fas fa-edit"></i></a>
+                            @can('order_crud')
                             <a href="" data-toggle="modal" data-target="#deletecustomer{{$customer->id}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            @endcan
                         </td>
                     </tr>
                     @include('customers.details')

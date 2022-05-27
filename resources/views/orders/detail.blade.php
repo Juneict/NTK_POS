@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content-wrapper">
+    dd($order->id);
     <style>
     
     </style>
