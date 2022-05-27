@@ -27,7 +27,8 @@ class OrderController extends Controller
         ->leftjoin('order_items','orders.id','=','order_items.order_id')
         ->leftjoin('customers','orders.customer_id', '=', 'customers.id')
         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
-        ->groupBy('orders.id', 'customers.customer_name', 'payments.amount','created_at')->get();       
+        ->groupBy('orders.id', 'customers.customer_name', 'payments.amount','created_at')->get();  
+         
         return view('orders.index', compact('orders'));
     }
 
@@ -115,8 +116,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Order $order)
     {
+    
         $this->authorize('order_crud');
         //
     }
@@ -128,8 +130,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
+        return $order;
         $this->authorize('order_crud');
         //
     }
