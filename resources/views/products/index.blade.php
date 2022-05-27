@@ -55,7 +55,7 @@
                         <td>{{$product->description}}</td>
                         <td>{{$product->barcode}}</td>
                         <td>{{$product->stock}}</td>
-                        <td>{{number_format($product->price,2)}} ks</td>
+                        <td>{{number_format($product->price)}} ks</td>
                         <td><span
                             class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>
                             

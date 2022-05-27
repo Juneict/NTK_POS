@@ -1,4 +1,4 @@
-<div class="modal right fade" id="deleteproduct{{$order->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal right fade" id="deleteorder{{$order->order_id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     <form action="/orders/{{$order->order_id}}" method="POST">
                         @csrf
                         @method('delete')
-                        <p>Are you sure you want to delete Order id: {{$order->order_id}}</p>
+                        <p> အမှာစာ အမှတ် {{ $order->order_id}} ကို ဖျက်ရန်သေချာပါသလား ?</p>
                     
                         <div class="modal-footer">
                             <button class="btn btn-default" data-dismiss="modal">Cancle</button>
