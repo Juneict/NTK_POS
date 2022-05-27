@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-                {{ $order->order_id}}
+                
             </div>
             <div class="modal-body">
                     <form action="/orders/{{$order->order_id}}" method="POST">

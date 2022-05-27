@@ -168,6 +168,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        dd('hello');
         $this->authorize('order_crud');
         
         $items = Order::where('id', $id)->first()->order_items();
