@@ -148,9 +148,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        return $order;
         $this->authorize('order_crud');
-        //
+        
+        $total_price = Order::where('id', $order->id)->first()->total();
+        $payment = Payment::where('order_id', $order->id)->first();
+        $payment->amount += (int)$request->amount;
+
+        $payment_status = $this->calcStatus($total_price, $payment->amount);
+        $payment->status = $payment_status;
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Payment updated.');
     }
 
     /**

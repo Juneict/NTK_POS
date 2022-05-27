@@ -70,7 +70,7 @@
                         <td>
                         
                           @can('order_crud')
-                          <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                          <a href="" data-toggle="modal" data-target="#editorder{{$order->id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                           @endcan
 
                           @can('order_crud')
@@ -124,7 +124,7 @@
     $('#orders').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": true,
       "autoWidth": false,
