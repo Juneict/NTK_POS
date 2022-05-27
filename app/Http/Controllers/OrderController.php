@@ -27,7 +27,10 @@ class OrderController extends Controller
         ->leftjoin('order_items','orders.id','=','order_items.order_id')
         ->leftjoin('customers','orders.customer_id', '=', 'customers.id')
         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
-        ->groupBy('orders.id','status', 'customers.customer_name', 'payments.amount','created_at')->get();     
+        ->groupBy('orders.id','status', 'customers.customer_name', 'payments.amount','created_at')->get();
+        
+      
+        
         return view('orders.index', compact('orders'));
     }
 
@@ -120,8 +123,15 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return $order;
-        return view('orders.detail',compact('order'));
+       
+       
+        $orderdetail = Order::select('order_items.name','order_items.price','order_items.quantity','payments.amount')
+                        ->leftjoin('order_items', 'orders.id', '=', 'order_items.order_id')
+                        ->leftjoin('products', 'order_items.product_id', '=', 'products.id')
+                        ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
+                        ->where('orders.id', $order->id)
+                        ->get();
+        return view('orders.detail',compact('order','orderdetail'));
     }
 
     /**
