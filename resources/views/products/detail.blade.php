@@ -25,7 +25,7 @@
                   <b>Product Type</b>: Single
               </div>
               <div class="col-md-4">
-                <img src="/dist/img/product1.png"class="card-img-top" style="width:100px"alt="">
+                <img src="/dist/img/product1.PNG"class="card-img-top" style="width:100px"alt="">
               </div>
           
           </div>

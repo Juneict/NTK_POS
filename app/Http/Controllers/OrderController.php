@@ -52,7 +52,7 @@ class OrderController extends Controller
         $this->authorize('order_crud');
 
         // some changes
-        try {
+        try {    
             $user_id = auth()->user()->id;
         
             $order = Order::create([
