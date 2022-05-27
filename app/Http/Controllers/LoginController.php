@@ -20,9 +20,7 @@ class LoginController extends Controller
             return redirect()->route('dashboard')->with('success', 'Logged in successfully.');
         }
 
-        return back()->withErrors([
-            'error' => 'Invalid Credentials.',
-        ]);
+        return redirect()->back()->with('error', 'Invalid Credentials!');
     }
 
     public function showLoginForm(){
