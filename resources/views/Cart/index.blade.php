@@ -66,6 +66,7 @@
 
                                           <div class="col-md-12">
                                                 <table class="table">
+                                                  {{-- Card items here --}}
                                                   <tr>
                                                     <th colspan="4">Total</th>
                                                     <td class="total-price">0</td>

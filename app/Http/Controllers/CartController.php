@@ -15,8 +15,8 @@ class CartController extends Controller
     public function index(){
         
         $customers = Customer::all();
-        $products = Product::all();
-        $productlists = Product::latest()->paginate(20);
+        $products = Product::where('status', 1)->get();
+        $productlists = Product::where('status', 1)->latest()->paginate(20);
         return view('Cart.index',compact('products','customers','productlists'));
     }
 }
