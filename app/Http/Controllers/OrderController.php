@@ -49,7 +49,6 @@ class OrderController extends Controller
      */
     public function store(Request $req)
     {
-        $this->authorize('order_crud');
 
         // some changes
         try {    

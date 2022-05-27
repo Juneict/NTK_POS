@@ -27,13 +27,13 @@
                   </div>                      
                   <div class="form-group">
                     <label for="name">Change Password</label>
-                    <input type="password" name="password" class="form-control" value="{{old('password',$user->password)}}">
+                    <input type="password" name="password" class="form-control" value="">
                   </div>
                   <div class="form-group">
                       <label for="">Role</label>
                       <select name="is_admin" id="" class="form-control">
-                          <option value="1">Admin</option>
-                          <option value="2">Cashier</option>
+                        <option value="1" {{ $user->is_admin == 1 ? 'selected' : '' }}>Admin</option>
+                        <option value="0" {{ $user->is_admin == 0 ? 'selected' : '' }}>Cashier</option>
                       </select>
                   </div>         
                                   

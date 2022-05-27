@@ -94,12 +94,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('user_management');
+        $res = User::where('id', $user->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_admin' => $request->is_admin
+        ]);
 
-        $user->name =$request->name;
-        $user->email =$request->email;
-        $user->password =$request->password;
-        $user->is_admin =$request->is_admin;
-        $user->save();
         if (!$user) {
             return redirect()->back()->with('error', 'Sorry, there a problem while creating user.');
         }
