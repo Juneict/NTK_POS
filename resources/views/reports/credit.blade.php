@@ -18,41 +18,32 @@
                   </div>
                 @endif
                 <div class="card-header">
-                        <h3 class="card-title">Orders</h3>     
+                        <h3 class="card-title">Credit List</h3>     
                 </div>
                 <div class="card-body">
                   
                       <!-- datatable  -->
-                      <table id="orders" class="table table-striped table-bordered">
+                      <table id="creditlists" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                              <th>No.</th>
-                             
-                              <th>Customer Name</th>
-                              <th>Products</th>
-                              
+                              <th>Customer Name</th>                            
                               <th>Total Amount</th>
                               <th>Received Amount</th>   
                               <th>To Pay</th>
                               <th>Status</th>
                               <th>ID</th>
-                              <th>DATE</th>
+                            
                               <th>Action</th>
                             </tr>
                           </thead>
                         <tbody>
-                            @foreach($orders as $index=>$order)
+                            @foreach($creditlists as $order)
                               <tr>
-                                <td>{{$index+1}}</td>
                                 <td>{{$order->customer_name}}</td>
-                                <td>{{$order->items}}</td>
-                                
                                 <td>{{ number_format($order->total_amount)}} ks</td>
                                 <td>{{ number_format($order->received_amount)}} ks</td>
                                 <td>{{ number_format(abs($order->total_amount-$order->received_amount))}} ks</td>
-                               
                                 <td>
-
                                   @if($order->received_amount == 0)
                                   <span class="badge badge-danger">Not Paid</span>
                                   @elseif($order->received_amount < $order->total_amount)
@@ -64,7 +55,7 @@
                                   @endif
                                 </td>
                                 <td>{{$order->order_id}}</td>
-                                <td>{{$order->created_at}}</td>
+                              
                                 <td>
                                     @can('order_crud')
                                     <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
@@ -75,21 +66,16 @@
                                     @endcan        
                                 </td>  
                               </tr>
-                              @include('orders.delete')
-                              @include('orders.edit')
+                            @include('reports.edit')
                             @endforeach  
                         </tbody>
                         <tfoot>
                           <tr>
                               <th colspan="3" style="text-align: center">Total</th>
-                            
-                              <th>{{number_format($orders->sum('total_amount'))}} ks</th>
-                              <th>{{number_format($orders->sum('received_amount'))}} ks</th>
-                              <th>{{number_format(abs($orders->sum('received_amount')-$orders->sum('total_amount')))}} ks</th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
+                              <th>{{number_format($creditlists->sum('total_amount'))}} ks</th>
+                              <th>{{number_format($creditlists->sum('received_amount'))}} ks</th>
+                              <th>{{number_format(abs($creditlists->sum('received_amount')-$creditlists->sum('total_amount')))}} ks</th>
+                              <th></th>     
                           </tr>
                         </tfoot>
                       </table>  
@@ -108,7 +94,7 @@
 <script>
      $(function () {
     
-    $('#orders').DataTable({
+    $('#creditlists').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,
