@@ -80,6 +80,7 @@
                         </td>
                         
                       </tr>
+                      @include('orders.delete')
                       @include('orders.edit')
                     @endforeach
                    
