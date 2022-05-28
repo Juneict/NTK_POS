@@ -39,7 +39,7 @@
               <!-- small box -->
               <div class="small-box">
                 <div class="inner">
-                  <h3>{{ number_format($payments->sum('amount'),2)}} ks</h3>
+                  <h3>{{ number_format($payments->sum('amount'))}} ks</h3>
   
                   <p>Income</p>
                 </div>
@@ -54,7 +54,7 @@
               <!-- small box -->
               <div class="small-box ">
                 <div class="inner">
-                  <h3>{{ number_format($dailypayments->sum('amount'),2)}} ks</h3>
+                  <h3>{{ number_format($dailypayments->sum('amount'))}} ks</h3>
   
                   <p>Income Today</p>
                 </div>

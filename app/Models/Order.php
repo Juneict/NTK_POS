@@ -24,7 +24,7 @@ class Order extends Model
     }
 
     public function order_items(){
-        return $this->hasMany(OrderItem::class, 'order_id');
+        return $this->hasOne(OrderItem::class, 'order_id');
     }
 
     public function total(){

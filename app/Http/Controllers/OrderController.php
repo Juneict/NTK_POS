@@ -131,7 +131,13 @@ class OrderController extends Controller
                         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
                         ->where('orders.id', $order->id)
                         ->get();
-        return view('orders.detail',compact('order','orderdetail'));
+        $total =Order::select('order_items.price as total_amount')
+                ->leftjoin('order_items','orders.id','=','order_items.order_id')
+                ->groupBy('order_items.price')
+                ->where('orders.id',$order->id)->get();
+        $totalamount =$total->sum('total_amount');
+       
+        return view('orders.detail',compact('order','orderdetail','totalamount'));
     }
 
     /**
