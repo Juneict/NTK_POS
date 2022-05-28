@@ -31,8 +31,6 @@
                               <th>Received Amount</th>   
                               <th>To Pay</th>
                               <th>Status</th>
-                              <th>ID</th>
-                            
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -53,9 +51,7 @@
                                   @elseif($order->received_amount > $order->total_amount)
                                       <span class="badge badge-info">Change</span>
                                   @endif
-                                </td>
-                                <td>{{$order->order_id}}</td>
-                              
+                                </td>                             
                                 <td>
                                     @can('order_crud')
                                     <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
@@ -67,11 +63,12 @@
                         </tbody>
                         <tfoot>
                           <tr>
-                              <th colspan="3" style="text-align: center">Total</th>
+                              <th colspan="1" style="text-align: center">Total</th>
                               <th>{{number_format($creditlists->sum('total_amount'))}} ks</th>
                               <th>{{number_format($creditlists->sum('received_amount'))}} ks</th>
                               <th>{{number_format(abs($creditlists->sum('received_amount')-$creditlists->sum('total_amount')))}} ks</th>
-                              <th></th>     
+                              <th></th> 
+                              <th></th>
                           </tr>
                         </tfoot>
                       </table>  
@@ -99,7 +96,8 @@
       "autoWidth": false,
       "responsive": true,
     });
+    $('div.alert').delay(1000).slideUp(300);
   });
 
-  $('div.alert').delay(3000).slideUp(300);
+  
 </script>

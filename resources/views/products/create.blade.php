@@ -1,5 +1,5 @@
 <div class="modal right fade" id="createproduct" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
               <h4 class="modal-title" id="staticBackdropLabel">Add product</h4>
@@ -12,30 +12,40 @@
               @csrf
               <div class="row">
                 <div class="form-group col-md-4">
-                  <label for="name">Product Name *</label>
-                  <input type="text" name="name" class="form-control" value="{{old('name')}}" required>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="">Size</label>
-                  <select name="size" id="" class="form-control">
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                      <option value="XXL">XXl</option>
+                  <label for="">Brand Select*</label>
+                  <select name="brand_id" id="" class="form-control">
+                      @foreach( $brands as $brand)
+                      <option value="{{ $brand->id }}" class="form-control">{{ $brand->name}}</option>
+                      @endforeach
                   </select>
                  </div> 
+                 <div class="form-group col-md-4">
+                  <label for="">Category Select*</label>
+                  <select name="category_id" id="" class="form-control">
+                      
+                      @foreach( $categories as $category)
+                      <option value="{{ $category->id }}" class="form-control">{{ $category->name}}</option>
+                      @endforeach
+                  </select>
+                 </div> 
+                <div class="form-group col-md-4">
+                  <label for="name">Product Name *</label>
+                  <input type="text" name="name" class="form-control" value="{{old('name')}}" required>
+                </div>    
+                <div class="form-group col-md-4">  
+                  <label for="">Size</label>
+                  <select name="size" id="" class="form-control">
+                      <option value="">Select Size</option>  
+                      <option value="xs">Xtra Small</option>
+                      <option value="s">Small</option>
+                      <option value="L">Large</option>
+                      <option value="Xl">Xtra Large</option>
+                      <option value="XXL">XXL</option>
+                  </select>
+                 </div>          
                  <div class="form-group col-md-4">  
                   <label for="">Color</label>
-                  <select name="color" id="" class="form-control">
-                      <option value="white">white</option>
-                      <option value="black">black</option>
-                      <option value="blue">blue</option>
-                      <option value="red">yellow</option>
-                      <option value="green">green</option>
-                      <option value="yellow">yellow</option>
-                      <option value="brown">brown</option>
-                  </select>
+                  <input type="text" name="color" class="form-control" value="{{old('color')}}">
                  </div>
                 <div class="form-group col-md-4">
                   <label for="name">Barcode *</label>
@@ -49,19 +59,19 @@
                   <label for="name">Stock</label>
                   <input type="text" name="stock" class="form-control" value="{{old('stock')}}" required>
                 </div>
-                <div class="form-group col-md-8">
+                <div class="form-group col-md-4">
+                  <label for="status">Status</label>
+                    <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
+                        <option value="1" {{ old('status') === 1 ? 'selected' : ''}}>Active</option>
+                        <option value="0" {{ old('status') === 0 ? 'selected' : ''}}>Inactive</option>
+                    </select>
+                 </div>
+                <div class="form-group col-md-12">
                   <label for="name">Description</label>
-                  <input type="text" name="description" class="form-control" value="{{old('description')}}">
+                  <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description')}}"></textarea>
+                 
                 </div>                      
                 
-                <div class="form-group">
-                              <label for="status">Status</label>
-                        <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
-                            <option value="1" {{ old('status') === 1 ? 'selected' : ''}}>Active</option>
-                            <option value="0" {{ old('status') === 0 ? 'selected' : ''}}>Inactive</option>
-                        </select>
-        
-                </div>
               </div>                      
               <button class="btn btn-success" type="submit">Create</button>
           </form>

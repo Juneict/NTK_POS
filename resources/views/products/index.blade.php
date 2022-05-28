@@ -107,14 +107,14 @@
     $('#products').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "pageLength":8,
       "autoWidth": false,
       "responsive": true,
     });
+    $('div.alert').delay(3000).slideUp(300);
   });
-
-  $('div.alert').delay(3000).slideUp(300);
+  
 </script>

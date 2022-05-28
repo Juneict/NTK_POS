@@ -94,7 +94,8 @@
       "autoWidth": false,
       "responsive": true,
     });
+    $('div.alert').delay(3000).slideUp(300);
   });
 
-  $('div.alert').delay(3000).slideUp(300);
+ 
 </script>

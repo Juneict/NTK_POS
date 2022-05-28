@@ -118,11 +118,12 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "pageLength":5,
+      "pageLength":10,
       "autoWidth": false,
       "responsive": true,
     });
+    $('div.alert').delay(1000).slideUp(300);
   });
 
-  $('div.alert').delay(3000).slideUp(300);
+  
 </script>

@@ -18,9 +18,9 @@
                   <b>Color</b> :{{$product->color}}
               </div>
               <div class="col-md-4">
-                  <b>Category</b> : Women Cloths<br>
-                  <b>Price</b>: {{ number_format($product->price,2) }} ks<br>
-                  <b>Manag Stock?</b>Yes <br>
+                  <b>Brand</b> : {{$product->brand->name}}<br>
+                  <b>Categoy</b>: {{ $product->category->name }} <br>
+                  <b>Manag Stock?</b> Yes <br>
                   <b>Alert Quantity</b> 5 PCs <br>
                   <b>Product Type</b>: Single
               </div>
