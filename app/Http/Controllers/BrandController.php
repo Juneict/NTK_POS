@@ -37,7 +37,7 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+       
         Brand::insert([
             'name' => $request->name,
             'description' => $request->description,
@@ -75,9 +75,9 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Brand $brand)
     {
-        //
+        dd('hello');
     }
 
     /**
@@ -88,6 +88,6 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('hello');
     }
 }
