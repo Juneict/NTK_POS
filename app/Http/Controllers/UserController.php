@@ -93,18 +93,28 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('user_management');
-        $res = User::where('id', $user->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_admin' => $request->is_admin
-        ]);
+        try{
 
-        if (!$user) {
-            return redirect()->back()->with('error', 'Sorry, there a problem while creating user.');
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'password' => 'required',
+                'is_admin' => 'required',
+            ]);
+
+            $this->authorize('user_management');
+            $res = User::where('id', $user->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'is_admin' => $request->is_admin
+            ]);
+
+            return redirect()->route('users.index')->with('success', 'Success, you user account have been updated.');   
+
+        } catch(\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('users.index')->with('success', 'Success, you user account have been updated.');   
     }
 
     /**

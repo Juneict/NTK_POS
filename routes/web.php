@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
@@ -41,6 +43,8 @@ Route::middleware('auth')->group(function(){
     Route::resource('/orders', OrderController::class);
     Route::resource('/customers', CustomerController::class);
     Route::resource('/products', ProductController::class);
+    Route::resource('/brands', BrandController::class);
+    Route::resource('/categories', CategoryController::class);
     Route::resource('/users',UserController::class);
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
