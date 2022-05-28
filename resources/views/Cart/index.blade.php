@@ -157,6 +157,7 @@
 </div>
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
-
 <script type="text/javascript">let products = '<?= $products ?>';</script>
 <script type="text/javascript" src="{{ asset('js/cart.js') }}"></script>
+
+
