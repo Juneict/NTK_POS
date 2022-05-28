@@ -256,6 +256,9 @@ window.onload = () => {
         const total_price = document.querySelector(".total-price").innerHTML;
         paymentInput.value = total_price;
 
+        paymentInput.min = 0;
+        paymentInput.max = total_price;
+
         const targetCustomer = customers.find((c) => c.id === +activeCustomer);
         if (+targetCustomer.is_customer === 0) paymentInput.readOnly = true;
         if (+targetCustomer.is_customer !== 0) paymentInput.readOnly = false;

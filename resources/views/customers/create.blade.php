@@ -17,7 +17,7 @@
                   </div>
                   <div class="form-group">
                     <label for="name">Phone</label>
-                    <input type="text" name="phone" class="form-control" value="{{old('phone')}}">
+                    <input type="number" name="phone" class="form-control" value="{{old('phone')}}">
                   </div>
                   <div class="form-group">
                     <label for="name">Address</label>
