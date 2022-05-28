@@ -20,7 +20,10 @@ class DashboardController extends Controller
     }
     public function index(){
 
-        $customer = Customer::firstOrCreate(['customer_name' => 'Walk-In Customer']);
+        $customer = Customer::firstOrCreate(
+            ['customer_name' => 'Walk-In Customer'],
+            ['is_customer' => 0]
+        );
 
         $order_count=DB::table('orders')->count();
         $payments = DB::table('payments')->get();
