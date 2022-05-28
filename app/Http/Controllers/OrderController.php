@@ -57,6 +57,15 @@ class OrderController extends Controller
         // some changes
         try {    
 
+            $req->validate([
+                'customer_id' => 'required',
+                'product_id' => 'required|array',
+                'item_name' => 'required|array',
+                'quantity' => 'required|array',
+                'item_price' => 'required|array',
+                'payment_amount' => 'required',
+            ]);
+
             $user_id = $req->user()->id;
         
             $order = Order::create([
@@ -164,6 +173,10 @@ class OrderController extends Controller
         $this->authorize('order_crud');
         
         try{
+
+            $request->validate([
+                'amount' => 'required'
+            ]);
 
             $total_price = Order::where('id', $order->id)->first()->total();
             $payment = Payment::where('order_id', $order->id)->first();

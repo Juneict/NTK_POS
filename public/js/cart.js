@@ -318,8 +318,6 @@ window.onload = () => {
         enableButton();
     };
 
-    const clearLocalStorageOnLogout = () => window.localStorage.clear();
-
     barcodeInput.addEventListener("keydown", searchBarcode);
     cartContainer.addEventListener("change", calculateCountPrice);
     cartContainer.addEventListener("click", delete_cart_item);
@@ -329,7 +327,6 @@ window.onload = () => {
     cancelCartBtn.addEventListener("click", clearCheckout);
     customerList.addEventListener("change", saveCustomer);
     sendBtn.addEventListener("submit", clearCheckout);
-    logoutBtn.addEventListener("click", clearLocalStorageOnLogout);
 
     if (alertMsg) {
         clearCart();

@@ -42,27 +42,51 @@
 
               @endcan
 
-              <li class="nav-item">
-                <a href="/products" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
-                  <i class="fas fa-th-large nav-icon"></i>
-                  <p>Products</p>
+              <li class="nav-item menu-is-opening menu-open">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-warehouse"></i>
+                  <p>
+                    Inventory
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview" style="display: block;">
+                  <li class="nav-item">
+                    <a href="/brands" class="nav-link {{ Request::segment(1) == 'brands' ? 'active' : ''}}">
+                      <i class="fas fa-star nav-icon"></i>
+                      <p>Brands</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/categories" class="nav-link {{ Request::segment(1) == 'categories' ? 'active' : ''}}">
+                      <i class="fas fa-list nav-icon"></i>
+                      <p>Categories</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/products" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
+                      <i class="fas fa-box-open nav-icon"></i>
+                      <p>Products</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
+
               <li class="nav-item">
                 <a href="{{route('cart')}}" class="nav-link {{ Request::segment(1) == 'cart' ? 'active' : ''}}">
                   <i class="fas fa-cart-plus nav-icon"></i>
-                  <p>Open POS</p>
+                  <p>Cart</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/orders" class="nav-link {{ Request::segment(1) == 'orders' ? 'active' : ''}}">
-                  <i class="fas fa-cart-plus nav-icon"></i>
+                  <i class="fas fa-calendar-check nav-icon"></i>
                   <p>Orders</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('credit')}}" class="nav-link {{ Request::segment(1) == 'credit' ? 'active' : ''}}">
-                  <i class="fas fa-clipboard nav-icon"></i>
+                  <i class="fas fa-credit-card nav-icon"></i>
                   <p>Credit List</p>
                 </a>
               </li>

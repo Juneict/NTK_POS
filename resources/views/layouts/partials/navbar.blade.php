@@ -11,7 +11,7 @@
     <!-- Navbar Search -->
     <li class="nav-item">
       <a href="{{route('cart')}}" class="btn btn-success">
-        <i class="fas fa-cart-plus"></i>Open POS
+        <i class="fas fa-cart-plus"></i>Open Cart
       </a>
     </li> 
 
