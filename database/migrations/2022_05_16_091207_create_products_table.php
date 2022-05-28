@@ -26,7 +26,8 @@ class CreateProductsTable extends Migration
             $table->integer('brand_id');
             $table->integer('category_id');
             $table->boolean('status')->default(true);
-            $table->timestamps();
+            $table->boolean('deleted')->default(false);
+            $table->timestamps()->useCurrent()->useCurrentOnUpdate();;
         });
     }
 

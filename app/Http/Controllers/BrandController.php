@@ -15,7 +15,8 @@ class BrandController extends Controller
     public function index()
     {
         //
-        $brands = Brand::all();
+       
+        $brands = Brand::where('deleted','=','0')->get();
         return view('brands.index',compact('brands'));
     }
 
@@ -77,7 +78,10 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        dd('hello');
+        $brand->name = $request->name;
+        $brand->description =$request->description;
+        $brand->save();
+        return redirect()->route('brands.index')->with('success', 'Brand have been updated.');
     }
 
     /**
@@ -86,8 +90,10 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        dd('hello');
+        $brand->deleted = 1;
+        $brand->update();
+        return redirect()->back()->with('success','Brand delete successfully');
     }
 }

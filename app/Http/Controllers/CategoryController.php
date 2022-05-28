@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories =Category::all();
+        $categories =Category::where('deleted','0')->get();
         return view('categories.index',compact('categories'));
     }
 
@@ -73,9 +73,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        dd("hello");
+       
+        $category->name =$request->name;
+        $category->description =$request->description;
+        $category->save();
+        return redirect()->back()->with('success', 'Category have been updated.');
     }
 
     /**
@@ -84,8 +88,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        dd('hello');
+        $category->deleted = 1;
+        $category->update();
+        return redirect()->back()->with('success','Category delete successfully');
     }
 }

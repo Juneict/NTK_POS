@@ -21,7 +21,7 @@ class CreateOrderItemsTable extends Migration
             $table->foreignId('order_id');
             $table->foreignId('product_id');
             $table->timestamps();
-
+            $table->boolean('deleted')->default(false);
             // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             

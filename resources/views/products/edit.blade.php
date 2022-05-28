@@ -26,7 +26,7 @@
                   <select name="category_id" id="" class="form-control">
                       
                       @foreach( $categories as $category)
-                      <option value="{{ $category->id }}"{{$category->id == $product->category_id? 'selected':''}}" class="form-control">{{ $category->name}}</option>
+                      <option value="{{ $category->id }}"{{$category->id == $product->category_id? 'selected':''}} class="form-control">{{ $category->name}}</option>
                       @endforeach
                   </select>
                  </div> 

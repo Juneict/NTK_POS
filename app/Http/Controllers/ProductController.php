@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $brands =Brand::all();
         $categories =Category::all();
-        $products = Product::all();
+        $products = Product::where('deleted','0')->get();
         return view('products.index',compact('products','brands','categories'));
     }
 
@@ -129,7 +129,8 @@ class ProductController extends Controller
     {
         $this->authorize('product_crud');
 
-        $product->delete();
+        $product->deleted =1;
+        $product->update();
         return redirect()->back()->with('success','Customer delete successfully');
     }
 }

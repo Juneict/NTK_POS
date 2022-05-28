@@ -19,7 +19,8 @@ class CreateCustomersTable extends Migration
             $table->string('phone', 255)->nullable();
             $table->string('address', 255)->nullable();
             $table->boolean('is_customer')->default(true);
-            $table->timestamps();
+            $table->boolean('deleted')->default(false);
+            $table->timestamps()->useCurrent()->useCurrentOnUpdate();;
         });
     }
 

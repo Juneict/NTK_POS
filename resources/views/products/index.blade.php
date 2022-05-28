@@ -114,10 +114,7 @@
       "autoWidth": false,
       "responsive": true,
     });
+    $('div.alert').delay(3000).slideUp(300);
   });
-  $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    });
-
-  $('div.alert').delay(3000).slideUp(300);
+  
 </script>
