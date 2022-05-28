@@ -85,7 +85,7 @@
                         </tbody>
                         <tfoot>
                           <tr>
-                              <th colspan="3" style="text-align: center">Total</th>
+                              <th colspan="2" style="text-align: center">Total</th>
                             
                               <th>{{number_format($orders->sum('total_amount'))}} ks</th>
                               <th>{{number_format($orders->sum('received_amount'))}} ks</th>

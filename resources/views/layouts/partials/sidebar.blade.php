@@ -51,19 +51,19 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview" style="display: block;">
-                  <li class="nav-item">
+                  <li class="nav-item" style="margin-left: 15px">
                     <a href="/brands" class="nav-link {{ Request::segment(1) == 'brands' ? 'active' : ''}}">
                       <i class="fas fa-star nav-icon"></i>
                       <p>Brands</p>
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" style="margin-left: 15px">
                     <a href="/categories" class="nav-link {{ Request::segment(1) == 'categories' ? 'active' : ''}}">
                       <i class="fas fa-list nav-icon"></i>
                       <p>Categories</p>
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" style="margin-left: 15px">
                     <a href="/products" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
                       <i class="fas fa-box-open nav-icon"></i>
                       <p>Products</p>
@@ -78,7 +78,7 @@
                   <p>Cart</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" >
                 <a href="/orders" class="nav-link {{ Request::segment(1) == 'orders' ? 'active' : ''}}">
                   <i class="fas fa-calendar-check nav-icon"></i>
                   <p>Orders</p>
@@ -90,7 +90,7 @@
                   <p>Credit List</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" >
                 <a href="/customers" class="nav-link {{ Request::segment(1) == 'customers' ? 'active' : ''}}">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Customers</p>

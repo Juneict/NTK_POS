@@ -22,7 +22,7 @@
                                 <b>Address</b>  : {{$order->customers->address}}    
                                 </div>
                                 <div class="col-md-4">
-                                <b> Date </b>: {{$order->created_at}}
+                                <b> Date </b>: {{$order->created_at->format('d-m-Y')}}
                                 </div>
                             </div>     
                             <table class="table mt-3">
@@ -43,17 +43,60 @@
                                             <td>{{$items->price}}</td>
                                             <td>{{$items->quantity*$items->price}}</td>
                                         </tr>
-                                    @endforeach                  
+                                    @endforeach              
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th></th>
                                         <th></th>
                                         <th>Total</th>
-                                        <th>{{$order->payments->amount}}</th>
+                                        <th>{{$totalamount}}</th>
                                     </tr>
                                 </tfoot>
-                            </table>    
+                                
+                            </table> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="mt-3">Payment info</h5>
+                                    <table class="table tabled-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                             
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Payment Method</th>
+                                                <th>Payment Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                
+                                                <th>{{$order->created_at->format('d-m-Y')}}</th>
+                                                <th>{{$order->payments->amount}}</th>
+                                                <th>Cash</th>
+                                                <th>-</th>
+                                            </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <table class="table table-bordered table-striped">
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>{{$totalamount}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Paid</th>
+                                            <td>{{$order->payments->amount}}</td>
+                                        </tr><tr>
+                                            <th>Total Remaining</th>
+                                            <td>{{$totalamount-$order->payments->amount}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                               
                         </div>        
                     </div>
                 </div>
