@@ -110,6 +110,7 @@
       "searching": false,
       "ordering": true,
       "info": true,
+      "pageLength":8,
       "autoWidth": false,
       "responsive": true,
     });

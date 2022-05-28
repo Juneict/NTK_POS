@@ -29,7 +29,7 @@
                               <th>No.</th>
                              
                               <th>Customer Name</th>
-                              <th>Products</th>
+                              
                               
                               <th>Total Amount</th>
                               <th>Received Amount</th>   
@@ -45,7 +45,7 @@
                               <tr>
                                 <td>{{$index+1}}</td>
                                 <td>{{$order->customer_name}}</td>
-                                <td>{{$order->items}}</td>
+                               
                                 
                                 <td>{{ number_format($order->total_amount)}} ks</td>
                                 <td>{{ number_format($order->received_amount)}} ks</td>
@@ -66,6 +66,9 @@
                                 <td>{{$order->order_id}}</td>
                                 <td>{{$order->created_at}}</td>
                                 <td>
+                                   
+                                    <a href="/orders/{{$order->order_id}}"  class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+                                    
                                     @can('order_crud')
                                     <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
                                     @endcan
@@ -75,6 +78,7 @@
                                     @endcan        
                                 </td>  
                               </tr>
+                              @include('orders.invoice')
                               @include('orders.delete')
                               @include('orders.edit')
                             @endforeach  
@@ -114,6 +118,7 @@
       "searching": true,
       "ordering": true,
       "info": true,
+      "pageLength":5,
       "autoWidth": false,
       "responsive": true,
     });

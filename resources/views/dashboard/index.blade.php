@@ -103,8 +103,7 @@
                       <th>#</th>
                       <th>Product</th>
                       <th>Stock</th>
-                      <th>Price</th>
-                                           
+                      <th>Price</th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -124,8 +123,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="/products" class="btn btn-sm btn-info float-left">Products</a>
-            
+              <a href="/products" class="btn btn-sm btn-info float-left">Products</a>   
             </div>
             <!-- /.card-footer -->
           </div>
