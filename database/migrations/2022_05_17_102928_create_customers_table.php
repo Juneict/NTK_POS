@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('customer_name',255);
             $table->string('phone', 255)->nullable();
             $table->string('address', 255)->nullable();
+            $table->boolean('is_customer')->default(true);
             $table->timestamps();
         });
     }

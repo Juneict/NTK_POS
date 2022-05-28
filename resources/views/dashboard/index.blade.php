@@ -41,7 +41,7 @@
                 <div class="inner">
                   <h3>{{ number_format($payments->sum('amount'))}} ks</h3>
   
-                  <p>Income</p>
+                  <p>Total Income</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -18,8 +20,10 @@ class ProductController extends Controller
     }
     public function index()
     {
+        $brands =Brand::all();
+        $categories =Category::all();
         $products = Product::all();
-        return view('products.index',compact('products'));
+        return view('products.index',compact('products','brands','categories'));
     }
 
     /**
@@ -52,6 +56,8 @@ class ProductController extends Controller
         $products->size =$request->size;
         $products->color =$request->color;
         $products->status =$request->status;
+        $products->brand_id =$request->brand_id;
+        $products->category_id =$request->category_id;
         $products->save();
         
         if (!$products) {
@@ -93,6 +99,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+       
         $this->authorize('product_crud');
 
         $product->name =$request->name;
@@ -103,6 +110,8 @@ class ProductController extends Controller
         $product->size =$request->size;
         $product->color =$request->color;
         $product->status =$request->status;
+        $product->brand_id =$request->brand_id;
+        $product->category_id =$request->category_id;
         $product->save();
         if (!$product->save()) {
             return redirect()->back()->with('error', 'Sorry, there\'re a problem while updating product.');

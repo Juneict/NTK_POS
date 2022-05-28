@@ -107,7 +107,7 @@
     $('#products').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "pageLength":8,
@@ -115,6 +115,9 @@
       "responsive": true,
     });
   });
+  $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
 
   $('div.alert').delay(3000).slideUp(300);
 </script>

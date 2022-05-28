@@ -1,5 +1,5 @@
 <div class="modal right fade" id="editproduct{{$product->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
               <h4 class="modal-title" id="staticBackdropLabel">Edit product</h4>
@@ -13,6 +13,23 @@
               @csrf
               @method('PUT')
               <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="">Brand Select*</label>
+                  <select name="brand_id" id="" class="form-control">
+                      @foreach( $brands as $brand)
+                      <option value="{{ $brand->id }}"{{$brand->id == $product->brand_id? 'selected':''}} class="form-control">{{ $brand->name}}</option>
+                      @endforeach
+                  </select>
+                 </div> 
+                 <div class="form-group col-md-4">
+                  <label for="">Category Select*</label>
+                  <select name="category_id" id="" class="form-control">
+                      
+                      @foreach( $categories as $category)
+                      <option value="{{ $category->id }}"{{$category->id == $product->category_id? 'selected':''}}" class="form-control">{{ $category->name}}</option>
+                      @endforeach
+                  </select>
+                 </div> 
                 <div class="form-group col-md-4">
                   <label for="name">Product Name *</label>
                   <input type="text" name="name" class="form-control" value="{{old('name',$product->name)}}">
@@ -38,18 +55,18 @@
                   <input type="text" name="stock" class="form-control" value="{{old('stock',$product->stock)}}">
                 </div>
                 <div class="form-group col-md-4">
+                  <label for="status">Status</label>
+                    <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
+                        <option value="1" {{ $product->status == 1 ? 'selected' : ''}}>Active</option>
+                        <option value="0" {{ $product->status == 0 ? 'selected' : ''}}>Inactive</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12">
                   <label for="name">Description</label>
-                  <input type="text" name="description" class="form-control" value="{{old('description',$product->description)}}">
+                  <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description',$product->description)}}"></textarea>
                 </div>                      
                
-                <div class="form-group">
-                              <label for="status">Status</label>
-                        <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
-                            <option value="1" {{ $product->status == 1 ? 'selected' : ''}}>Active</option>
-                            <option value="0" {{ $product->status == 0 ? 'selected' : ''}}>Inactive</option>
-                        </select>
-        
-                </div>
+              
               </div>                      
               <button class="btn btn-warning" type="submit">Update</button>
           </form>

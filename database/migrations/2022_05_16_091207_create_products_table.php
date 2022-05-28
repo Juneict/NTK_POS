@@ -20,8 +20,11 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->string('barcode')->unique();
             $table->integer('price');
+            $table->integer('stock');
             $table->string('size')->nullable();
             $table->string('color')->nullable();
+            $table->integer('brand_id');
+            $table->integer('category_id');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

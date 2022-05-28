@@ -16,7 +16,7 @@
               #
             </div>
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="card">
                           @if (session('success'))
                             <div class="alert alert-success">
@@ -90,7 +90,7 @@
                            {{-- card body --}}
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                       <div class="card">
                         <div class="card-body">
                               
@@ -104,10 +104,9 @@
                                                 <p><small>{{$product->name}}({{$product->barcode}})</small> </p>
                                             </div> --}}
                                               <div class="card">
-                                                  <div class="card-body">
+                                                  <div class="card-body" style="height: 150px">
                                                     <img src="/dist/img/product.png" class="card-img-top"  alt="">
-                                                    <p style="text-align: center; margin-top:3px"><small> {{$product->name}}({{$product->barcode}}) </small> </p>   
-                                                                                                   
+                                                    <p style="text-align: center; margin-top:3px"><small> {{$product->name}}({{$product->barcode}}) </small> </p>                                               
                                                   </div>
                                               </div>
                                           </div>

@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
   <!-- datatable -->
   <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <!--Select2-->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
   <style>
     .main-sidebar { background-color: #313140 !important }
     .main-header{background-color: #3C3C4E !important}
@@ -54,6 +56,8 @@
 <!-- Datatable -->
 <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/select2/js/select2.full.min.js"></script>
+
 </body>
 </html>
 

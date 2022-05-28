@@ -118,7 +118,7 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "pageLength":5,
+      "pageLength":10,
       "autoWidth": false,
       "responsive": true,
     });
