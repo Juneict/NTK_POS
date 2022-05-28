@@ -87,15 +87,11 @@
                                             <td>{{$totalamount}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Discount</th>
-                                            <td>0.00%</td>
-                                        </tr>
-                                        <tr>
                                             <th>Total Paid</th>
                                             <td>{{$order->payments->amount}}</td>
                                         </tr><tr>
                                             <th>Total Remaining</th>
-                                            <td>{{abs($totalamount-$order->payments->amount)}}</td>
+                                            <td>{{$totalamount-$order->payments->amount}}</td>
                                         </tr>
                                     </table>
                                 </div>

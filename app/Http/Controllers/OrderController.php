@@ -64,7 +64,7 @@ class OrderController extends Controller
                 'user_id' => $user_id
             ]);
 
-    
+            
             $items = array();
             for($i = 0; $i < count($req->product_id); $i++)
             {
@@ -77,11 +77,9 @@ class OrderController extends Controller
                 ];
                 array_push($items, $tmp);
             }
-    
-            $result = OrderItem::insert($items);
 
-            
-    
+            $result = OrderItem::insert($items);
+           
             for($i = 0; $i < count($req->product_id); $i++)
             {
                 $product = Product::find($req->product_id[$i]);
@@ -90,10 +88,10 @@ class OrderController extends Controller
                 $product->stock = $updatedStock;
                 $product->save();
             }
-
+            
             $total_price = (int)$order->total();
             $payment_status = $this->calcStatus($total_price, (int)$req->payment_amount);
-
+           
             $payment = Payment::insert([
                 'amount' => $req->payment_amount,
                 'order_id' => $order->id,
@@ -125,18 +123,18 @@ class OrderController extends Controller
     public function show(Order $order)
     {
        
-       
         $orderdetail = Order::select('order_items.name','order_items.price','order_items.quantity','payments.amount')
                         ->leftjoin('order_items', 'orders.id', '=', 'order_items.order_id')
                         ->leftjoin('products', 'order_items.product_id', '=', 'products.id')
                         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
                         ->where('orders.id', $order->id)
                         ->get();
-        $total =Order::select('order_items.price as total_amount')
+        $total =Order::select(DB::raw('sum(order_items.price) as total_amount'))
                 ->leftjoin('order_items','orders.id','=','order_items.order_id')
-                ->groupBy('order_items.price')
+                ->groupBy('order_items.order_id','order_items.price')
                 ->where('orders.id',$order->id)->get();
         $totalamount =$total->sum('total_amount');
+       
        
         return view('orders.detail',compact('order','orderdetail','totalamount'));
     }
