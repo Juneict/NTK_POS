@@ -1,5 +1,6 @@
 window.onload = () => {
     products = JSON.parse(products);
+    customers = JSON.parse(customers);
 
     const barcodeInput = document.querySelector(".search-barcode");
     const cartContainer = document.querySelector(".cart-container");
@@ -8,12 +9,11 @@ window.onload = () => {
     const searchProductInput = document.querySelector(".search-product");
     const proceedBtn = document.querySelector(".proceed-btn");
     const paymentInput = document.querySelector(".payment-input");
-    const cancelCartBtn = document.querySelector(".cancel-cart");
+    const clearCartBtn = document.querySelector(".clear-cart");
     const customerList = document.querySelector(".customer-list");
     const sendBtn = document.querySelector(".btn-send");
     const alertMsg = document.querySelector(".alert-success");
     const itemAlertMsg = document.querySelector(".alert-outofstock");
-    const logoutBtn = document.querySelector(".logout-btn");
 
     const enableButton = () =>
         proceedBtn.style.removeProperty("pointer-events");
@@ -45,7 +45,6 @@ window.onload = () => {
     };
 
     const showAlertMessage = function (msg) {
-        console.log(msg);
         itemAlertMsg.style.display = "block";
         itemAlertMsg.innerHTML = msg;
 
@@ -53,7 +52,8 @@ window.onload = () => {
     };
 
     const saveCustomer = function () {
-        localStorage.setItem("customer_id", customerList.value);
+        activeCustomer = customerList.value;
+        localStorage.setItem("active_customer", activeCustomer);
     };
 
     const getIds = function () {
@@ -253,20 +253,9 @@ window.onload = () => {
     const proceedCheckout = function () {
         const total_price = document.querySelector(".total-price").innerHTML;
         paymentInput.value = total_price;
-    };
 
-    const clearCart = function () {
-        cart.innerHTML = "";
-        document.querySelector(".total-price").innerHTML = 0;
-        localStorage.clear();
-        disableButton();
-    };
-
-    const clearCheckout = function (e) {
-        if (e) e.preventDefault();
-
-        // remove all child
-        clearCart();
+        const targetCustomer = customers.find((c) => c.id === +activeCustomer);
+        if (+targetCustomer.is_customer === 0) paymentInput.readOnly = true;
     };
 
     const setLocalStorage = function () {
@@ -284,14 +273,18 @@ window.onload = () => {
 
         localStorage.setItem("cart_items", JSON.stringify(cartItems));
         localStorage.setItem("total_price", total_price);
+        localStorage.setItem("active_customer", activeCustomer);
     };
 
     const renderLocalStorage = function () {
-        const customer_id = localStorage.customer_id;
+        const customer_id = localStorage.active_customer;
         const cart_items = JSON.parse(localStorage.getItem("cart_items"));
         const total_price = localStorage.total_price;
 
-        if (customer_id) customerList.value = customer_id;
+        if (customer_id) {
+            customerList.value = customer_id;
+            activeCustomer = customer_id;
+        }
 
         if (!cart_items) return;
 
@@ -316,17 +309,33 @@ window.onload = () => {
         document.querySelector(".total-price").innerHTML = total_price;
 
         enableButton();
+
+        barcodeInput.focus();
     };
 
-    barcodeInput.addEventListener("keydown", searchBarcode);
-    cartContainer.addEventListener("change", calculateCountPrice);
-    cartContainer.addEventListener("click", delete_cart_item);
-    searchProductInput.addEventListener("keydown", searchProduct);
-    productContainer.addEventListener("click", inputSearchItem);
-    proceedBtn.addEventListener("click", proceedCheckout);
-    cancelCartBtn.addEventListener("click", clearCheckout);
-    customerList.addEventListener("change", saveCustomer);
-    sendBtn.addEventListener("submit", clearCheckout);
+    const walkinCustomer = customerList.value;
+    let activeCustomer = customerList.value;
+
+    const clearCart = function () {
+        cart.innerHTML = "";
+        document.querySelector(".total-price").innerHTML = 0;
+
+        customerList.value = walkinCustomer;
+        activeCustomer = walkinCustomer;
+
+        paymentInput.readOnly = false;
+
+        disableButton();
+        localStorage.clear();
+        barcodeInput.focus();
+    };
+
+    const clearCheckout = function (e) {
+        if (e) e.preventDefault();
+
+        // remove all child
+        clearCart();
+    };
 
     if (alertMsg) {
         clearCart();
@@ -336,5 +345,16 @@ window.onload = () => {
         }, 1000);
     }
 
+    barcodeInput.addEventListener("keydown", searchBarcode);
+    cartContainer.addEventListener("change", calculateCountPrice);
+    cartContainer.addEventListener("click", delete_cart_item);
+    searchProductInput.addEventListener("keydown", searchProduct);
+    productContainer.addEventListener("click", inputSearchItem);
+    proceedBtn.addEventListener("click", proceedCheckout);
+    clearCartBtn.addEventListener("click", clearCheckout);
+    customerList.addEventListener("change", saveCustomer);
+    sendBtn.addEventListener("submit", clearCheckout);
+
     renderLocalStorage();
+    barcodeInput.focus();
 };

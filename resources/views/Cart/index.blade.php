@@ -75,7 +75,7 @@
                                           </div>
                                           <div class="row m-auto">
                                             <div class="col-md-6">
-                                              <button class="btn btn-danger cancel-cart" type="submit">Clear</button>
+                                              <button class="btn btn-danger clear-cart" type="submit">Clear</button>
                                             </div>
                                             <div class="col-md-6">
                                               <a href="" data-toggle="modal" data-target="#sendReceivedAmount" class="btn btn-primary proceed-btn" style="pointer-events:none;">Proceed</a>
@@ -157,5 +157,13 @@
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 
-<script type="text/javascript">let products = '<?= $products ?>';</script>
+<script type="text/javascript">
+
+  let products = '<?= $products ?>';
+  let customers = '<?= $customers ?>';
+
+</script>
+
 <script type="text/javascript" src="{{ asset('js/cart.js') }}"></script>
+
+

@@ -65,7 +65,7 @@ class OrderController extends Controller
                 'item_price' => 'required|array',
                 'payment_amount' => 'required',
             ]);
-
+            
             $user_id = $req->user()->id;
         
             $order = Order::create([
