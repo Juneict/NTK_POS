@@ -27,7 +27,8 @@ class OrderController extends Controller
         ->leftjoin('order_items','orders.id','=','order_items.order_id')
         ->leftjoin('customers','orders.customer_id', '=', 'customers.id')
         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
-        ->groupBy('orders.id','status', 'customers.customer_name', 'payments.amount','created_at')->get();
+        ->groupBy('orders.id','status', 'customers.customer_name', 'payments.amount','created_at')
+        ->orderBy('orders.id', 'DESC')->get();
         
       
         
