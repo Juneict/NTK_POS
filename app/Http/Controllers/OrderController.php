@@ -136,7 +136,7 @@ class OrderController extends Controller
         $price = OrderItem::where('order_id', $order_id)->groupBy('order_id')->sum('price');
         $debt_status = $this->calcStatus($price, $amount);
 
-        $debt = Debt::where('customer_id', $request->customer_id)->first();
+        $debt = Debt::where('customer_id', $request->customer_id)->where('debt_status', '!=', 'paid')->first();
 
         if(!$debt)
         {

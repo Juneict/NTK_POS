@@ -21,6 +21,7 @@ class ReportController extends Controller
         $debtlists = Debt::select('customers.id as customer_id', 'customer_name', 'phone', 'address', 'debts.id as debt_id', 'total_amount', 'total_received', 'debt_status')
         ->leftjoin('customers', 'customers.id', 'debts.customer_id')->where('debt_status', '!=', 'paid')->get();
    
+        // return $debtlists;
         return view('reports.credit',compact('debtlists'));
     }
 
