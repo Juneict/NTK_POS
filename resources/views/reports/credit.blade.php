@@ -12,21 +12,23 @@
                       {{ session('success') }}
                   </div>
                 @endif
-                @if (session('delete'))
+                @if (session('error'))
                   <div class="alert alert-danger">
-                      {{ session('delete') }}
+                      {{ session('error') }}
                   </div>
                 @endif
                 <div class="card-header">
-                        <h3 class="card-title">Credit List</h3>     
+                        <h3 class="card-title">debt List</h3>     
                 </div>
                 <div class="card-body">
                   
                       <!-- datatable  -->
-                      <table id="creditlists" class="table table-striped table-bordered">
+                      <table id="debtlists" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                               <th>Customer Name</th>                            
+                              <th>Phone</th>                            
+                              <th>Address</th>                            
                               <th>Total Amount</th>
                               <th>Received Amount</th>   
                               <th>To Pay</th>
@@ -35,27 +37,23 @@
                             </tr>
                           </thead>
                         <tbody>
-                            @foreach($creditlists as $order)
+                            @foreach($debtlists as $debt)
                               <tr>
-                                <td>{{$order->customer_name}}</td>
-                                <td>{{ number_format($order->total_amount)}} ks</td>
-                                <td>{{ number_format($order->received_amount)}} ks</td>
-                                <td>{{ number_format(abs($order->total_amount-$order->received_amount))}} ks</td>
+                                <td>{{$debt->customer_name}}</td>
+                                <td>{{$debt->phone}}</td>
+                                <td>{{$debt->address}}</td>
+                                <td>{{ number_format($debt->total_amount)}} ks</td>
+                                <td>{{ number_format($debt->total_received)}} ks</td>
+                                <td>{{ number_format(abs($debt->total_amount-$debt->total_received))}} ks</td>
                                 <td>
-                                  @if($order->received_amount == 0)
+                                  @if($debt->debt_status == 'no paid')
                                   <span class="badge badge-danger">Not Paid</span>
-                                  @elseif($order->received_amount < $order->total_amount)
+                                  @elseif($debt->debt_status == 'partial')
                                   <span class="badge badge-warning">Partial</span>
-                                  @elseif($order->received_amount == $order->total_amount)
-                                      <span class="badge badge-success">Paid</span>
-                                  @elseif($order->received_amount > $order->total_amount)
-                                      <span class="badge badge-info">Change</span>
                                   @endif
                                 </td>                             
                                 <td>
-                                    @can('order_crud')
-                                    <a href="" data-toggle="modal" data-target="#editorder{{$order->order_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                    @endcan    
+                                    <a href="" data-toggle="modal" data-target="#editorder{{$debt->debt_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a> 
                                 </td>  
                               </tr>
                             @include('reports.edit')
@@ -64,9 +62,11 @@
                         <tfoot>
                           <tr>
                               <th colspan="1" style="text-align: center">Total</th>
-                              <th>{{number_format($creditlists->sum('total_amount'))}} ks</th>
-                              <th>{{number_format($creditlists->sum('received_amount'))}} ks</th>
-                              <th>{{number_format(abs($creditlists->sum('received_amount')-$creditlists->sum('total_amount')))}} ks</th>
+                              <th></th>
+                              <th></th>
+                              <th>{{number_format($debtlists->sum('total_amount'))}} ks</th>
+                              <th>{{number_format($debtlists->sum('total_received'))}} ks</th>
+                              <th>{{number_format(abs($debtlists->sum('total_received')-$debtlists->sum('total_amount')))}} ks</th>
                               <th></th> 
                               <th></th>
                           </tr>
@@ -87,7 +87,7 @@
 <script>
      $(function () {
     
-    $('#creditlists').DataTable({
+    $('#debtlists').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,

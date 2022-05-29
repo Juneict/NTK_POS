@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CartController;
+use App\Models\Debt;
 
 class OrderController extends Controller
 {
@@ -107,6 +108,12 @@ class OrderController extends Controller
                 'customer_id' => $req->customer_id,
                 'status' => $payment_status
             ]);
+
+            if($payment_status != 'paid'){
+                
+                $this->calculateDebt($req, $order->id);
+            }
+
             
             return redirect()->back()->with('success', 'Payment success.');
 
@@ -120,7 +127,40 @@ class OrderController extends Controller
         if($amount == 0) return('no paid');
         if($amount == $price) return('paid');
         if($amount < $price) return('partial');
-        if($amount > $price) return('change');
+    }
+
+    public function calculateDebt($request, $order_id)
+    {
+
+        $amount = Payment::where('order_id', $order_id)->first()->amount;
+        $price = OrderItem::where('order_id', $order_id)->groupBy('order_id')->sum('price');
+        $debt_status = $this->calcStatus($price, $amount);
+
+        $debt = Debt::where('customer_id', $request->customer_id)->first();
+
+        if(!$debt)
+        {
+            Debt::insert([
+                'customer_id' => $request->customer_id,
+                'total_amount' => $price,
+                'total_received' => $amount,
+                'debt_status' => $debt_status
+            ]);
+            
+        }
+        
+
+        if($debt)
+        {
+            $updated_price = $debt->total_amount + $price;
+            $updated_received = $debt->total_received + $amount;
+
+            $debt->update([
+                'total_amount' => $updated_price,
+                'total_received' => $updated_received,
+                'debt_status' => $debt_status
+            ]);
+        }
     }
 
     /**

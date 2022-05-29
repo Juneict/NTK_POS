@@ -33,7 +33,6 @@
                               
                               <th>Total Amount</th>
                               <th>Received Amount</th>   
-                              <th>To Pay</th>
                               <th>Status</th>
                               <th>ID</th>
                               <th>DATE</th>
@@ -49,18 +48,15 @@
                                 
                                 <td>{{ number_format($order->total_amount)}} ks</td>
                                 <td>{{ number_format($order->received_amount)}} ks</td>
-                                <td>{{ number_format(abs($order->total_amount-$order->received_amount))}} ks</td>
                                
                                 <td>
 
-                                  @if($order->received_amount == 0)
+                                  @if($order->order_status == 'no paid')
                                   <span class="badge badge-danger">Not Paid</span>
-                                  @elseif($order->received_amount < $order->total_amount)
+                                  @elseif($order->order_status == 'partial')
                                   <span class="badge badge-warning">Partial</span>
-                                  @elseif($order->received_amount == $order->total_amount)
-                                      <span class="badge badge-success">Paid</span>
-                                  @elseif($order->received_amount > $order->total_amount)
-                                      <span class="badge badge-info">Change</span>
+                                  @elseif($order->order_status == 'paid')
+                                  <span class="badge badge-success">Paid</span>
                                   @endif
                                 </td>
                                 <td>{{$order->order_id}}</td>

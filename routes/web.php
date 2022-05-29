@@ -46,10 +46,12 @@ Route::middleware('auth')->group(function(){
     Route::resource('/brands', BrandController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/users',UserController::class);
+    Route::resource('/credits', ReportController::class);
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
    
-    Route::get('/credit',[ReportController::class,'index'])->name('credit');
+    // Route::get('/credit',[ReportController::class,'index'])->name('credit');
+
     Route::get('/logout', [LogoutController::class,'perform'])->name('user.logout');
     Route::post('/place-order', [OrderController::class, 'store'])->name('place-order');
 });
