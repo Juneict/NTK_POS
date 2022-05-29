@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CartController;
+use App\Models\Customer;
 use App\Models\Debt;
 
 class OrderController extends Controller
@@ -58,6 +59,7 @@ class OrderController extends Controller
         // some changes
         try {    
 
+            
             $req->validate([
                 'customer_id' => 'required',
                 'product_id' => 'required|array',
@@ -131,7 +133,6 @@ class OrderController extends Controller
 
     public function calculateDebt($request, $order_id)
     {
-
         $amount = Payment::where('order_id', $order_id)->first()->amount;
         $price = OrderItem::where('order_id', $order_id)->groupBy('order_id')->sum('price');
         $debt_status = $this->calcStatus($price, $amount);
@@ -246,9 +247,15 @@ class OrderController extends Controller
 
         try{
 
+            $pricesToSubstract = OrderItem::select(DB::raw('sum(price) as total_price'))
+                    ->where('order_id', $id)->groupBy('order_id')->first()->total_price;
+
+            // return $pricesToSubstract;
+
             $details = Order::with('order_items', 'payments')->where('id', $id)->get();
             $items = $details[0]->order_items;
             $payments = $details[0]->payments;
+            // return $payments;
             
             foreach($items as $item)
             {
@@ -259,7 +266,26 @@ class OrderController extends Controller
                 $item->delete();
             }
 
-            if( $payments ) $payments->delete();
+            
+            if( $payments ) {
+                
+                $debt = Debt::where('customer_id', $payments->customer_id)->where('debt_status', '!=', 'paid')->first();
+                $new_total_price = $debt->total_amount - $pricesToSubstract;
+                $new_received = $debt->total_received - $payments->amount;
+                // return $new_received;
+                if($new_received == 0)
+                {
+                    $debt->debt_status = 'paid';
+                }
+
+                $debt->total_amount = $new_total_price;
+                $debt->total_received = $new_received;
+                $debt->save();
+                // return 'hi';
+
+                $payments->delete();
+            }
+                
 
             Order::where('id', $id)->delete();
             

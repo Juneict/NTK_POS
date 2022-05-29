@@ -92,7 +92,7 @@ class ReportController extends Controller
                 ->where('status', '!=', 'paid')
                 ->where('customer_id', $customer_id)
                 ->update(['status' => 'paid']);
-
+            
             $debt->debt_status = 'paid';
 
         }
@@ -103,7 +103,8 @@ class ReportController extends Controller
 
         Transaction::insert([
             'debt_id' => $id,
-            'amount' => $request->amount
+            'customer_id' => $debt->customer_id,
+            'amount' => $request->amount,
         ]);
 
         return redirect()->back()->with('success', 'Payment Received.');
