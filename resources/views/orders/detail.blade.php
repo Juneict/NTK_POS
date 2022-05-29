@@ -71,10 +71,14 @@
                                         <tbody>
                                             <tr>
                                                 
-                                                <th>{{$order->created_at->format('d-m-Y')}}</th>
-                                                <th>{{$order->payments->amount}}</th>
-                                                <th>Cash</th>
-                                                <th>-</th>
+                                                @foreach($detail_list as $transaction)
+                                                    <tr>
+                                                        <td>{{$transaction->updated_at}}</td>
+                                                        <td>{{$transaction->amount}}</td>
+                                                        <td>Cash</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                @endforeach
                                             </tr>
                                         </tbody>
                                         

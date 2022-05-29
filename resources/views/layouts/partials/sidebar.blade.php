@@ -85,7 +85,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/credits" class="nav-link {{ Request::segment(1) == 'credit' ? 'active' : ''}}">
+                <a href="/credits" class="nav-link {{ Request::segment(1) == 'credits' ? 'active' : ''}}">
                   <i class="fas fa-credit-card nav-icon"></i>
                   <p>Credit List</p>
                 </a>

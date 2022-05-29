@@ -53,6 +53,7 @@
                                   @endif
                                 </td>                             
                                 <td>
+                                    <a href="/credits/{{$debt->debt_id}}"  class="btn btn-success"><i class="fas fa-eye"></i></a>
                                     <a href="" data-toggle="modal" data-target="#editorder{{$debt->debt_id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a> 
                                 </td>  
                               </tr>

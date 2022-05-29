@@ -53,8 +53,9 @@ class ReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+       $detail_list = Transaction::select('amount','created_at','updated_at')->where('debt_id',$id)->get();
+        return view('reports.credit_detail',compact('detail_list'));
     }
 
     /**

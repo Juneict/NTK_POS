@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Debt;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Customer;
 use App\Models\OrderItem;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CartController;
-use App\Models\Customer;
-use App\Models\Debt;
 
 class OrderController extends Controller
 {
@@ -185,8 +186,9 @@ class OrderController extends Controller
                 ->where('orders.id',$order->id)->get();
         $totalamount =$total->sum('total_amount');
        
+        $detail_list = Transaction::select('amount','created_at','updated_at')->where('debt_id',$order->id)->get();
        
-        return view('orders.detail',compact('order','orderdetail','totalamount'));
+        return view('orders.detail',compact('order','orderdetail','totalamount','detail_list'));
     }
 
     /**
