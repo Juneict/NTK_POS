@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $this->authorize('user_management');
 
-        $users = User::all();
+        $users = User::where('deleted', '!=', '1')->get();
         return view('users.index',compact('users'));
     }
 
@@ -127,7 +127,7 @@ class UserController extends Controller
     {
         $this->authorize('user_management');
 
-        $user->delete();
+        User::where('id', $user->id)->update(['deleted' => 1]);
         return redirect()->route('users.index')->with('success','User delete successfully');
     }
 }
