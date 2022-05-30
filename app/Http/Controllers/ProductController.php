@@ -110,6 +110,7 @@ class ProductController extends Controller
         $product->name =$request->name;
         $product->description = $request->description;
         $product->barcode = $request->barcode;
+        $product->purchase_price = $request->purchase_price;
         $product->price = $request->price;
         $product->stock =$request->stock;
         $product->size =$request->size;
