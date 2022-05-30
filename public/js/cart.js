@@ -53,8 +53,6 @@ window.onload = () => {
 
     const saveCustomer = function () {
         activeCustomer = customerList.value;
-        console.log(walkinCustomer);
-        console.log(activeCustomer);
         localStorage.setItem("active_customer", activeCustomer);
     };
 
@@ -288,7 +286,6 @@ window.onload = () => {
         const total_price = localStorage.total_price;
 
         if (customer_id) {
-            console.log("hello", customer_id);
             customerList.value = customer_id;
             activeCustomer = customer_id;
         }
@@ -322,9 +319,6 @@ window.onload = () => {
 
     const walkinCustomer = customerList.value;
     let activeCustomer = customerList.value;
-
-    console.log(walkinCustomer);
-    console.log(activeCustomer);
 
     const clearCart = function () {
         cart.innerHTML = "";

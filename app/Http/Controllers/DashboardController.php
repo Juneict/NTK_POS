@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -31,15 +32,20 @@ class DashboardController extends Controller
             ['description' => 'Default brand to use for no brand items.']
         );
 
-        $purchases = (object)[];
+        $purchases = $sales = $dues = (object)[];
+
         $purchases->total_purchase = $this->calculate_purchase();
         $purchases->today_purchase = $this->calculate_purchase(true, '', '');
         $purchases->this_month_purchase = $this->calculate_purchase('', true, '');
         $purchases->this_year_purchase = $this->calculate_purchase('', '', true);
 
-        $sales = (object)[];
-        // $sales->total_sales = ;
+        $sales->total_sale = $this->calculate_sale();
+        $sales->today_sale = $this->calculate_sale(true, '', '');
+        $sales->this_month_sale = $this->calculate_sale('', true, '');
+        $sales->this_year_sale = $this->calculate_sale('', '', true);
+
         
+
 
         $products = Product::where('stock','<','5')->get();
 
@@ -77,7 +83,37 @@ class DashboardController extends Controller
     }
 
 
-    public function sale()
+    public function calculate_sale($today = '', $month = '', $year = '')
+    {
+        $sales = Payment::select(DB::raw('sum(amount) as sales'))
+                        ->where('status', '=', 'paid')
+                        ->where('deleted', 0);
+
+        if($today)
+        {
+            $sales->whereDate('updated_at', Carbon::today());
+        }
+
+        if($month)
+        {
+            $sales->whereMonth('updated_at', date('m'))
+                    ->whereYear('updated_at', date('Y'));
+        }
+
+        if($year)
+        {
+            $sales->whereBetween('updated_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]);
+            
+        }
+
+        return $sales->first()->sales;
+    }
+
+    
+    public function calculate_due()
     {
         
     }
