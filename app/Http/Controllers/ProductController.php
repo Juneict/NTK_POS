@@ -23,6 +23,7 @@ class ProductController extends Controller
         $brands =Brand::all();
         $categories =Category::all();
         $products = Product::where('deleted','0')->get();
+        
         return view('products.index',compact('products','brands','categories'));
     }
 

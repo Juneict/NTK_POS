@@ -80,6 +80,14 @@
                     
                
             </tbody>
+            <tfoot>
+                <tr>
+                  <th colspan="5" class="text-center">Total Stock Price</th>
+                  <th> ks</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+            </tfoot>
         </table>  
               </div>
             </div>

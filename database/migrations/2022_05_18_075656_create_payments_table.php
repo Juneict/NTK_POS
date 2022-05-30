@@ -19,7 +19,9 @@ class CreatePaymentsTable extends Migration
             $table->foreignId('order_id');
             $table->foreignId('customer_id');
             $table->string('status', 100)->nullable();
-            $table->timestamps()->useCurrent()->useCurrentOnUpdate();;
+            $table->boolean('deleted')->default(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

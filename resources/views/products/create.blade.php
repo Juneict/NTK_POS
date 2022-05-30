@@ -52,6 +52,10 @@
                   <input type="text" name="barcode" class="form-control" value="{{old('barcode')}}" required>
                 </div>
                 <div class="form-group col-md-4">
+                  <label for="name">Purchase Price *</label>
+                  <input type="text" name="purchase_price" class="form-control" value="{{old('purchase_price')}}" required>
+                </div>
+                <div class="form-group col-md-4">
                   <label for="name">Price *</label>
                   <input type="text" name="price" class="form-control" value="{{old('price')}}" required>
                 </div>
@@ -59,6 +63,12 @@
                   <label for="name">Stock</label>
                   <input type="text" name="stock" class="form-control" value="{{old('stock')}}" required>
                 </div>
+               
+                <div class="form-group col-md-12">
+                  <label for="name">Description</label>
+                  <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description')}}"></textarea>
+                 
+                </div>                      
                 <div class="form-group col-md-4">
                   <label for="status">Status</label>
                     <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
@@ -66,12 +76,6 @@
                         <option value="0" {{ old('status') === 0 ? 'selected' : ''}}>Inactive</option>
                     </select>
                  </div>
-                <div class="form-group col-md-12">
-                  <label for="name">Description</label>
-                  <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description')}}"></textarea>
-                 
-                </div>                      
-                
               </div>                      
               <button class="btn btn-success" type="submit">Create</button>
           </form>

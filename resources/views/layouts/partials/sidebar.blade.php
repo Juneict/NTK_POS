@@ -34,7 +34,7 @@
               @can('user_management')
 
               <li class="nav-item">
-                <a href="/users" class="nav-link {{ Request::segment(1) == 'users' ? 'active' : ''}}">
+                <a href="{{route('users.index')}}" class="nav-link {{ Request::segment(1) == 'users' ? 'active' : ''}}">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Users Management</p>
                 </a>
@@ -52,19 +52,19 @@
                 </a>
                 <ul class="nav nav-treeview" style="display: block;">
                   <li class="nav-item" style="margin-left: 15px">
-                    <a href="/brands" class="nav-link {{ Request::segment(1) == 'brands' ? 'active' : ''}}">
+                    <a href="{{route('brands.index')}}" class="nav-link {{ Request::segment(1) == 'brands' ? 'active' : ''}}">
                       <i class="fas fa-star nav-icon"></i>
                       <p>Brands</p>
                     </a>
                   </li>
                   <li class="nav-item" style="margin-left: 15px">
-                    <a href="/categories" class="nav-link {{ Request::segment(1) == 'categories' ? 'active' : ''}}">
+                    <a href="{{route('categories.index')}}" class="nav-link {{ Request::segment(1) == 'categories' ? 'active' : ''}}">
                       <i class="fas fa-list nav-icon"></i>
                       <p>Categories</p>
                     </a>
                   </li>
                   <li class="nav-item" style="margin-left: 15px">
-                    <a href="/products" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
+                    <a href="{{route('products.index')}}" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
                       <i class="fas fa-box-open nav-icon"></i>
                       <p>Products</p>
                     </a>
@@ -79,19 +79,19 @@
                 </a>
               </li>
               <li class="nav-item" >
-                <a href="/orders" class="nav-link {{ Request::segment(1) == 'orders' ? 'active' : ''}}">
+                <a href="{{route('orders.index')}}" class="nav-link {{ Request::segment(1) == 'orders' ? 'active' : ''}}">
                   <i class="fas fa-calendar-check nav-icon"></i>
                   <p>Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/credits" class="nav-link {{ Request::segment(1) == 'credits' ? 'active' : ''}}">
+                <a href="{{route('credits.index')}}" class="nav-link {{ Request::segment(1) == 'credits' ? 'active' : ''}}">
                   <i class="fas fa-credit-card nav-icon"></i>
                   <p>Credit List</p>
                 </a>
               </li>
               <li class="nav-item" >
-                <a href="/customers" class="nav-link {{ Request::segment(1) == 'customers' ? 'active' : ''}}">
+                <a href="{{route('customers.index')}}" class="nav-link {{ Request::segment(1) == 'customers' ? 'active' : ''}}">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Customers</p>
                 </a>

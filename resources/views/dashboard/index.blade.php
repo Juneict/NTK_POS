@@ -24,14 +24,14 @@
               <!-- small box -->
               <div class="small-box ">
                 <div class="inner">
-                  <h3>{{$order_count}}</h3>
+                  <h3>1000000 ks</h3>
   
-                  <p>Order Count</p>
+                  <p>Total Purchase Price </p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
                 </div>
-                <a href="/orders" class="small-box-footer bg-info">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="" data-toggle="modal" data-target="#detailPurchase" class="small-box-footer bg-info">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -39,14 +39,14 @@
               <!-- small box -->
               <div class="small-box">
                 <div class="inner">
-                  <h3>{{ number_format($payments->sum('amount'))}} ks</h3>
+                  <h3>ks</h3>
   
-                  <p>Total Income</p>
+                  <p>Total Sales</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="/orders" class="small-box-footer bg-success">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="" data-toggle="modal" data-target="#detailIncome" class="small-box-footer bg-success">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -54,14 +54,14 @@
               <!-- small box -->
               <div class="small-box ">
                 <div class="inner">
-                  <h3>{{ number_format($dailypayments->sum('amount'))}} ks</h3>
+                  <h3> ks</h3>
   
-                  <p>Income Today</p>
+                  <p>Total Due</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
                 </div>
-                <a href="/orders" class="small-box-footer bg-warning">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="" data-toggle="modal" data-target="#detailDue" class="small-box-footer bg-warning">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -69,14 +69,14 @@
               <!-- small box -->
               <div class="small-box">
                 <div class="inner">
-                  <h3>{{$customerCount}}</h3>
+                  <h3> ks</h3>
   
-                  <p>Customer Counts</p>
+                  <p>Total Profit</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="/customers" class="small-box-footer bg-danger">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="" data-toggle="modal" data-target="#detailProfit" class="small-box-footer bg-danger">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -135,4 +135,8 @@
     </section>
     <!-- /.content -->
   </div>
+@include('dashboard.purchase');
+@include('dashboard.income');
+@include('dashboard.due');
+@include('dashboard.profit');
 @endsection

@@ -19,7 +19,9 @@ class CreateDebtsTable extends Migration
             $table->integer('total_amount')->nullable();
             $table->integer('total_received')->nullable();
             $table->string('debt_status')->nullable();
-            $table->timestamps()->useCurrent()->useCurrentOnUpdate();
+            $table->boolean('deleted')->default(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
