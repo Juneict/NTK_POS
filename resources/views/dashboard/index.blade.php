@@ -24,7 +24,7 @@
               <!-- small box -->
               <div class="small-box ">
                 <div class="inner">
-                  <h3>1000000 ks</h3>
+                  <h3>{{ number_format($purchases->total_purchase)}} ks</h3>
   
                   <p>Total Purchase Price </p>
                 </div>
