@@ -14,9 +14,9 @@
                   {{ session('success') }}
               </div>
             @endif
-            @if (session('delete'))
+            @if (session('error'))
               <div class="alert alert-danger">
-                  {{ session('delete') }}
+                  {{ session('error') }}
               </div>
             @endif
 
