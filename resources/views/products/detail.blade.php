@@ -12,15 +12,16 @@
             <div class="row">
               <div class="col-md-4">
                   <b>Barcode</b> : {{$product->barcode}} <br>
-                  <b>Price</b> : {{$product->price}} <br>
+                  <b>Price</b> : {{$product->price}} ks<br>
+                  <b>Purchase Price</b>:{{$product->purchase_price}} ks <br>
                   <b>Size</b> :{{$product->size}} <br>
-                  <b>Stock</b> :{{$product->stock}} <br>
+                 
                   <b>Color</b> :{{$product->color}}
               </div>
               <div class="col-md-4">
                   <b>Brand</b> : {{$product->brand->name}}<br>
                   <b>Categoy</b>: {{ $product->category->name }} <br>
-                  <b>Manag Stock?</b> Yes <br>
+                  <b>Stock</b> :{{$product->stock}} <br>
                   <b>Alert Quantity</b> 5 PCs <br>
                   <b>Product Type</b>: Single
               </div>

@@ -9,12 +9,19 @@
                 
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row"> 
+                    <div class="col-md-6">
+                        <h4>Due</h4>
                         <b>Today</b> :  <br>
                         <b>This Month</b> : <br>
                         <b>This Year</b> : <br>
-                    </div>            
+                    </div>    
+                    <div class="col-md-6">
+                        <h4>Due Received</h4>
+                        <b>Today</b> :  <br>
+                        <b>This Month</b> : <br>
+                        <b>This Year</b> : <br>
+                    </div>         
                 </div>
             </div>  
     

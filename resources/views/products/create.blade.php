@@ -34,14 +34,7 @@
                 </div>    
                 <div class="form-group col-md-4">  
                   <label for="">Size</label>
-                  <select name="size" id="" class="form-control">
-                      <option value="">Select Size</option>  
-                      <option value="xs">Xtra Small</option>
-                      <option value="s">Small</option>
-                      <option value="L">Large</option>
-                      <option value="Xl">Xtra Large</option>
-                      <option value="XXL">XXL</option>
-                  </select>
+                  <input type="text" name="color" class="form-control" value="{{old('color')}}">
                  </div>          
                  <div class="form-group col-md-4">  
                   <label for="">Color</label>
