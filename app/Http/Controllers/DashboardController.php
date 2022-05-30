@@ -38,15 +38,9 @@ class DashboardController extends Controller
         $purchases->this_year_purchase = $this->calculate_purchase('', '', true);
         
 
-        $order_count=DB::table('orders')->count();
-        $payments = DB::table('payments')->get();
-        $dailypayments = DB::table('payments')->whereDate('created_at', Carbon::today())->get();
-        
-        $customerCount =DB::table('customers')->count();
-
         $products = Product::where('stock','<','5')->get();
 
-        return view('dashboard.index',compact('order_count','payments','dailypayments','customerCount','products', 'purchases'));
+        return view('dashboard.index',compact('products', 'purchases'));
     }
 
 
