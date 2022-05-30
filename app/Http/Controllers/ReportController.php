@@ -76,6 +76,27 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function update_payment_amounts($customer_id)
+    {
+        $res = Payment::select(DB::raw('group_concat(order_id) as order_ids'))
+                            ->where('customer_id', $customer_id)
+                            ->where('status', '!=', 'paid')
+                            ->groupBy('customer_id')
+                            ->get();
+
+        $order_ids = array_map('intval', explode(',', $res[0]->order_ids));
+        
+        foreach($order_ids as $id)
+        {
+            $order_price = OrderItem::select(DB::raw('sum(price) as price'))->where('order_id', $id)->groupBy('order_id')->first()->price;
+            
+            Payment::where('order_id', $id)->update(['amount' => $order_price]);
+            
+        }
+        
+    }
+
     public function update(Request $request, $id)
     {
         if((int)$request->amount <= 0){
@@ -89,12 +110,17 @@ class ReportController extends Controller
         {
             
             $customer_id = $debt->customer_id;
+
+            $this->update_payment_amounts($customer_id);
+
             OrderItem::leftjoin('payments', 'order_items.order_id', 'payments.order_id')
                 ->where('status', '!=', 'paid')
                 ->where('customer_id', $customer_id)
                 ->update(['status' => 'paid']);
             
+
             $debt->debt_status = 'paid';
+            
         }
 
 

@@ -12,6 +12,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CartController;
+use Dotenv\Exception\ValidationException;
 
 class OrderController extends Controller
 {
@@ -216,25 +217,19 @@ class OrderController extends Controller
     {
         $this->authorize('order_crud');
         
-        try{
+        $request->validate([
+            'amount' => 'required | integer'
+        ]);
 
-            $request->validate([
-                'amount' => 'required'
-            ]);
+        $total_price = Order::where('id', $order->id)->first()->total();
+        $payment = Payment::where('order_id', $order->id)->first();
+        $payment->amount += (int)$request->amount;
 
-            $total_price = Order::where('id', $order->id)->first()->total();
-            $payment = Payment::where('order_id', $order->id)->first();
-            $payment->amount += (int)$request->amount;
-    
-            $payment_status = $this->calcStatus($total_price, $payment->amount);
-            $payment->status = $payment_status;
-            $payment->save();
-    
-            return redirect()->back()->with('success', 'Payment updated.');
-            
-        }catch (\Exception $e) {
-            $e->getMessage();
-          }
+        $payment_status = $this->calcStatus($total_price, $payment->amount);
+        $payment->status = $payment_status;
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Payment updated.');
     }
 
     /**
