@@ -21,17 +21,31 @@ class DashboardController extends Controller
     }
     public function index(){
 
-        $customer = Customer::firstOrCreate(
+        Customer::firstOrCreate(
             ['customer_name' => 'Walk-In Customer'],
             ['is_customer' => 0]
         );
+
+        Brand::firstOrCreate(
+            ['name' => 'default'],
+            ['description' => 'Default brand to use for no brand items.']
+        );
+
+
         $order_count=DB::table('orders')->count();
         $payments = DB::table('payments')->get();
         $dailypayments = DB::table('payments')->whereDate('created_at', Carbon::today())->get();
         
         $customerCount =DB::table('customers')->count();
+
+
         $products = Product::where('stock','<','5')->get();
-        
+
         return view('dashboard.index',compact('order_count','payments','dailypayments','customerCount','products'));
+    }
+
+    public function calculate_purchase()
+    {
+        
     }
 }

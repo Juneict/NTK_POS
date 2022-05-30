@@ -29,7 +29,7 @@
                               <th>No.</th>
                               <th>Customer Name</th>
                               <th>Total Amount</th>
-                              <th>Selling Amount</th>   
+                              <th>Received Amount</th>   
                               <th>Status</th>
                               <th>ID</th>
                               <th>DATE</th>

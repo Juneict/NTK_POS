@@ -48,7 +48,6 @@ class ProductController extends Controller
     {
         $this->authorize('product_crud');
 
-
         $p = Product::where('barcode', $request->barcode)->first();
         if($p) return redirect()->back()->with('error', 'Barcode already exists.');
 
@@ -56,6 +55,7 @@ class ProductController extends Controller
         $products->name = $request->name;
         $products->description = $request->description;
         $products->barcode = $request->barcode;
+        $products->purchase_price = $request->purchase_price;
         $products->price = $request->price;
         $products->stock =$request->stock;
         $products->size =$request->size;
