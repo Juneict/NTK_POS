@@ -15,7 +15,8 @@ class OrderItem extends Model
         'price',
         'quantity',
         'order_id',
-        'product_id'
+        'product_id',
+        'deleted'
     ];
     public function order(){
         return $this->belongsTo('App\Models\Order','order_id');

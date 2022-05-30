@@ -13,7 +13,8 @@ class Payment extends Model
     protected $fillable = [
         'amount',
         'order_id',
-        'customer_id'
+        'customer_id',
+        'deleted'
     ];
     
     public function order(){

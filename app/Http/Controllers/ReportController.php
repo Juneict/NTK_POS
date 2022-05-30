@@ -95,7 +95,6 @@ class ReportController extends Controller
                 ->update(['status' => 'paid']);
             
             $debt->debt_status = 'paid';
-
         }
 
 

@@ -30,6 +30,7 @@ class OrderController extends Controller
         ->leftjoin('order_items','orders.id','=','order_items.order_id')
         ->leftjoin('customers','orders.customer_id', '=', 'customers.id')
         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
+        ->where('orders.deleted', '=', 0)
         ->groupBy('orders.id','status', 'customers.customer_name', 'payments.amount','created_at')
         ->orderBy('orders.id', 'DESC')->get();
         
@@ -252,44 +253,44 @@ class OrderController extends Controller
             $pricesToSubstract = OrderItem::select(DB::raw('sum(price) as total_price'))
                     ->where('order_id', $id)->groupBy('order_id')->first()->total_price;
             
-            // return $pricesToSubstract;
             
             $details = Order::with('order_items', 'payments')->where('id', $id)->get();
+
             $items = $details[0]->order_items;
+            if(!$items) return redirect()->back()->with('error', 'Order items not found!');
+
             $payments = $details[0]->payments;
-            // return $payments;
+            if(!$payments) return redirect()->back()->with('error', 'Payments not found!');
             
+            // product stock recovered & order items delete
             foreach($items as $item)
             {
                 $product = Product::where('id', $item->product_id)->first();
                 $product->stock += $item->quantity;
                 $product->save();
 
-                $item->delete();
+                OrderItem::where('id', $item->id)->update(['deleted' => 1]);
             }
 
             
-            if( $payments ) {
-                
-                $debt = Debt::where('customer_id', $payments->customer_id)->where('debt_status', '!=', 'paid')->first();
+            // remove order payment from debt
+            $debt = Debt::where('customer_id', $payments->customer_id)->where('debt_status', '!=', 'paid')->first();
+            if($debt)
+            {
                 $new_total_price = $debt->total_amount - $pricesToSubstract;
                 $new_received = $debt->total_received - $payments->amount;
-                // return $new_received;
                 if($new_received == 0)
                 {
                     $debt->debt_status = 'paid';
                 }
-
+    
                 $debt->total_amount = $new_total_price;
                 $debt->total_received = $new_received;
                 $debt->save();
-                // return 'hi';
-
-                $payments->delete();
             }
-                
 
-            Order::where('id', $id)->delete();
+            Payment::where('id', $payments->id)->update(['deleted' => 1]);
+            Order::where('id', $id)->update(['deleted' => 1]);
             
             return redirect()->back()->with('success', 'order deleted successfully.');
 
