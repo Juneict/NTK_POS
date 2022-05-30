@@ -20,8 +20,8 @@ class ProductController extends Controller
     }
     public function index()
     {
-        $brands =Brand::all();
-        $categories =Category::all();
+        $brands =Brand::where('deleted','0')->get();
+        $categories =Category::where('deleted','0')->get();
         $products = Product::where('deleted','0')->get();
         
         return view('products.index',compact('products','brands','categories'));
