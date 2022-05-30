@@ -20,7 +20,9 @@ class CreateOrderItemsTable extends Migration
             $table->integer('quantity')->default(1);
             $table->foreignId('order_id');
             $table->foreignId('product_id');
-            $table->timestamps()->useCurrent()->useCurrentOnUpdate();
+            $table->boolean('deleted')->default(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             
             // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

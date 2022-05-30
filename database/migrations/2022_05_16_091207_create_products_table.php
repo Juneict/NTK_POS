@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->string('barcode')->unique();
+            $table->integer('purchase_price')->nullable();
             $table->integer('price');
             $table->integer('stock');
             $table->string('size')->nullable();
@@ -27,7 +28,8 @@ class CreateProductsTable extends Migration
             $table->integer('category_id');
             $table->boolean('status')->default(true);
             $table->boolean('deleted')->default(false);
-            $table->timestamps()->useCurrent()->useCurrentOnUpdate();;
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

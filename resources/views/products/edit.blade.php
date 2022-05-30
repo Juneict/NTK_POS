@@ -47,6 +47,10 @@
                   <input type="text" name="barcode" class="form-control" value="{{old('barcode',$product->barcode)}}">
                 </div>
                 <div class="form-group col-md-4">
+                  <label for="name">Purchase Price *</label>
+                  <input type="text" name="purchase_price" class="form-control" value="{{old('price',$product->purchase_price)}}">
+                </div>
+                <div class="form-group col-md-4">
                   <label for="name">Price *</label>
                   <input type="text" name="price" class="form-control" value="{{old('price',$product->price)}}">
                 </div>
@@ -54,6 +58,11 @@
                   <label for="name">Stock</label>
                   <input type="text" name="stock" class="form-control" value="{{old('stock',$product->stock)}}">
                 </div>
+                
+                <div class="form-group col-md-12">
+                  <label for="name">Description</label>
+                  <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description',$product->description)}}"></textarea>
+                </div>                      
                 <div class="form-group col-md-4">
                   <label for="status">Status</label>
                     <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
@@ -61,11 +70,6 @@
                         <option value="0" {{ $product->status == 0 ? 'selected' : ''}}>Inactive</option>
                     </select>
                 </div>
-                <div class="form-group col-md-12">
-                  <label for="name">Description</label>
-                  <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description',$product->description)}}"></textarea>
-                </div>                      
-               
               
               </div>                      
               <button class="btn btn-warning" type="submit">Update</button>

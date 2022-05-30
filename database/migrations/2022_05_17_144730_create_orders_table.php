@@ -17,9 +17,12 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('customer_id')->nullable();
             $table->foreignId('user_id');
-            $table->timestamps();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('deleted')->default(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            // $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
           
         });
     }

@@ -18,7 +18,8 @@ class CreateBrandsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('deleted')->default(false);
-            $table->timestamps()->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

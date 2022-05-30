@@ -244,16 +244,16 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        
+       
         $this->authorize('order_crud');
-
-        try{
-
+        
+        try{    
+           
             $pricesToSubstract = OrderItem::select(DB::raw('sum(price) as total_price'))
                     ->where('order_id', $id)->groupBy('order_id')->first()->total_price;
-
+            
             // return $pricesToSubstract;
-
+            
             $details = Order::with('order_items', 'payments')->where('id', $id)->get();
             $items = $details[0]->order_items;
             $payments = $details[0]->payments;
