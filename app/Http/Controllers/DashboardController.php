@@ -36,19 +36,15 @@ class DashboardController extends Controller
         $purchases->today_purchase = $this->calculate_purchase(true, '', '');
         $purchases->this_month_purchase = $this->calculate_purchase('', true, '');
         $purchases->this_year_purchase = $this->calculate_purchase('', '', true);
-        
 
-        $order_count=DB::table('orders')->count();
-        $payments = DB::table('payments')->get();
-        $dailypayments = DB::table('payments')->whereDate('created_at', Carbon::today())->get();
+        $sales = (object)[];
+        // $sales->total_sales = ;
         
-        $customerCount =DB::table('customers')->count();
 
         $products = Product::where('stock','<','5')->get();
 
-        return view('dashboard.index',compact('order_count','payments','dailypayments','customerCount','products', 'purchases'));
+        return view('dashboard.index',compact('products', 'purchases'));
     }
-
 
 
     public function calculate_purchase($today = '', $month = '', $year = '')
@@ -83,7 +79,7 @@ class DashboardController extends Controller
 
     public function sale()
     {
-
+        
     }
 
 }
