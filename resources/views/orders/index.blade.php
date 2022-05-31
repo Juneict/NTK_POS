@@ -57,7 +57,7 @@
                                   @endif
                                 </td>
                                 <td>{{$order->order_id}}</td>
-                                <td>{{$order->created_at}}</td>
+                                <td>{{$order->created_at->format('d-m-Y')}}</td>
                                 <td>
                                    
                                     <a href="/orders/{{$order->order_id}}"  class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>

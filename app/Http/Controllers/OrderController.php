@@ -178,12 +178,13 @@ class OrderController extends Controller
     public function show(Order $order)
     {
        
-        $orderdetail = Order::select('order_items.name','order_items.price','order_items.quantity','payments.amount')
+        $orderdetail = Order::select('order_items.name','order_items.price','products.price','order_items.quantity','payments.amount')
                         ->leftjoin('order_items', 'orders.id', '=', 'order_items.order_id')
                         ->leftjoin('products', 'order_items.product_id', '=', 'products.id')
                         ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
                         ->where('orders.id', $order->id)
                         ->get();
+        
         $total =Order::select(DB::raw('sum(order_items.price) as total_amount'))
                 ->leftjoin('order_items','orders.id','=','order_items.order_id')
                 ->groupBy('order_items.order_id','order_items.price')
