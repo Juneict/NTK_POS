@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="{{asset('/dist/css/adminlte.min.css')}}">
   <!-- datatable -->
   <link rel="stylesheet" href="{{asset('../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-  
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <style>
     .main-sidebar { background-color: #313140 !important }
     .main-header{background-color: #3C3C4E !important}

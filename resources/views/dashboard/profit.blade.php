@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-12 text-center">
                         <b>Today</b> : {{ number_format($stats->today_profit)}} ks <br>
                         <b>This Month</b> : {{ number_format($stats->this_month_profit)}} ks<br>
                         <b>This Year</b> : {{ number_format($stats->this_year_profit)}} ks<br>

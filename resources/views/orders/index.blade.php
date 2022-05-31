@@ -92,8 +92,9 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-    
-    $('#orders').DataTable({
+    $("#orders").DataTable({
+      
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
       "paging": true,
       "lengthChange": false,
       "searching": true,
@@ -102,7 +103,8 @@
       "pageLength":10,
       "autoWidth": false,
       "responsive": true,
-    });
+    }).buttons().container().appendTo('#orders_wrapper .col-md-6:eq(0)');
+  
     $('div.alert').delay(1000).slideUp(300);
   });
 
