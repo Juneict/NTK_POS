@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Debt;
+use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -36,20 +37,39 @@ class DashboardController extends Controller
 
         $stats = (object)[];
 
+        // Purchases
         $stats->total_purchase = $this->calculate_purchase();
         $stats->today_purchase = $this->calculate_purchase(true, '', '');
         $stats->this_month_purchase = $this->calculate_purchase('', true, '');
         $stats->this_year_purchase = $this->calculate_purchase('', '', true);
 
+        // Sales
         $stats->total_sale = $this->calculate_sale();
         $stats->today_sale = $this->calculate_sale(true, '', '');
         $stats->this_month_sale = $this->calculate_sale('', true, '');
         $stats->this_year_sale = $this->calculate_sale('', '', true);
 
+        // Dues
         $stats->total_due = $this->calculate_total_due();
 
-        // return $this->calculate_due(true, '', '');
+        $res = $this->calculate_due(true, '', '');
+        $stats->today_due = $res[0];
+        $stats->today_due_received = $res[1];
 
+        $res = $this->calculate_due('', true, '');
+        $stats->this_month_due = $res[0];
+        $stats->this_month_due_received = $res[1];
+
+        $res = $this->calculate_due('', '', true);
+        $stats->this_year_due = $res[0];
+        $stats->this_year_due_received = $res[1];
+
+        // Profits
+        $stats->total_profit = $this->calculate_profit();
+        $stats->today_profit = $this->calculate_profit(true, '', '');
+        $stats->this_month_profit = $this->calculate_profit('', true, '');
+        $stats->this_year_profit = $this->calculate_profit('', '', true);
+        
         $products = Product::where('stock','<','5')->get();
 
         return view('dashboard.index',compact('products', 'stats'));
@@ -91,14 +111,20 @@ class DashboardController extends Controller
         $sales = Payment::select(DB::raw('sum(amount) as sales'))
                         ->where('deleted', 0);
 
+        $d = Transaction::select(DB::raw('sum(amount) as due_received'))->where('deleted', 0);
+
         if($today)
         {
             $sales->whereDate('created_at', Carbon::today());
+            $d->whereDate('created_at', Carbon::today());
         }
 
         if($month)
         {
             $sales->whereMonth('created_at', date('m'))
+                    ->whereYear('created_at', date('Y'));
+
+            $d->whereMonth('created_at', date('m'))
                     ->whereYear('created_at', date('Y'));
         }
 
@@ -108,10 +134,17 @@ class DashboardController extends Controller
                 Carbon::now()->startOfYear(),
                 Carbon::now()->endOfYear(),
             ]);
+
+            $d->whereBetween('created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]);
             
         }
 
-        return $sales->first()->sales;
+        $sales = $sales->first()->sales;
+        $debt_received = $d->first()->due_received;
+        return $sales + $debt_received;
     }
 
     
@@ -121,85 +154,107 @@ class DashboardController extends Controller
     } 
 
 
-
     public function calculate_due($today = '', $month = '', $year = '')
     {
+        $due = Order::select(DB::raw('sum(order_price) - sum(amount) as dues'))
+                    ->leftjoin('payments', 'orders.id', 'payments.order_id')
+                    ->where('orders.deleted', 0)
+                    ->where('status', '!=', 'paid');
 
-        $q = Payment::select(DB::raw('distinct(amount), sum(price) as order_price, payments.order_id, payments.customer_id'))
-                        ->leftjoin('order_items', 'order_items.order_id', 'payments.order_id')
-                        ->where('status', '!=', 'paid')
-                        ->where('payments.deleted', 0);
+        $dr = Transaction::select(DB::raw('sum(amount) as due_received'))
+                        ->where('deleted', 0);
 
-        $t = Transaction::where('deleted', 0);
+        if($today)
+        {
+            $due->whereDate('orders.created_at', Carbon::today());
+            $dr->whereDate('created_at', Carbon::today());
+        }
+
+        if($month)
+        {
+            $due->whereMonth('orders.created_at', date('m'))
+                    ->whereYear('orders.created_at', date('Y'));
+
+            $dr->whereMonth('created_at', date('m'))
+                    ->whereYear('created_at', date('Y'));
+        }
+
+        if($year)
+        {
+            $due->whereBetween('orders.created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]);
+
+            $dr->whereBetween('created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]);
+            
+        }
+
+        $dues = $due->first()->dues;
+        $due_received = $dr->first()->due_received;
+        $dues_remain = $dues - $due_received;
+        
+        return array($dues_remain, $due_received);
+    }
+
+    // public function calculate_due_received($today = '', $month = '', $year = '')
+    // {
+    //     $due = Transaction::select(DB::raw('sum(amount) as due_received'))
+    //                 ->where('deleted', 0);
+
+    //     if($today)
+    //     {
+    //         $p->whereDate('order_items.created_at', Carbon::today());
+    //     }
+
+    //     if($month)
+    //     {
+    //         $p->whereMonth('order_items.created_at', date('m'))
+    //                 ->whereYear('order_items.created_at', date('Y'));
+
+    //     }
+
+    //     if($year)
+    //     {
+    //         $p->whereBetween('order_items.created_at', [
+    //             Carbon::now()->startOfYear(),
+    //             Carbon::now()->endOfYear(),
+    //         ]);
+    //     }
+    // }
+
+    
+    public function calculate_profit($today = '', $month = '', $year = '')
+    {
+        $p = OrderItem::select(DB::raw('sum((products.price - purchase_price) * quantity) as profit'))
+                        ->leftjoin('products', 'products.id', '=', 'order_items.product_id')
+                        ->where('order_items.deleted', 0)
+                        ->where('products.deleted', 0);
         
         if($today)
         {
-            $q->whereDate('payments.created_at', Carbon::today());
-            $t->whereDate('created_at', Carbon::today());
+            $p->whereDate('order_items.created_at', Carbon::today());
         }
-        
-        $orders = $q->groupBy('payments.order_id', 'payments.amount', 'payments.customer_id')->get();
-        $transactions = $t->get();
 
-        foreach($orders as $order)
+        if($month)
         {
-            $order->due = $order->order_price - $order->amount;
+            $p->whereMonth('order_items.created_at', date('m'))
+                    ->whereYear('order_items.created_at', date('Y'));
+
         }
-        
-        $formatted_orders = $this->create_array_format($orders);
-        return $transactions;
-    }
 
-
-    public function create_array_format($orders)
-    {
-        $arr = [];
-        foreach($orders as $order)
+        if($year)
         {
-            if(count($arr) == 0)
-            {
-                $obj = (object)[];
-                $obj->customer_id = $order->customer_id;
-                $obj->due = $order->due;
-
-                array_push($arr, $obj);
-            }
-            
-            
-            else
-            {
-                $updated = false;
-                foreach($arr as $i)
-                {
-                    if($i->customer_id == $order->customer_id)
-                    {
-                        $i->due += $order->due;
-                        $updated = true;
-                    }
-                }
-
-                if(!$updated)
-                {
-                    $obj = (object)[];
-                    $obj->customer_id = $order->customer_id;
-                    $obj->due = $order->due;
-                    array_push($arr, $obj);
-                }
-            }
-
+            $p->whereBetween('order_items.created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]);
         }
 
-        return $arr;
+        return $p->first()->profit;
     }
-
-
-    // public function findObjectByid($array, $id){
-
-    //     foreach ( $array as $element ) {
-    //         if ( $id == $element->customer_id ) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
+   
 }

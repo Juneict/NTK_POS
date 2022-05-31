@@ -69,7 +69,7 @@
               <!-- small box -->
               <div class="small-box">
                 <div class="inner">
-                  <h3> ks</h3>
+                  <h3>  {{ number_format($stats->total_profit)}} ks</h3>
   
                   <p>Total Profit</p>
                 </div>
