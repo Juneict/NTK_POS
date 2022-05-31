@@ -56,27 +56,6 @@
 <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="/plugins/select2/js/select2.full.min.js"></script>
-<script>
-
-  console.log(document.querySelectorAll(".nav-item"));
-  // const cart_nav = document.querySelector('.nav-cart');
-  // cart_nav.addEventListener('click', function(e){
-  //   e.preventDefault();
-    
-  //   cart_nav.href = 'http://127.0.0.1:8000/cart';
-
-  // })
-    // $('.nav-item').click(function (event) {
-    //     // Avoid the link click from loading a new page
-    //     event.preventDefault();
-
-    //     // Load the content from the link's href attribute
-    //     $('.content').load($(this).attr('href'));
-    // });
-
-    
-</script>
-
 </body>
 </html>
 
