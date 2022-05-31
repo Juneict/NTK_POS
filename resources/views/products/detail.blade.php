@@ -13,7 +13,9 @@
               <div class="col-md-4">
                   <b>Barcode</b> : {{$product->barcode}} <br>
                   <b>Price</b> : {{$product->price}} ks<br>
+                  @can('product_crud')
                   <b>Purchase Price</b>:{{$product->purchase_price}} ks <br>
+                  @endcan
                   <b>Size</b> :{{$product->size}} <br>
                  
                   <b>Color</b> :{{$product->color}}

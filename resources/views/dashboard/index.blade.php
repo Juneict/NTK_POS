@@ -26,7 +26,7 @@
                 <div class="inner">
                   <h3>{{ number_format($stats->total_purchase)}} ks</h3>
   
-                  <p>Total Purchase Price </p>
+                  <p>Total Purchase </p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -80,6 +80,21 @@
               </div>
             </div>
             <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box">
+                <div class="inner">
+                  <h3> ks</h3>
+  
+                  <p>Overall Stock Prices </p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="" data-toggle="modal" data-target="#detailProfit" class="small-box-footer bg-danger">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
           </div>
           <div class="card">
             <div class="card-header border-transparent">
@@ -96,8 +111,8 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-              <div class="table-responsive">
-              <table id="customers" class="table">
+              <div class="table-responsive"  style="height: 200px;">
+              <table id="customers" class="table table-head-fixed text-nowrap">
                 <thead>
                     <tr>
                       <th>#</th>

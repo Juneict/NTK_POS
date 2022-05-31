@@ -41,7 +41,9 @@
                     <th>Description</th>
                     <th>Barcode</th>
                     <th>Stock</th>
+                    @can('product_crud')
                     <th>Purchase Price</th>
+                    @endcan
                     <th>Price</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -56,7 +58,9 @@
                         <td>{{$product->description}}</td>
                         <td>{{$product->barcode}}</td>
                         <td>{{$product->stock}}</td>
+                        @can('product_crud')
                         <td>{{number_format($product->purchase_price)}} ks</td>
+                        @endcan
                         <td>{{number_format($product->price)}} ks</td>
                         <td><span
                             class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>
@@ -114,17 +118,19 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-   
-    $('#products').DataTable({
-      "paging": true,
+    $("#products").DataTable({
+      
+      "buttons": ["copy", "csv", "excel", "pdf", "print","colvis"],
+      "paging": false,
       "lengthChange": false,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": true,
-      "pageLength":8,
+      
       "autoWidth": false,
       "responsive": true,
-    });
+    }).buttons().container().appendTo('#products_wrapper .col-md-6:eq(0)');
+   
     $('div.alert').delay(3000).slideUp(300);
   });
   
