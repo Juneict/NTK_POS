@@ -124,6 +124,11 @@ class ReportController extends Controller
         $debt->total_received = $updated_amount;
         $debt->save();
 
+        Payment::leftjoin('orders', 'orders.id', 'payments.order_id')
+                ->where('status', '!=', 'paid')
+                ->where('orders.deleted', 0)
+                ->update(['paying' => 1]);
+
         Transaction::insert([
             'debt_id' => $id,
             'customer_id' => $debt->customer_id,

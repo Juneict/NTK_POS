@@ -125,20 +125,81 @@ class DashboardController extends Controller
     public function calculate_due($today = '', $month = '', $year = '')
     {
 
-        $res = Payment::leftjoin('order_items', 'order_items.order_id', 'payments.order_id')
-                        ->where('payments.deleted', 0)
-                        ->where('status', '!=', 'paid');
-                        // ->whereDate('payments.updated_at', Carbon::today())->get();
+        $q = Payment::select(DB::raw('distinct(amount), sum(price) as order_price, payments.order_id, payments.customer_id'))
+                        ->leftjoin('order_items', 'order_items.order_id', 'payments.order_id')
+                        ->where('status', '!=', 'paid')
+                        ->where('payments.deleted', 0);
 
-
+        $t = Transaction::where('deleted', 0);
+        
         if($today)
         {
-            $res->whereDate('payments.updated_at', Carbon::today());
+            $q->whereDate('payments.created_at', Carbon::today());
+            $t->whereDate('created_at', Carbon::today());
         }
         
-        $res->get();
-        return $res;
+        $orders = $q->groupBy('payments.order_id', 'payments.amount', 'payments.customer_id')->get();
+        $transactions = $t->get();
+
+        foreach($orders as $order)
+        {
+            $order->due = $order->order_price - $order->amount;
+        }
         
+        $formatted_orders = $this->create_array_format($orders);
+        return $transactions;
     }
 
+
+    public function create_array_format($orders)
+    {
+        $arr = [];
+        foreach($orders as $order)
+        {
+            if(count($arr) == 0)
+            {
+                $obj = (object)[];
+                $obj->customer_id = $order->customer_id;
+                $obj->due = $order->due;
+
+                array_push($arr, $obj);
+            }
+            
+            
+            else
+            {
+                $updated = false;
+                foreach($arr as $i)
+                {
+                    if($i->customer_id == $order->customer_id)
+                    {
+                        $i->due += $order->due;
+                        $updated = true;
+                    }
+                }
+
+                if(!$updated)
+                {
+                    $obj = (object)[];
+                    $obj->customer_id = $order->customer_id;
+                    $obj->due = $order->due;
+                    array_push($arr, $obj);
+                }
+            }
+
+        }
+
+        return $arr;
+    }
+
+
+    // public function findObjectByid($array, $id){
+
+    //     foreach ( $array as $element ) {
+    //         if ( $id == $element->customer_id ) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 }
