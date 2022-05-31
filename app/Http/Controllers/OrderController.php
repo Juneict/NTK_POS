@@ -71,13 +71,13 @@ class OrderController extends Controller
                 'payment_amount' => 'required',
             ]);
             
+            
             $user_id = $req->user()->id;
-        
-            $order = Order::create([
-                'customer_id' => $req->customer_id,
-                'user_id' => $user_id
-            ]);
 
+            $order = new Order;
+            $order->customer_id = $req->customer_id;
+            $order->user_id = $user_id;
+            $order->save();
             
             $items = array();
             for($i = 0; $i < count($req->product_id); $i++)
@@ -92,7 +92,7 @@ class OrderController extends Controller
                 array_push($items, $tmp);
             }
 
-            $result = OrderItem::insert($items);
+            OrderItem::insert($items);
            
             for($i = 0; $i < count($req->product_id); $i++)
             {
@@ -104,9 +104,12 @@ class OrderController extends Controller
             }
             
             $total_price = (int)$order->total();
+
+            Order::where('id', $order->id)->update(['order_price' => $total_price]);
+            
             $payment_status = $this->calcStatus($total_price, (int)$req->payment_amount);
            
-            $payment = Payment::insert([
+            Payment::insert([
                 'amount' => $req->payment_amount,
                 'order_id' => $order->id,
                 'customer_id' => $req->customer_id,
@@ -243,6 +246,13 @@ class OrderController extends Controller
         $this->authorize('order_crud');
         
         try{    
+
+            $paying = Order::select('paying')->where('id', $id)->first()->paying;
+            if($paying == 1)
+            {
+                return redirect()->back()->with('error', 'Paying in progress, cannot return!');
+            }
+            
            
             $pricesToSubstract = OrderItem::select(DB::raw('sum(price) as total_price'))
                     ->where('order_id', $id)->groupBy('order_id')->first()->total_price;

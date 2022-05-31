@@ -48,7 +48,7 @@ class ProductController extends Controller
     {
         $this->authorize('product_crud');
 
-        $p = Product::where('barcode', $request->barcode)->first();
+        $p = Product::where('deleted', 0)->where('barcode', $request->barcode)->first();
         if($p) return redirect()->back()->with('error', 'Barcode already exists.');
 
         $products  = new Product;
