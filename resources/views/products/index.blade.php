@@ -123,7 +123,7 @@
       "buttons": ["copy", "csv", "excel", "pdf", "print","colvis"],
       "paging": false,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       

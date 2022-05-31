@@ -80,21 +80,6 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box">
-                <div class="inner">
-                  <h3> ks</h3>
-  
-                  <p>Overall Stock Prices </p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="" data-toggle="modal" data-target="#detailProfit" class="small-box-footer bg-danger">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
           </div>
           <div class="card">
             <div class="card-header border-transparent">
