@@ -41,6 +41,7 @@
                     <th>Description</th>
                     <th>Barcode</th>
                     <th>Stock</th>
+                    <th>Purchase Price</th>
                     <th>Price</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -55,6 +56,7 @@
                         <td>{{$product->description}}</td>
                         <td>{{$product->barcode}}</td>
                         <td>{{$product->stock}}</td>
+                        <td>{{number_format($product->purchase_price)}} ks</td>
                         <td>{{number_format($product->price)}} ks</td>
                         <td><span
                             class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span></td>
@@ -84,6 +86,7 @@
                 <tr>
                   <th colspan="5" class="text-center">Total Stock Price</th>
                   <th> ks</th>
+                  <th></th>
                   <th></th>
                   <th></th>
                 </tr>
