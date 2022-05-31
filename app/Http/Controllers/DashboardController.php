@@ -200,32 +200,6 @@ class DashboardController extends Controller
         return array($dues_remain, $due_received);
     }
 
-    // public function calculate_due_received($today = '', $month = '', $year = '')
-    // {
-    //     $due = Transaction::select(DB::raw('sum(amount) as due_received'))
-    //                 ->where('deleted', 0);
-
-    //     if($today)
-    //     {
-    //         $p->whereDate('order_items.created_at', Carbon::today());
-    //     }
-
-    //     if($month)
-    //     {
-    //         $p->whereMonth('order_items.created_at', date('m'))
-    //                 ->whereYear('order_items.created_at', date('Y'));
-
-    //     }
-
-    //     if($year)
-    //     {
-    //         $p->whereBetween('order_items.created_at', [
-    //             Carbon::now()->startOfYear(),
-    //             Carbon::now()->endOfYear(),
-    //         ]);
-    //     }
-    // }
-
     
     public function calculate_profit($today = '', $month = '', $year = '')
     {
