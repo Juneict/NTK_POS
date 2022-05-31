@@ -12,9 +12,9 @@
                 <div class="row"> 
                     <div class="col-md-6">
                         <h4>Due</h4>
-                        <b>Today</b> :  <br>
-                        <b>This Month</b> : <br>
-                        <b>This Year</b> : <br>
+                        {{-- <b>Today</b> : {{ number_format($stats->today_due)}} ks <br> --}}
+                        {{-- <b>This Month</b> : {{ number_format($stats->this_month_due)}} ks<br> --}}
+                        {{-- <b>This Year</b> : {{ number_format($stats->this_year_due)}} ks<br> --}}
                     </div>    
                     <div class="col-md-6">
                         <h4>Due Received</h4>

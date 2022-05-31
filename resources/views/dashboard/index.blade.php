@@ -24,7 +24,7 @@
               <!-- small box -->
               <div class="small-box ">
                 <div class="inner">
-                  <h3>{{ number_format($purchases->total_purchase)}} ks</h3>
+                  <h3>{{ number_format($stats->total_purchase)}} ks</h3>
   
                   <p>Total Purchase Price </p>
                 </div>
@@ -39,7 +39,7 @@
               <!-- small box -->
               <div class="small-box">
                 <div class="inner">
-                  <h3>ks</h3>
+                  <h3>{{ number_format($stats->total_sale)}}ks</h3>
   
                   <p>Total Sales</p>
                 </div>
@@ -54,7 +54,7 @@
               <!-- small box -->
               <div class="small-box ">
                 <div class="inner">
-                  <h3> ks</h3>
+                  <h3> {{ number_format($stats->total_due)}} ks</h3>
   
                   <p>Total Due</p>
                 </div>

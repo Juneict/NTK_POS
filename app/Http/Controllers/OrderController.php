@@ -61,7 +61,6 @@ class OrderController extends Controller
 
         // some changes
         try {    
-
             
             $req->validate([
                 'customer_id' => 'required',
