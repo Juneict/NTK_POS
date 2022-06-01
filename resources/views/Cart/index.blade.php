@@ -33,7 +33,7 @@
                                           {{-- barcode end --}}
 
                                           {{-- customer --}}
-                                          <div class="input-group col-md-8">
+                                          <div class="input-group col-md-7">
                                             <select name="customer_id"  class="form-control customer-list">
                                               {{-- <option value="1" class="form-control">Walk-in Customer</option> --}}
                                                 @foreach($customers as $customer)
@@ -42,7 +42,9 @@
                                             </select>
                                           </div>
                                           
-                                          
+                                          <div class="input-group col-md-1">
+                                            <a href=""data-toggle="modal" data-target="#createCustomer" class="btn btn-success" style="float:right; height:35px">+</a>
+                                          </div>
                                           {{-- customer end--}}
 
                                           {{-- cart --}}
@@ -154,6 +156,7 @@
     {{-- endmodal --}}
     </form>
 </div>
+@include('customers.create')
 @endsection
 <script src="/plugins/jquery/jquery.min.js"></script>
 

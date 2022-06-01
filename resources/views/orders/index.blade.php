@@ -92,8 +92,7 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script>
      $(function () {
-    $("#orders").DataTable({
-      
+    $("#orders").DataTable({ 
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
       "paging": true,
       "lengthChange": false,
