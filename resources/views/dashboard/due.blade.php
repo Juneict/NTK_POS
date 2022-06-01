@@ -12,15 +12,15 @@
                 <div class="row"> 
                     <div class="col-md-6">
                         <h4>Due</h4>
-                        <b>Today</b> : {{ number_format($stats->today_due)}} ks <br>
-                        <b>This Month</b> : {{ number_format($stats->this_month_due)}} ks<br>
-                        <b>This Year</b> : {{ number_format($stats->this_year_due)}} ks<br>
+                        <b>Today</b> : {{ $stats->today_due ? number_format($stats->today_due) : 0}} ks <br>
+                        <b>This Month</b> : {{ $stats->this_month_due ? number_format($stats->this_month_due) : 0}} ks<br>
+                        <b>This Year</b> : {{ $stats->this_year_due ? number_format($stats->this_year_due) : 0}} ks<br>
                     </div>    
                     <div class="col-md-6">
                         <h4>Due Received</h4>
-                        <b>Today</b> : {{ number_format($stats->today_due_received)}} ks <br>
-                        <b>This Month</b> : {{ number_format($stats->this_month_due_received)}} ks<br>
-                        <b>This Year</b> : {{ number_format($stats->this_year_due_received)}} ks<br>
+                        <b>Today</b> : {{ $stats->today_due_received ? number_format($stats->today_due_received) : 0}} ks <br>
+                        <b>This Month</b> : {{ $stats->this_month_due_received ? number_format($stats->this_month_due_received) : 0}} ks<br>
+                        <b>This Year</b> : {{ $stats->this_year_due_received ? number_format($stats->this_year_due_received) : 0}} ks<br>
                     </div>         
                 </div>
             </div>  

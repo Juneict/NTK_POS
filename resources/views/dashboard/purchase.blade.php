@@ -11,9 +11,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        </i> <b>Today </b> : {{$stats->today_purchase}}  ks <br>
-                        <b>This Month</b>: {{$stats->this_month_purchase}} ks  <br>
-                        <b>This Year</b> :  {{$stats->this_year_purchase }} ks<br>
+                        </i> <b>Today </b> : {{$stats->today_purchase ? number_format($stats->today_purchase) : 0}}  ks <br>
+                        <b>This Month</b>: {{$stats->this_month_purchase ? number_format($stats->this_month_purchase) : 0}} ks  <br>
+                        <b>This Year</b> :  {{$stats->this_year_purchase ? number_format($stats->this_year_purchase) : 0 }} ks<br>
                     </div>            
                 </div>
             </div>  
