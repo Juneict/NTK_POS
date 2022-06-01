@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('debt_id')->nullable();
             $table->integer('customer_id')->nullable();
             $table->integer('amount')->nullable();
+            $table->boolean('deleted')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
