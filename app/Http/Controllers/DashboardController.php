@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Brand;
 use App\Models\Order;
 use App\Models\Product;
@@ -12,9 +11,7 @@ use App\Models\Debt;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 
 class DashboardController extends Controller
