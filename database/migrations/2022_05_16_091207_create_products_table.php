@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->string('barcode')->unique();
+            $table->string('barcode')->nullable();
             $table->integer('purchase_price')->nullable();
             $table->integer('price');
             $table->integer('stock');

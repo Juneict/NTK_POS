@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('customer_id')->nullable();
             $table->foreignId('user_id');
             $table->boolean('deleted')->default(false);
-            $table->integer('order_price')->nullabe();
+            $table->integer('order_price')->nullable();
             $table->boolean('paying')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
