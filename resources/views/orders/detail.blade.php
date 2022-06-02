@@ -106,6 +106,12 @@
                 </div>
             </div>
           <!-- /.col-md-6 -->
+            <div class="row no-print pl-3">
+                <div class="col-md-12">
+                    <a href="/orders/invoice/{{$order->id}}" class="btn btn-success mr-3"><i class="fa fa-print"></i> Print</a>
+                </div>
+            </div>
+        
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->

@@ -89,7 +89,7 @@ class CustomerController extends Controller
         if (!$customer) {
             return redirect()->back()->with('error', 'Sorry, there a problem while updating customer.');
         }
-        return redirect()->route('customers.index')->with('success', 'Success, you customer have been updated.');
+        return redirect()->back()->with('success', 'Success, you customer have been updated.');
     }
 
     /**
