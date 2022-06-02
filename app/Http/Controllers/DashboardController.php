@@ -161,13 +161,18 @@ class DashboardController extends Controller
                     ->where('orders.deleted', 0)
                     ->where('status', '!=', 'paid');
 
-        $dr = Transaction::select(DB::raw('sum(amount) as due_received'))
-                        ->where('deleted', 0);
+        // $dr = Transaction::select(DB::raw('sum(amount) as due_received'))
+        //                 ->where('deleted', 0);
+
+        $dr = Debt::select(DB::raw('sum(amount) as due_received'))
+                ->leftjoin('transactions', 'debts.id', '=', 'transactions.debt_id')
+                ->where('debt_status', '!=', 'paid')
+                ->where('transactions.deleted', 0);
 
         if($today)
         {
             $due->whereDate('orders.created_at', Carbon::today());
-            $dr->whereDate('created_at', Carbon::today());
+            $dr->whereDate('transactions.created_at', Carbon::today());
         }
 
         if($month)
@@ -175,8 +180,8 @@ class DashboardController extends Controller
             $due->whereMonth('orders.created_at', date('m'))
                     ->whereYear('orders.created_at', date('Y'));
 
-            $dr->whereMonth('created_at', date('m'))
-                    ->whereYear('created_at', date('Y'));
+            $dr->whereMonth('transactions.created_at', date('m'))
+                    ->whereYear('transactions.created_at', date('Y'));
         }
 
         if($year)
@@ -186,7 +191,7 @@ class DashboardController extends Controller
                 Carbon::now()->endOfYear(),
             ]);
 
-            $dr->whereBetween('created_at', [
+            $dr->whereBetween('transactions.created_at', [
                 Carbon::now()->startOfYear(),
                 Carbon::now()->endOfYear(),
             ]);

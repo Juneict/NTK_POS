@@ -12,7 +12,8 @@ window.onload = () => {
     const clearCartBtn = document.querySelector(".clear-cart");
     const customerList = document.querySelector(".customer-list");
     const sendBtn = document.querySelector(".btn-send");
-    const alertMsg = document.querySelector(".alert-success");
+    const alertMsg = document.querySelector(".success");
+    const alertDanger = document.querySelector(".danger");
     const itemAlertMsg = document.querySelector(".alert-outofstock");
 
     const enableButton = () =>
@@ -25,7 +26,7 @@ window.onload = () => {
             e.preventDefault();
 
             const item = products.find(
-                (cur) => +cur.barcode === +barcodeInput.value
+                (cur) => cur.barcode === barcodeInput.value
             );
 
             if (!item) {
@@ -346,6 +347,12 @@ window.onload = () => {
 
         setTimeout(() => {
             alertMsg.style.display = "none";
+        }, 1000);
+    }
+
+    if (alertDanger) {
+        setTimeout(() => {
+            alertDanger.style.display = "none";
         }, 1000);
     }
 

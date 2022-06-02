@@ -62,15 +62,10 @@ class OrderController extends Controller
         // some changes
         try {    
             
-            $req->validate([
-                'customer_id' => 'required',
-                'product_id' => 'required|array',
-                'item_name' => 'required|array',
-                'quantity' => 'required|array',
-                'item_price' => 'required|array',
-                'payment_amount' => 'required',
-            ]);
-            
+            if(is_null($req->payment_amount))
+            {
+                return redirect()->back()->with('error', 'Fill some payment amount.');
+            }
             
             $user_id = $req->user()->id;
 
