@@ -303,5 +303,9 @@ class OrderController extends Controller
             $e->getMessage();
         }
     }
+    public function invoice(Order $order){
+        return $order;
+        return view('orders.invoice',compact('order'));
+    }
 
 }

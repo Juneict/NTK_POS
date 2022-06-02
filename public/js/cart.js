@@ -2,6 +2,7 @@ window.onload = () => {
     products = JSON.parse(products);
     customers = JSON.parse(customers);
 
+
     const barcodeInput = document.querySelector(".search-barcode");
     const cartContainer = document.querySelector(".cart-container");
     const cart = document.querySelector(".cart");
@@ -15,6 +16,9 @@ window.onload = () => {
     const alertMsg = document.querySelector(".alert-success");
     const itemAlertMsg = document.querySelector(".alert-outofstock");
 
+    console.log(products);
+    // return;
+
     const enableButton = () =>
         proceedBtn.style.removeProperty("pointer-events");
     const disableButton = () =>
@@ -25,7 +29,7 @@ window.onload = () => {
             e.preventDefault();
 
             const item = products.find(
-                (cur) => +cur.barcode === +barcodeInput.value
+                (cur) => cur.barcode === barcodeInput.value
             );
 
             if (!item) {

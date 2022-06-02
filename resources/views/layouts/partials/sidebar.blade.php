@@ -24,12 +24,15 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
             <ul class="nav nav-treeview">
+
+              @can('user_management')
               <li class="nav-item">
                 <a href="{{route('dashboard')}}" class="nav-link {{ Request::segment(1) == 'dashboard' ? 'active' : ''}}">
                   <i class="fas fa-tachometer-alt nav-icon"></i>
                   <p >Dashboard</p>
                 </a>
               </li>
+              @endcan
 
               @can('user_management')
 

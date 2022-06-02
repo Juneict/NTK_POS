@@ -39,7 +39,7 @@ Route::get('/login/owner', [LoginController::class, 'index'])->name('user.login'
 
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+    Route::get('/orders/invoice/{order}',[OrderController::class,'invoice'])->name('invoice');
     Route::resource('/orders', OrderController::class);
     Route::resource('/customers', CustomerController::class);
     Route::resource('/products', ProductController::class);
