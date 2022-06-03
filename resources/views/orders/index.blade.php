@@ -71,7 +71,7 @@
                                     @endcan        
                                 </td>  
                               </tr>
-                              @include('orders.invoice')
+                              
                               @include('orders.delete')
                               @include('orders.edit')
                             @endforeach  

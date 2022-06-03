@@ -299,8 +299,18 @@ class OrderController extends Controller
         }
     }
     public function invoice(Order $order){
-        return $order;
-        return view('orders.invoice',compact('order'));
+        $orderdetail = Order::select('order_items.name','order_items.price','products.price','order_items.quantity','payments.amount')
+        ->leftjoin('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->leftjoin('products', 'order_items.product_id', '=', 'products.id')
+        ->leftjoin('payments', 'orders.id', '=', 'payments.order_id')
+        ->where('orders.id', $order->id)
+        ->get();
+        $total =Order::select(DB::raw('sum(order_items.price) as total_amount'))
+                ->leftjoin('order_items','orders.id','=','order_items.order_id')
+                ->groupBy('order_items.order_id','order_items.price')
+                ->where('orders.id',$order->id)->get();
+        $totalamount =$total->sum('total_amount');
+        return view('orders.invoice',compact('order','orderdetail','totalamount'));
     }
 
 }
