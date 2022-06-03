@@ -91,7 +91,7 @@
           <div class="col-cus-info">
               <ul>
                   <li>Customer : {{$order->customers->customer_name}}</li>
-                  <li>Address : {{$order->customers->phone}} </li>
+                  <li>Phone : {{$order->customers->phone}} </li>
               </ul>
              
           </div>

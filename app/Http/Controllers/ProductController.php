@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -50,9 +51,15 @@ class ProductController extends Controller
 
         $p = Product::where('deleted', 0)->where('barcode', $request->barcode)->first();
         if($p) return redirect()->back()->with('error', 'Barcode already exists.');
+        $image_path = '';
 
+        if ($request->hasFile('image')) {
+            $image_path = $request->file('image')->store('products', 'public');
+        }
         $products  = new Product;
+       
         $products->name = $request->name;
+        $products->image =$image_path;
         $products->description = $request->description;
         $products->barcode = $request->barcode;
         $products->purchase_price = $request->purchase_price;
@@ -104,7 +111,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-       
+        
         $this->authorize('product_crud');
 
         $product->name =$request->name;
@@ -118,7 +125,17 @@ class ProductController extends Controller
         $product->status =$request->status;
         $product->brand_id =$request->brand_id;
         $product->category_id =$request->category_id;
-        $product->save();
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($product->image) {
+                Storage::delete($product->image);
+            }
+            // Store image
+            $image_path = $request->file('image')->store('products', 'public');
+            // Save to Database
+            $product->image = $image_path;
+        }
+       
         if (!$product->save()) {
             return redirect()->back()->with('error', 'Sorry, there\'re a problem while updating product.');
         }

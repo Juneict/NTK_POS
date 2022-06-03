@@ -112,7 +112,7 @@
                                             </div> --}}
                                               <div class="card">
                                                   <div class="card-body" style="height: 150px">
-                                                    <img src="/dist/img/product.png" class="card-img-top"  alt="">
+                                                    <img class="product-img" src="{{ Storage::url($product->image) }}" width="60px" alt="">
                                                     <p style="text-align: center; margin-top:3px"><small> {{$product->name}}({{$product->barcode}}) </small> </p>                                               
                                                   </div>
                                               </div>
