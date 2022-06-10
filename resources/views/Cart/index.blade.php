@@ -109,7 +109,7 @@
                                     @foreach($productlists as $product)
                                         
                                           <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center search-item" data-id="{{ $product->id }}">
-                                            {{-- <div class="product" style="height: 40px,width:150px">
+                                            {{-- <div class="product" style="height: 40px,width =150px">
                                                 <img src="/dist/img/product1.png" alt="" width="60px">
                                                 <p><small>{{$product->name}}({{$product->barcode}})</small> </p>
                                             </div> --}}

@@ -47,6 +47,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+    
         $this->authorize('product_crud');
 
         $p = Product::where('deleted', 0)->where('barcode', $request->barcode)->first();
@@ -111,9 +112,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        
+       
         $this->authorize('product_crud');
-
+    
         $product->name =$request->name;
         $product->description = $request->description;
         $product->barcode = $request->barcode;

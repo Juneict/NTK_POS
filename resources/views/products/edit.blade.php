@@ -14,6 +14,10 @@
               @method('PUT')
               <div class="row">
                 <div class="form-group col-md-4">
+                  <label for="name">Product Name *</label>
+                  <input type="text" name="name" class="form-control" value="{{old('name',$product->name)}}">
+                </div>
+                <div class="form-group col-md-4">
                   <label for="">Brand Select*</label>
                   <select name="brand_id" id="" class="form-control">
                       @foreach( $brands as $brand)
@@ -30,10 +34,7 @@
                       @endforeach
                   </select>
                  </div> 
-                <div class="form-group col-md-4">
-                  <label for="name">Product Name *</label>
-                  <input type="text" name="name" class="form-control" value="{{old('name',$product->name)}}">
-                </div>
+                
                 <div class="form-group col-md-4">
                   <label for="name">Size</label>
                   <input type="text" name="size" class="form-control" value="{{old('size',$product->size)}}">
@@ -74,7 +75,7 @@
                       <strong>{{ $message }}</strong>
                   </span>
                   @enderror
-                </div>                
+                </div>               
                 <div class="form-group col-md-4">
                   <label for="status">Status</label>
                     <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">

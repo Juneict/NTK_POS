@@ -62,13 +62,14 @@
                   <label for="name">Description</label>
                   <textarea class="form-control" name="description" id="" cols="3" rows="2" value="{{old('description')}}"></textarea>
                 </div>  
-                <div class="form-group col-md-12">
+                <div class="form-group">
                     <label for="image">Image</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="image" id="image">
                         <label class="custom-file-label" for="image">Choose file</label>
                     </div>
-                </div>                       
+                </div>
+        
                 <div class="form-group col-md-4">
                   <label for="status">Status</label>
                     <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
