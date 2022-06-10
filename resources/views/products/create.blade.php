@@ -12,6 +12,10 @@
               @csrf
               <div class="row">
                 <div class="form-group col-md-4">
+                  <label for="name">Product Name *</label>
+                  <input type="text" name="name" class="form-control" value="{{old('name')}}" required>
+                </div>   
+                <div class="form-group col-md-4">
                   <label for="">Brand Select*</label>
                   <select name="brand_id" id="" class="form-control">
                       @foreach( $brands as $brand)
@@ -28,10 +32,7 @@
                       @endforeach
                   </select>
                  </div> 
-                <div class="form-group col-md-4">
-                  <label for="name">Product Name *</label>
-                  <input type="text" name="name" class="form-control" value="{{old('name')}}" required>
-                </div>    
+                 
                 <div class="form-group col-md-4">  
                   <label for="">Size</label>
                   <input type="text" name="color" class="form-control" value="{{old('color')}}">

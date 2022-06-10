@@ -45,11 +45,14 @@
                                                 <option value="{{$customer->id}}" class="form-control">{{$customer->customer_name}}</option>
                                                 @endforeach
                                             </select>
+                                            <span class="form-group-append"> 
+                                              <a href=""data-toggle="modal" data-target="#createCustomer" class="btn btn-success" style="float:right; height:38px">+</a>
+                                            </span>
                                           </div>
                                           
-                                          <div class="input-group col-md-1">
+                                          <!-- <div class="input-group col-md-1">
                                             <a href=""data-toggle="modal" data-target="#createCustomer" class="btn btn-success" style="float:right; height:35px">+</a>
-                                          </div>
+                                          </div> -->
                                           {{-- customer end--}}
 
                                           {{-- cart --}}
