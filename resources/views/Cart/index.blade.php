@@ -109,10 +109,10 @@
                                     @foreach($productlists as $product)
                                         
                                           <div class="col-md-2 col-lg-2 col-sm-6 justify-content-center search-item" data-id="{{ $product->id }}">
-                                            {{-- <div class="product" style="height: 40px,width =150px">
+                                           <!-- <div class="product" style="height: 40px,width =150px">
                                                 <img src="/dist/img/product1.png" alt="" width="60px">
                                                 <p><small>{{$product->name}}({{$product->barcode}})</small> </p>
-                                            </div> --}}
+                                            </div> -->
                                               <div class="card">
                                                   <div class="card-body" style="height: 150px">
                                                     <img class="product-img" src="{{ Storage::url($product->image) }}" width="60px" alt="">
@@ -169,12 +169,8 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 
 <script type="text/javascript">
-
   let products = '<?= $products ?>';
   let customers = '<?= $customers ?>';
-
 </script>
 
 <script type="text/javascript" src="{{ asset('js/cart.js') }}"></script>
-
-

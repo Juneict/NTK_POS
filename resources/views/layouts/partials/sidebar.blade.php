@@ -33,8 +33,7 @@
                 </a>
               </li>
               @endcan
-
-              @can('user_management')
+               @can('user_management')
 
               <li class="nav-item">
                 <a href="{{route('users.index')}}" class="nav-link {{ Request::segment(1) == 'users' ? 'active' : ''}}">
@@ -45,7 +44,7 @@
 
               @endcan
 
-              <li class="nav-item menu-is-opening menu-open">
+              {{-- <li class="nav-item menu-is-opening menu-open">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-warehouse"></i>
                   <p>
@@ -73,6 +72,36 @@
                     </a>
                   </li>
                 </ul>
+              </li> --}}
+              
+              <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-warehouse"></i>
+                    <p>
+                      Inventory
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item" style="margin-left: 15px">
+                      <a href="{{route('brands.index')}}" class="nav-link {{ Request::segment(1) == 'brands' ? 'active' : ''}}">
+                        <i class="fas fa-star nav-icon"></i>
+                        <p>Brands</p>
+                      </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 15px">
+                      <a href="{{route('categories.index')}}" class="nav-link {{ Request::segment(1) == 'categories' ? 'active' : ''}}">
+                        <i class="fas fa-list nav-icon"></i>
+                        <p>Categories</p>
+                      </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 15px">
+                      <a href="{{route('products.index')}}" class="nav-link {{ Request::segment(1) == 'products' ? 'active' : ''}}">
+                        <i class="fas fa-box-open nav-icon"></i>
+                        <p>Products</p>
+                      </a>
+                    </li>
+                  </ul>
               </li>
 
               <li class="nav-item">
