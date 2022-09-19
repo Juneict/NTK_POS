@@ -1,14 +1,38 @@
-<h1> InnoSYS POS SYSTEM </h1>
 
-## About this pos sytem
-This project is created for mini pos system
+#NTK POS
 
-- product can be easily created with stock , category , brand
-- usermanagement can create casher account and other setting changes
-- OPEN POS to sell product
-- Customer can be easily created with phone and address
-- Credit tag to manage due from customers
+A stock management and mini pos system a local Cloth shop
 
-## License
 
-The project is developed by iNnoSYS Organization 
+## Tech Stack
+
+**Client:** Laravel, JavaScript, Bootstrap
+
+**Server:** xampp
+
+
+## Used By
+
+This project is used by the following companies:
+
+- Nwel Tharki Cloth Shop
+- New Flower Cloth Shop
+
+
+## Features
+
+- manage stock from purchase and sale
+- manage due from order by customer
+- manage order for online shopping
+- manage sales
+- total due by date,month,year
+- total sale by date,month,year
+- total purchase by date,month,year
+
+
+## Authors
+
+- [@junemoenyinyi](https://www.github.com/Juneict)
+- [@kaungmyatpaing21](https://www.github.com/kaungmyatpaing21)
+
+
