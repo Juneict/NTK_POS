@@ -1,7 +1,7 @@
 
 #NTK POS
 
-A stock management and mini pos system a local Cloth shop
+A stock management and mini pos system for a local Cloth shop
 
 
 ## Tech Stack
